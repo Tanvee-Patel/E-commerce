@@ -13,19 +13,27 @@ const initialstate = {
 
 const Login = () => {
   const [formData, setFormData] = useState(initialstate);
+  const [isLoading, setIsLoading] = useState(false);  // Add loading state
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   function onSubmit(e) {
     e.preventDefault();
+    setIsLoading(true);  // Set loading state to true when submitting
 
     dispatch(loginUser(formData))
       .then((data) => {
+        setIsLoading(false);  // Set loading state to false once done
+
         if (data?.payload?.success) {
           toast.success('Login Successful');
           
           // Access the user from the response payload
           const user = data.payload.user; // Assuming the API sends this back
+          const token = data.payload.token; // Assuming the token is returned
+
+          localStorage.setItem('user', JSON.stringify(user));
+          localStorage.setItem('token', token);
 
           // Navigate based on the user role
           if (user?.role === 'admin') {
@@ -38,6 +46,7 @@ const Login = () => {
         }
       })
       .catch((error) => {
+        setIsLoading(false);  // Set loading state to false in case of error
         console.error('Login failed:', error);
         toast.error('An error occurred. Please try again');
       });
@@ -58,7 +67,7 @@ const Login = () => {
       </div>
       <Form
         formControlls={loginFormControlls}
-        buttonText={'Login'}
+        buttonText={isLoading ? 'Logging in...' : 'Login'}  // Change button text when loading
         formData={formData}
         setFormData={setFormData}
         onSubmit={onSubmit}
@@ -66,5 +75,6 @@ const Login = () => {
     </div>
   );
 };
+
 
 export default Login;

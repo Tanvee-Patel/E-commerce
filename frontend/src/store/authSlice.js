@@ -61,7 +61,14 @@ export const logoutUser = createAsyncThunk(
 export const checkAuth = createAsyncThunk(
   '/auth/checkAuth',
   async (_, { rejectWithValue }) => {
+    const token = localStorage.getItem('authToken'); // Check if token exists in localStorage
+    if (!token) {
+      return rejectWithValue('No token found');
+    }
+
     try {
+      // Optionally, add the token to the header before making the request
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       const response = await axios.get('http://localhost:3000/auth/check-auth', {
         withCredentials: true,
       });
@@ -71,6 +78,7 @@ export const checkAuth = createAsyncThunk(
     }
   }
 );
+
 
 // Slice
 const authSlice = createSlice({
@@ -116,16 +124,21 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload?.message || 'Login failed';
       })
-      // Check Auth
+      // Che
       .addCase(checkAuth.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload.success ? action.payload.user : null;
-        state.isAuthenticated = action.payload.success;
-      })
+        if (action.payload.success) {
+          state.user = action.payload.user;
+          state.isAuthenticated = true;
+        } else {
+          state.user = null;
+          state.isAuthenticated = false;
+        }
+      })      
       .addCase(checkAuth.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload?.message || 'Authentication check failed';

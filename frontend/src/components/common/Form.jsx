@@ -6,10 +6,14 @@ import { Textarea } from '../ui/textarea';
 import { Button } from '../ui/button';
 
 const Form = ({ formControlls, formData, setFormData, onSubmit, buttonText }) => {
-  
+
   function renderInputsByComponentType(controlItem) {
-    const { name, componentType, placeholder, type, options } = controlItem;
+    const { name, componentType, placeholder, type, options, label } = controlItem;
     const value = formData[name] || ''; // Safeguard against undefined value
+
+    // console.log(formData);
+    // console.log(formControlls);
+
 
     switch (componentType) {
       case 'input':
@@ -29,21 +33,30 @@ const Form = ({ formControlls, formData, setFormData, onSubmit, buttonText }) =>
 
       case 'select':
         return (
-          <Select onValueChange={(value) => setFormData({
-            ...formData,
-            [name]: value
-          })} value={value}>
+          <Select
+            onValueChange={(value) =>
+              setFormData((prevData) => ({
+                ...prevData,
+                [name]: value,
+              }))
+            }
+            value={formData[name] || ''}
+          >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder={placeholder} />
+              <SelectValue placeholder={label} />
             </SelectTrigger>
             <SelectContent>
-              {options && options.length > 0 && options.map(option => (
-                <SelectItem key={option.id || option.label} value={option.value}>
+              {options.map((option) => (
+                <SelectItem key={option.id} value={option.id}>
                   {option.label}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
+
+
+
+
         );
 
       case 'textarea':
@@ -76,6 +89,7 @@ const Form = ({ formControlls, formData, setFormData, onSubmit, buttonText }) =>
         );
     }
   }
+
 
   return (
     <form onSubmit={onSubmit}>
