@@ -18,14 +18,19 @@ import Checkout from './pages/shopping/Checkout';
 import Account from './pages/shopping/Account';
 import CheckAuth from './components/common/CheckAuth';
 import { Toaster } from 'react-hot-toast';
+import { Skeleton } from './components/ui/skeleton';
 
 function App() {
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const { isAuthenticated, user, isLoading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
+
+  if(isLoading) return <Skeleton className="w-[800px] bg-black h-[600px] rounded-full" />
+  console.log(isLoading, user);
+  
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">

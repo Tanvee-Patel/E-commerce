@@ -38,7 +38,7 @@ const Form = ({ formControlls, formData, setFormData, onSubmit, buttonText }) =>
             </SelectTrigger>
             <SelectContent>
               {options && options.length > 0 && options.map(option => (
-                <SelectItem key={option.id || option.label}>
+                <SelectItem key={option.id || option.label} value={option.value}>
                   {option.label}
                 </SelectItem>
               ))}
