@@ -1,8 +1,16 @@
 import React from 'react'
 import { Button } from '../ui/button'
 import { AlignJustify, LogOut } from 'lucide-react'
+import { useDispatch } from 'react-redux'
+import { logoutUser } from '@/store/authSlice'
 
 const Header = ({setOpen}) => {
+  const dispatch = useDispatch()
+  
+  function handleLogout(){
+    dispatch(logoutUser())
+  }
+
   return (
     <header className='flex items-center justify-between px-4 py-3 bg-background border-b'>
       <Button
@@ -14,7 +22,9 @@ const Header = ({setOpen}) => {
         </span>
       </Button>
       <div className='flex flex-1 justify-end'>
-        <Button className="inline-flex gap-2 shadow-md items-center rounden-md px-4 py-2 text-sm font-medium hover:bg-red-600 transition duration-300">
+        <Button
+        onClick = {handleLogout}
+        className="inline-flex gap-2 shadow-md items-center rounden-md px-4 py-2 text-sm font-medium hover:bg-red-600 transition duration-300">
           <LogOut /> Logout
         </Button>
       </div>

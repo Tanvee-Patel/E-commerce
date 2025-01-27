@@ -26,7 +26,7 @@ export const fetchAllProducts = createAsyncThunk('/products/fetchAllProducts',as
     return result?.data;
 })
 
-export const editProduct = createAsyncThunk('/products/editProduct',async (id, formData)=>{
+export const editProduct = createAsyncThunk('/products/editProduct',async ({id, formData})=>{
    const result = await axios.put(
       `http://localhost:3000/admin/products/edit/${id}`,
       formData,
@@ -59,7 +59,17 @@ const AdminProductSlice = createSlice({
       }).addCase(fetchAllProducts.rejected,(state,action)=>{
          state.isLoading= false
          state.productList=[]
-      })
+      }).addCase(editProduct.fulfilled, (state, action)=>{
+         state.isLoading = false;
+         const updatedProduct = action.payload.data;
+         const index = state.productList.findIndex((product)=>product.id === updatedProduct.id)
+         if(index !== -1){
+            state.productList[index] = updatedProduct
+         }
+      }) .addCase(editProduct.rejected, (state) => {
+         state.isLoading = false;
+         toast.error('Failed to edit the product');
+       });
    }
 })
 

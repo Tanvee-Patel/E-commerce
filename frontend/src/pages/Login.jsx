@@ -1,9 +1,9 @@
 import Form from '@/components/common/Form';
 import { loginFormControlls } from '@/config';
 import { loginUser } from '@/store/authSlice';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 const initialstate = {
@@ -13,29 +13,36 @@ const initialstate = {
 
 const Login = () => {
   const [formData, setFormData] = useState(initialstate);
-  const [isLoading, setIsLoading] = useState(false);  // Add loading state
+  const [isLoading, setIsLoading] = useState(false);  
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector((state)=> state.auth.user);
+  const isAuthenticated = useSelector((state)=>state.auth.isAuthenticated)
+
+  useEffect(()=>{
+    if(isAuthenticated){
+      if(user?.role === 'admin'){
+        navigate('/admin/dashboard');
+      } else {
+        navigate('/user/home')
+      }
+    }
+  },[isAuthenticated, user, navigate])
 
   function onSubmit(e) {
     e.preventDefault();
-    setIsLoading(true);  // Set loading state to true when submitting
+    setIsLoading(true);  
 
     dispatch(loginUser(formData))
       .then((data) => {
-        setIsLoading(false);  // Set loading state to false once done
+        setIsLoading(false);  
 
         if (data?.payload?.success) {
           toast.success('Login Successful');
-          
-          // Access the user from the response payload
-          const user = data.payload.user; // Assuming the API sends this back
-          const token = data.payload.token; // Assuming the token is returned
-
+        
+          const user = data.payload.user; 
           localStorage.setItem('user', JSON.stringify(user));
-          localStorage.setItem('token', token);
 
-          // Navigate based on the user role
           if (user?.role === 'admin') {
             navigate('/admin/dashboard');
           } else {
@@ -46,7 +53,7 @@ const Login = () => {
         }
       })
       .catch((error) => {
-        setIsLoading(false);  // Set loading state to false in case of error
+        setIsLoading(false);  
         console.error('Login failed:', error);
         toast.error('An error occurred. Please try again');
       });

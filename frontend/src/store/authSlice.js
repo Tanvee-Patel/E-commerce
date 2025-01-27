@@ -30,17 +30,15 @@ export const loginUser = createAsyncThunk(
       const response = await axios.post('http://localhost:3000/auth/login', FormData, {
         withCredentials: true,
       });
-      const { token } = response.data;
-      if (token) {
-        localStorage.setItem('authToken', token);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      }
+      console.log(response); // Log the entire response data
       return response.data;
     } catch (error) {
+      console.error(error);
       return rejectWithValue(error.response?.data || { message: 'Login failed' });
     }
   }
 );
+
 
 export const logoutUser = createAsyncThunk(
   "/auth/logout",
@@ -49,8 +47,8 @@ export const logoutUser = createAsyncThunk(
       const response = await axios.post("http://localhost:3000/auth/logout", {}, {
         withCredentials: true,
       });
-      localStorage.removeItem('authToken'); // Remove token
-      delete axios.defaults.headers.common['Authorization'];
+      // localStorage.removeItem('authToken'); // Remove token
+      // delete axios.defaults.headers.common['Authorization'];
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: 'Logout failed' });
@@ -61,24 +59,26 @@ export const logoutUser = createAsyncThunk(
 export const checkAuth = createAsyncThunk(
   '/auth/checkAuth',
   async (_, { rejectWithValue }) => {
-    const token = localStorage.getItem('authToken'); // Check if token exists in localStorage
-    if (!token) {
-      return rejectWithValue('No token found');
-    }
-
+    // const token = localStorage.getItem('authToken');
+    // console.log(token); // Check token in localStorage
+    // if (!token) {
+    //   return rejectWithValue('No token found');
+    // }
     try {
-      // Optionally, add the token to the header before making the request
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       const response = await axios.get('http://localhost:3000/auth/check-auth', {
-        withCredentials: true,
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
+        withCredentials: true, // Ensure cookies are sent
       });
+      console.log(response.data); // Log response for debugging
       return response.data;
     } catch (error) {
+      console.error(error); // Log error for debugging
       return rejectWithValue(error.response?.data || { message: 'Authentication check failed' });
     }
   }
 );
-
 
 // Slice
 const authSlice = createSlice({
@@ -113,36 +113,35 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        if (action.payload.success) {
-          state.user = action.payload.user;
-          state.isAuthenticated = true;
-        } else {
-          state.error = action.payload.message;
-        }
+        state.user = action.payload.user;  // Assuming the payload contains user data
+        state.isAuthenticated = true;
+        state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload?.message || 'Login failed';
       })
-      // Che
+      // Check authentication status
       .addCase(checkAuth.pending, (state) => {
         state.isLoading = true;
-        state.error = null;
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
         state.isLoading = false;
         if (action.payload.success) {
-          state.user = action.payload.user;
-          state.isAuthenticated = true;
+          state.user = action.payload.user; // Assuming payload contains the user object
+          state.isAuthenticated = true; // Set authentication status to true
         } else {
-          state.user = null;
-          state.isAuthenticated = false;
+          state.isAuthenticated = false; // Handle failed authentication
+          state.user = null; // Clear user data if not authenticated
         }
-      })      
+      })
       .addCase(checkAuth.rejected, (state, action) => {
         state.isLoading = false;
+        state.user = null;
+        state.isAuthenticated = false;
         state.error = action.payload?.message || 'Authentication check failed';
       })
+      
       // Logout User
       .addCase(logoutUser.pending, (state) => {
         state.isLoading = true;

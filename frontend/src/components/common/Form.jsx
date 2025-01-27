@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Textarea } from '../ui/textarea';
 import { Button } from '../ui/button';
 
-const Form = ({ formControlls, formData, setFormData, onSubmit, buttonText }) => {
+const Form = ({ formControlls, formData, setFormData, onSubmit, buttonText, isBtnDisabled }) => {
 
   function renderInputsByComponentType(controlItem) {
     const { name, componentType, placeholder, type, options, label } = controlItem;
@@ -103,7 +103,10 @@ const Form = ({ formControlls, formData, setFormData, onSubmit, buttonText }) =>
           </div>
         ))}
       </div>
-      <Button type="submit" className="mt-2 w-full">
+      <Button 
+      disabled={isBtnDisabled} 
+      type="submit" 
+      className={`mt-2 w-full ${buttonText === 'Edit' ? 'bg-green-400' : 'bg-blue-400'} hover:bg-opacity-80`}>
         {buttonText || 'Submit'}
       </Button>
     </form>
