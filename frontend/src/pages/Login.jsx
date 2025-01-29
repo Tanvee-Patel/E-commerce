@@ -4,7 +4,7 @@ import { loginUser } from '@/store/authSlice';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const initialstate = {
   email: '',
@@ -13,50 +13,47 @@ const initialstate = {
 
 const Login = () => {
   const [formData, setFormData] = useState(initialstate);
-  const [isLoading, setIsLoading] = useState(false);  
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state)=> state.auth.user);
-  const isAuthenticated = useSelector((state)=>state.auth.isAuthenticated)
+  const location = useLocation();  // Get previous location
+  const user = useSelector((state) => state.auth.user);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
-  useEffect(()=>{
-    if(isAuthenticated){
-      if(user?.role === 'admin'){
-        navigate('/admin/dashboard');
-      } else {
-        navigate('/user/home')
-      }
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      // Use the previous route if available, otherwise default
+      const redirectPath = location.state?.from || (user.role === 'admin' ? '/admin/dashboard' : '/user/home');
+      // console.log("Login useEffect Redirecting to:", redirectPath);
+      navigate(redirectPath, { replace: true });
     }
-  },[isAuthenticated, user, navigate])
+  }, [isAuthenticated, user, location, navigate]);
 
-  function onSubmit(e) {
+  
+  async function onSubmit(e) {
     e.preventDefault();
-    setIsLoading(true);  
+    setIsLoading(true);
 
-    dispatch(loginUser(formData))
-      .then((data) => {
-        setIsLoading(false);  
+    try {
+      const data = await dispatch(loginUser(formData)).unwrap();
+      setIsLoading(false);
 
-        if (data?.payload?.success) {
-          toast.success('Login Successful');
-        
-          const user = data.payload.user; 
-          localStorage.setItem('user', JSON.stringify(user));
+      if (data?.success) {
+        toast.success('Login Successful');
+        localStorage.setItem('user', JSON.stringify(data.user));
 
-          if (user?.role === 'admin') {
-            navigate('/admin/dashboard');
-          } else {
-            navigate('/user/home');
-          }
-        } else {
-          toast.error('Invalid Credentials');
-        }
-      })
-      .catch((error) => {
-        setIsLoading(false);  
-        console.error('Login failed:', error);
-        toast.error('An error occurred. Please try again');
-      });
+        // Redirect back to intended route or default
+        const redirectPath = location.state?.from || (data.user.role === 'admin' ? '/admin/dashboard' : '/user/home');
+        console.log("Login Successful - Redirecting to:", redirectPath);
+        navigate(redirectPath, { replace: true });
+      } else {
+        toast.error(data?.message || 'Invalid Credentials');
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.error('Login failed:', error);
+      toast.error('An error occurred. Please try again.');
+    }
   }
 
   return (

@@ -2,32 +2,29 @@ import { Navigate, useLocation } from "react-router-dom";
 
 function CheckAuth({ isAuthenticated, user, children }) {
   const location = useLocation();
-
-  // console.log(location.pathname, isAuthenticated);
+  // console.log("CheckAuth Rendered:", { isAuthenticated, user, location: location.pathname });
 
   if (!isAuthenticated) {
     if (location.pathname.includes("/login") || location.pathname.includes("/register")) {
       return <>{children}</>;
     }
-    return <Navigate to="/auth/login" />;
+    // console.log("Redirecting to login, storing path:", location.pathname);
+    return <Navigate to="/auth/login" state={{ from: location.pathname }} replace />;
   }
 
-  if (isAuthenticated && (location.pathname.includes("/login") || location.pathname.includes("/register"))) {
-    if (user?.role === "admin") {
-      return <Navigate to="/admin/dashboard" />;
-    }
-    return <Navigate to="/user/home" />;
+  if (isAuthenticated && (location.pathname.includes("/auth/login") || location.pathname.includes("/auth/register"))) {
+    return <Navigate to={user?.role === "admin" ? "/admin/dashboard" : "/user/home"} replace />;
   }
 
-  if (isAuthenticated && user?.role === "admin" && location.pathname.includes("user")) {
-    return <Navigate to="/admin/dashboard" />;
+  if (isAuthenticated && user?.role === "admin" && location.pathname.startsWith("/user")) {
+    return <Navigate to="/admin/dashboard" replace />;
   }
 
-  if (isAuthenticated && user?.role !== "admin" && location.pathname.includes("admin")) {
-    return <Navigate to="/user/home" />;
+  if (isAuthenticated && user?.role !== "admin" && location.pathname.startsWith("/admin")) {
+    return <Navigate to="/user/home" replace />;
   }
 
-   return <>{children}</>;
+  return <>{children}</>;
 }
 
 export default CheckAuth;

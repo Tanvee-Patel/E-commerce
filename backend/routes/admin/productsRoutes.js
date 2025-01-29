@@ -10,4 +10,4 @@ router.put('/edit/:id',editProduct)
 router.delete('/delete/:id',deleteProduct)
 router.get('/get',fetchAllProducts)
 
-module.exports = router;
+module.exports = router; 

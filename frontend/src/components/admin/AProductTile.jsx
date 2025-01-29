@@ -29,7 +29,7 @@ const AProductTile = ({product, setFormData, setOpenCreateProductsDialog,current
                   ) : null}
                </div>
             </CardContent>
-            <CardFooter className='felx justify-between items-center'>
+            <CardFooter className='flex justify-between items-center'>
                <Button onClick={()=>{
                   setOpenCreateProductsDialog(true)
                   setCurrentEditedId(product?._id)
