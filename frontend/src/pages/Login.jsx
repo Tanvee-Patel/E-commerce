@@ -22,14 +22,11 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated && user) {
-      // Use the previous route if available, otherwise default
       const redirectPath = location.state?.from || (user.role === 'admin' ? '/admin/dashboard' : '/user/home');
-      // console.log("Login useEffect Redirecting to:", redirectPath);
       navigate(redirectPath, { replace: true });
     }
   }, [isAuthenticated, user, location, navigate]);
 
-  
   async function onSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
@@ -42,43 +39,43 @@ const Login = () => {
         toast.success('Login Successful');
         localStorage.setItem('user', JSON.stringify(data.user));
 
-        // Redirect back to intended route or default
         const redirectPath = location.state?.from || (data.user.role === 'admin' ? '/admin/dashboard' : '/user/home');
-        console.log("Login Successful - Redirecting to:", redirectPath);
         navigate(redirectPath, { replace: true });
       } else {
         toast.error(data?.message || 'Invalid Credentials');
       }
     } catch (error) {
       setIsLoading(false);
-      console.error('Login failed:', error);
       toast.error('An error occurred. Please try again.');
     }
   }
 
   return (
-    <div className='mx-auto w-full max-w-md space-y-6'>
-      <div className='text-center'>
-        <h1 className='text-3xl font-bold tracking-tight text-foreground'>
-          Login to your account
-        </h1>
-        <p className='mt-2'>
-          Don't have an account?
-          <Link className='font-medium ml-2 text-primary hover:underline' to='/auth/register'>
-            Register
-          </Link>
-        </p>
+    <div className="min-h-screen bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center px-4">
+      <div className="w-full max-w-lg space-y-8">
+        <div className="text-center">
+          <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight mb-4">
+          Sign In to Explore More!
+          </h1>
+          <p className="text-xl text-gray-700 mb-6">
+            Don't have an account?{' '}
+            <Link className="text-primary-500 hover:outline-dashed font-semibold" to="/auth/register">
+              Register
+            </Link>
+          </p>
+        </div>
+        <div className="bg-white rounded-lg shadow-xl p-8 space-y-6 ring-2 ring-primary-300">
+          <Form
+            formControlls={loginFormControlls}
+            buttonText={isLoading ? 'Logging in...' : 'Login'}
+            formData={formData}
+            setFormData={setFormData}
+            onSubmit={onSubmit}
+          />
+        </div>
       </div>
-      <Form
-        formControlls={loginFormControlls}
-        buttonText={isLoading ? 'Logging in...' : 'Login'}  // Change button text when loading
-        formData={formData}
-        setFormData={setFormData}
-        onSubmit={onSubmit}
-      />
     </div>
   );
 };
-
 
 export default Login;

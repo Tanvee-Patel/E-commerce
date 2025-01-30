@@ -8,6 +8,7 @@ import { shoppingViewHeaderMenuItems } from '@/config'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu'
 import { Avatar, AvatarFallback } from '../ui/avatar'
 import { logoutUser } from '@/store/authSlice'
+import CartWrapper from './CartWrapper'
 
 function MenuItems({ closeMenu }) {
   return (
@@ -18,7 +19,7 @@ function MenuItems({ closeMenu }) {
             key={menuItem.id}
             to={menuItem.path}
             className='text-sm font-medium'
-            onClick={closeMenu}  
+            onClick={closeMenu}
           >
             {menuItem.label}
           </Link>
@@ -30,16 +31,28 @@ function MenuItems({ closeMenu }) {
 
 function HeaderRightContent({ closeMenu }) {
   const { user } = useSelector((state) => state.auth);
+  const [openCartSheet, setOpenCartSheet] = useState(false)
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   function handleLogout() {
     dispatch(logoutUser());
-    closeMenu(); 
+    closeMenu();
   }
 
   return (
     <div className='flex lg:items-center lg:flex-row flex-col gap-4'>
+      <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
+        <Button
+          onClick={()=>setOpenCartSheet(true)}
+          variant="outline"
+          size="icon"
+          className="mb-3">
+          <ShoppingCart className='h-6 w-6' />
+          <span className='sr-only'>User shopping cart</span>
+        </Button>
+        <CartWrapper />
+      </Sheet>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Avatar className="bg-black lg:mb-3">
@@ -63,10 +76,7 @@ function HeaderRightContent({ closeMenu }) {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <Button variant="outline" size="icon" className="mb-3">
-        <ShoppingCart className='h-6 w-6' />
-        <span className='sr-only'>User shopping cart</span>
-      </Button>
+
     </div>
   );
 }
@@ -78,22 +88,22 @@ const SHeader = () => {
   const handleClose = () => setIsOpen(false);
 
   return (
-    <header className='sticky top-0 z-40 w-full border-b bg-background'>
+    <header className='sticky top-0 z-40 w-full border-b bg-white shadow-md'>
       <div className='flex h-16 items-center justify-between px-4 md:px-6'>
-        <Link to="/user/home" className='flex items-center gap-2'>
-          <House className='h-6 w-6' />
-          <span className='font-bold'>
+        <Link to="/user/home" className='flex items-center gap-2 text-gray-900'>
+          <House className='h-6 w-6 text-primary-600' />
+          <span className='font-bold text-primary-600'>
             E-commerce
           </span>
         </Link>
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
-            <Button variant="outline" size="icon" className="lg:hidden" onClick={handleOpen}>
-              <SquareMenu className='h-6 w-6' />
+            <Button variant="outline" size="icon" className="lg:hidden text-gray-900 border-gray-300 hover:border-primary-600" onClick={handleOpen}>
+              <SquareMenu className='h-6 w-6 text-primary-600' />
               <span className='sr-only'>Toggle header menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-full max-w-xs">
+          <SheetContent side="left" className="w-full max-w-xs bg-white p-4">
             <HeaderRightContent closeMenu={handleClose} />
             <MenuItems closeMenu={handleClose} />
           </SheetContent>
