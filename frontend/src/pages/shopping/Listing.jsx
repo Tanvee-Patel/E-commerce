@@ -4,9 +4,11 @@ import ProductTile from '@/components/shopping/ProductTile'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { sortOptions } from '@/config'
+import { addToCart, fetchCartItems } from '@/store/user/cartSlice'
 import { fetchAllFilteredProducts, fetchProductDetails } from '@/store/user/productSlice'
 import { ArrowUpDown } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 
@@ -17,6 +19,7 @@ const Listing = () => {
   const [sort, setSort] = useState(null)
   const [searchParams, setSearchParams] = useSearchParams()
   const [openDetailsDialog, setOpenDetailsDialog]=useState(false)
+  const {user} = useSelector (state => state.auth)
 
   function createSearchParamsHelper(filterParams){
     const queryParams = [];
@@ -52,9 +55,20 @@ const Listing = () => {
   }
 
   function handleGetProductDetails(getCurrentProductId){
-    console.log(getCurrentProductId);
+    // console.log(getCurrentProductId);
     dispatch(fetchProductDetails(getCurrentProductId))
     setOpenDetailsDialog(true)
+  }
+
+  function handleAddToCart(getCurrentProductId){
+    console.log(getCurrentProductId);  
+    dispatch(addToCart({userId: user?.id, productId: getCurrentProductId, quantity: 1}))
+    .then((data)=>{
+      if(data?.payload?.success){
+        dispatch(fetchCartItems(user?.id))
+        toast.success('Product is added to cart successfully')
+      }
+    })
   }
 
   useEffect(()=>{
@@ -85,12 +99,11 @@ const Listing = () => {
   return (
     <div className='min-h-screen bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-100 flex items-center justify-center p-6'>
       <div className='w-full max-w-7xl flex flex-col md:flex-row gap-8'>
-        {/* Filter Component */}
+      
         <div className='bg-white p-6 rounded-lg shadow-xl w-full md:w-1/4'>
           <Filter filters={filters} handleFilter={handleFilter} />
         </div>
 
-        {/* Product List */}
         <div className='w-full md:w-3/4 space-y-8'>
           <div className='bg-white p-6 rounded-lg shadow-xl'>
             <h2 className='text-4xl font-extrabold text-gray-900 tracking-tight mb-6 text-center'>
@@ -128,6 +141,7 @@ const Listing = () => {
                       product={productItem}
                       key={productItem.id || index}
                       handleGetProductDetails={handleGetProductDetails}
+                      handleAddToCart={handleAddToCart}
                     />
                   )
                   :

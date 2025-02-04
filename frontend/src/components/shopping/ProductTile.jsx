@@ -14,7 +14,7 @@ const getCategoryLabel = (categoryId) => {
    return brand ? brand.label : brandId;  
  };
 
-const ProductTile = ({ product, handleGetProductDetails }) => {
+const ProductTile = ({ product, handleGetProductDetails, handleAddToCart }) => {
    const categoryLabel = getCategoryLabel(product.category)
    const brandLabel = getBrandLabel(product.brand)
 
@@ -53,12 +53,14 @@ const ProductTile = ({ product, handleGetProductDetails }) => {
                }
             </div>
          </CardContent>
-         <CardFooter>
-            <Button className="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 rounded-md">
+      </div>
+      <CardFooter>
+            <Button
+            onClick={()=>handleAddToCart(product?._id)}
+            className="w-full bg-primary-600 hover:bg-primary-700 text-cyan-700 font-semibold py-2 rounded-md">
                Add to Cart
             </Button>
          </CardFooter>
-      </div>
     </Card>
   )
 }

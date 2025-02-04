@@ -5,7 +5,7 @@ const addToCart = async (req, res)=>{
    try {
       const {userId, productId, quantity} = req.body;
 
-      if(!userId || productId || quantity <= 0){
+      if(!userId || !productId || quantity <= 0){
          return res.status(400).json({
             success: false,
             message: 'Invalid data provided!'
@@ -104,65 +104,72 @@ const fetchCartItems = async (req, res)=>{
    }
 }
 
-const updateCartItemQuantity = async (req, res)=>{
+const updateCartItemQuantity = async (req, res) => {
    try {
-      const {userId, productId, quantity} = req.body;
-      if(!userId || !productId || quantity <= 0){
-         return res.status(400).json({
-            success: false,
-            message: "Invalid data provided"
-         });
-      }
-
-      const cart = await Cart.findOne({userId})
-      if(!cart){
-         return res.status(404).json({
-            success: false,
-            message: "Cart not found"
-         });
-      }
-
-      const findCurrentProductIndex = cart.items.findIndex(item => item.productId.toString() === productId)
-      if(findCurrentProductIndex === -1){
-         return res.status(404).json({
-            success: false,
-            message: "Cart item not found"
-         });
-      }
-
-      cart.items[findCurrentProductIndex].quantity = quantity
-      await cart.save();
-      
-      await cart.populate({
-         path: 'items.productId',
-         select: "image title price salePrice", 
-      })
-
-      const populateCartItems = cart.items.map((item)=>({
-         productId: item.productId ? item.productId._id : null,
-         image: item.productId ? item.productId.image : null,
-         title: item.productId ? item.productId.title : "Product not found",
-         price: item.productId ? item.productId.price : null,
-         salePrice: item.productId ? item.productId.salePrice : null,
-         quantity: item.quantity
-      }))
-
-      return res.status(200).json({
-         success: true,
-         data: {
-            ...cart._doc,
-            items: populateCartItems
-         }
-      });
-
-   } catch (error) {
-      console.log(error);
-      res.status(500).json({
+     const { userId, items } = req.body;
+     console.log(req.body);
+   
+     if (!userId || !items || !Array.isArray(items) || items.some(item => !item.productId || item.quantity <= 0)) {
+       return res.status(400).json({
          success: false,
-         message: 'Error'
-      })
+         message: "Invalid data provided"
+       });
+     }
+ 
+     const cart = await Cart.findOne({ userId });
+     if (!cart) {
+       return res.status(404).json({
+         success: false,
+         message: "Cart not found"
+       });
+     }
+ 
+     for (const { productId, quantity } of items) {
+       const productIndex = cart.items.findIndex(item => item.productId.toString() === productId.toString());
+
+       if (productIndex === -1) {
+         return res.status(404).json({
+           success: false,
+           message: `Item with productId ${productId} not found in cart`
+         });
+       }
+ 
+       cart.items[productIndex].quantity = quantity;
+     }
+ 
+     await cart.save();
+
+     await cart.populate({
+       path: 'items.productId',
+       select: "image title price salePrice"
+     });
+ 
+     const populatedItems = cart.items.map(item => ({
+       productId: item.productId ? item.productId._id : null,
+       image: item.productId ? item.productId.image : null,
+       title: item.productId ? item.productId.title : "Product not found",
+       price: item.productId ? item.productId.price : null,
+       salePrice: item.productId ? item.productId.salePrice : null,
+       quantity: item.quantity
+     }));
+ 
+     return res.status(200).json({
+       success: true,
+       data: {
+         ...cart._doc,
+         items: populatedItems
+       }
+     });
+ 
+   } catch (error) {
+     console.error(error);
+     res.status(500).json({
+       success: false,
+       message: 'Error'
+     });
    }
-}
+ };
+ 
 
 const deleteCartItem = async (req, res)=>{
    try {
@@ -174,7 +181,11 @@ const deleteCartItem = async (req, res)=>{
          });
       }
 
-      const cart = await Cart.findOne({userId }).populate({
+      const cart = await Cart.findOneAndUpdate(
+         {userId },
+         {$pull: {items:{productId}}},
+         {new: true}
+      ).populate({
          path: "items.productId",
          select: "image title price salePrice"
       })
@@ -187,7 +198,7 @@ const deleteCartItem = async (req, res)=>{
 
       cart.items = cart.items.filter(item => item.productId._id.toString() !== productId)
       await cart.save();
-      await Cart.populate( "items.productId", "image title price salePrice")
+      await cart.populate( "items.productId", "image title price salePrice")
 
       const populateCartItems = cart.items.map((item)=>({
          productId: item.productId ? item.productId : null,
@@ -210,7 +221,7 @@ const deleteCartItem = async (req, res)=>{
       console.log(error);
       res.status(500).json({
          success: false,
-         message: 'Error'
+         message: 'Internal server error'
       })
    }
 }
