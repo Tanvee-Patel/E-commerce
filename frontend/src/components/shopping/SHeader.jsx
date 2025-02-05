@@ -10,20 +10,32 @@ import { Avatar, AvatarFallback } from '../ui/avatar'
 import { logoutUser } from '@/store/authSlice'
 import CartWrapper from './CartWrapper'
 import { fetchCartItems } from '@/store/user/cartSlice'
+import { Label } from '../ui/label'
 
-function MenuItems({ closeMenu }) {
+function MenuItems() {
+  const navigate = useNavigate()
+
+  function handleNavigate(getCurrentMenuItems){
+    sessionStorage.removeItem('filters')
+    const currentFilter = getCurrentMenuItems.id !== 'home' ?
+    {
+      category: [getCurrentMenuItems.id]
+    } : null
+    sessionStorage.setItem('filters', JSON.stringify(currentFilter))
+    navigate(getCurrentMenuItems.path)
+  }
+
   return (
     <nav className='flex flex-col mb-3 lg:mb-0 lg:items-center gap-6 lg:flex-row'>
       {
         shoppingViewHeaderMenuItems.map(menuItem =>
-          <Link
-            key={menuItem.id}
-            to={menuItem.path}
-            className='text-sm font-medium'
-            onClick={closeMenu}
-          >
-            {menuItem.label}
-          </Link>
+          <Label 
+          onClick={()=>handleNavigate(menuItem)}
+          key={menuItem.id}
+          className='text-sm font-medium cursor-pointer'
+        >
+          {menuItem.label}
+          </Label>
         )
       }
     </nav>
