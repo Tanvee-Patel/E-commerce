@@ -20,10 +20,8 @@ export const getAllOrderByUser = createAsyncThunk(
 export const getOrderDetails = createAsyncThunk(
    '/order/getOrderDetails',async (id)=>{
    const response = await axios.get(
-      `http://localhost:3000/user/order/details/${id}`,
-      console.log("API",response.data)
-      
-    );
+      `http://localhost:3000/user/order/details/${id}`);
+    console.log("API",response.data)
     return response.data;
 })
 
@@ -35,7 +33,11 @@ const orderSlice = createSlice({
     orderStatus: 'Pending',
     orderDetails: null
   },
-  reducers: {},
+  reducers: {
+    resetOrderDetails:(state)=>{
+      state.orderDetails = null
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(createOrder.pending, (state) => {
@@ -44,11 +46,16 @@ const orderSlice = createSlice({
       .addCase(createOrder.fulfilled, (state, action) => {
         state.status = 'confirmed';
         state.orders.push(action.payload.order);
+        state.orderDetails = {
+          ...action.payload.order,
+          addressInfo: action.payload.order.addressInfo || {}, 
+        };
       })
       .addCase(createOrder.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
-      }).addCase(getAllOrderByUser.pending, (state) => {
+      })
+      .addCase(getAllOrderByUser.pending, (state) => {
          state.isLoading = true;
        })
        .addCase(getAllOrderByUser.fulfilled, (state, action) => {
@@ -63,9 +70,12 @@ const orderSlice = createSlice({
          state.isLoading = true;
        })
        .addCase(getOrderDetails.fulfilled, (state, action) => {
-         state.isLoading = false;
-         state.orderDetails = action.payload.data;
-       })
+        state.isLoading = false;
+        state.orderDetails = {
+          ...action.payload.data,
+          addressInfo: action.payload.data.addressInfo || {},
+        };
+      })      
        .addCase(getOrderDetails.rejected, (state) => {
          state.isLoading = false;
          state.orderDetails = null;
@@ -73,4 +83,5 @@ const orderSlice = createSlice({
   },
 });
 
+export const {resetOrderDetails} = orderSlice.actions;
 export default orderSlice.reducer;

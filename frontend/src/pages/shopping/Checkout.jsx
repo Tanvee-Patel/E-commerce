@@ -24,7 +24,12 @@ const Checkout = () => {
 
   const handleAddressSelect = (address) => {
     dispatch(setSelectedAddress(address))
+    // console.log("Setting selected address:", selectedAddress);
   }
+  useEffect(() => {
+    console.log("Updated Selected Address:", selectedAddress);
+  }, [selectedAddress]);
+  
 
   const totalCartAmount = cartItems && cartItems.items && cartItems.items.length > 0 ?
     cartItems.items.reduce((sum, currentItem) => sum + (
@@ -47,7 +52,7 @@ const Checkout = () => {
       userId: user?.id || '',
       cartId: cartItems?._id,
       cartItems: cartItems.items,
-      addressInfo: selectedAddress.address || {},
+      addressInfo: selectedAddress || {},
       totalAmount: totalCartAmount,
       orderStatus: orderStatus,
     };

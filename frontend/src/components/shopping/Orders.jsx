@@ -5,7 +5,7 @@ import { Button } from '../ui/button'
 import { Dialog } from '../ui/dialog'
 import OrderDetails from './OrderDetails'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllOrderByUser, getOrderDetails } from '@/store/user/orderSlice'
+import { getAllOrderByUser, getOrderDetails, resetOrderDetails } from '@/store/user/orderSlice'
 import { Badge } from '../ui/badge'
 
 const Orders = () => {
@@ -14,6 +14,7 @@ const Orders = () => {
   const dispatch = useDispatch()
   const { user } = useSelector(state => state.auth)
   const { orders: orderList = [], orderDetails } = useSelector(state => state.orders)
+  const [selectedOrderId, setSelectedOrderId] = useState(null)
 
   useEffect(() => {
     dispatch(getAllOrderByUser(user?.id))
@@ -21,13 +22,16 @@ const Orders = () => {
 
   // console.log("Order List", orderList);
   // console.log("Order Details", orderDetails);
-  useEffect(()=>{
-    console.log("Order Details",orderDetails);
-  },[orderDetails])
+  useEffect(() => {
+    if (orderDetails) {
+      setOpenDetailsDialog(true)
+      console.log("Order Details", orderDetails);
+    }
+  }, [orderDetails])
 
-  function handleFetchOrderDetails (getId){
-    console.log("Id",getId);
-    
+  function handleFetchOrderDetails(getId) {
+    // console.log("Id",getId);
+    setSelectedOrderId(getId)
     dispatch(getOrderDetails(getId))
   }
 
@@ -51,9 +55,9 @@ const Orders = () => {
           </TableHeader>
           <TableBody>
             {
-              orderList && orderList.length > 0 ?
-                orderList.map(orderItem =>
-                  <TableRow>
+              orderList && orderList.length > 0 ? (
+                orderList.map((orderItem) => (
+                  <TableRow key={orderItem?._id}>
                     <TableCell>{orderItem?._id}</TableCell>
                     <TableCell className='w-full'>{orderItem?.orderDate.split('T')[0]}</TableCell>
                     <TableCell>
@@ -61,23 +65,25 @@ const Orders = () => {
                     </TableCell>
                     <TableCell>${orderItem?.totalAmount}</TableCell>
                     <TableCell>
-                      <Dialog
-                        open={openDetailsDialog}
-                        onOpenChange={setOpenDetailsDialog}>
-                        <Button
-                          onClick={()=>handleFetchOrderDetails(orderItem?._id)}>
-                          View Details
-                        </Button>
-                        <OrderDetails />
-                      </Dialog>
+                      <Button
+                        onClick={() => handleFetchOrderDetails(orderItem?._id)}>
+                        View Details
+                      </Button>
                     </TableCell>
-                  </TableRow>
-                ) : null
+                  </TableRow>))
+              ) : null
             }
-
           </TableBody>
         </Table>
       </CardContent>
+      <Dialog
+        open={openDetailsDialog}
+        onOpenChange={()=>{
+          setOpenDetailsDialog(false)
+          dispatch(resetOrderDetails())
+        }}>
+        <OrderDetails orderDetails={orderDetails} />
+      </Dialog>
     </Card>
   )
 }
