@@ -29,10 +29,12 @@ const Account = () => {
               <TabsTrigger value="address" className="px-6 py-2 text-lg font-semibold text-gray-300 rounded-lg hover:bg-gray-700">Address</TabsTrigger>
             </TabsList>
             <TabsContent value="orders">
-              <p className="text-gray-600 text-lg"><Orders/></p>
+              <div className="text-gray-600 text-lg">
+                <Orders/>
+              </div>
             </TabsContent>
             <TabsContent value="address">
-              <p className="text-gray-600 text-lg"><Address/></p>
+              <div className="text-gray-600 text-lg"><Address/></div>
             </TabsContent>
           </Tabs>
         </div>

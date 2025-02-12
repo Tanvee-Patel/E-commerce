@@ -40,7 +40,7 @@ export const deleteCartItem = createAsyncThunk('/cart/deleteCartItems',async ({u
     );
     return response.data;
 })
-
+ 
 const userCartSlice = createSlice({
    name: 'userCart',
    initialState,

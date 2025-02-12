@@ -4,7 +4,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
    isLoading: false,
-   addressList: []
+   addressList: [],
+   selectedAddress: null
 }
 
 export const addNewAddress = createAsyncThunk('/addresses/addNewAddress', async (FormData) => {
@@ -12,12 +13,12 @@ export const addNewAddress = createAsyncThunk('/addresses/addNewAddress', async 
    return response.data;
 })
 
-export const editAddress = createAsyncThunk('/addresses/editAddress', async ({ userId, addressId, FormData }) => {
-   const response = await axios.put(`http://localhost:3000/user/address//update/${userId}/${addressId}`, FormData)
+export const editAddress = createAsyncThunk('/addresses/editAddress', async ({ userId, addressId, formData }) => {
+   const response = await axios.put(`http://localhost:3000/user/address/update/${userId}/${addressId}`, formData)
    return response.data;
 })
 
-export const fetchAllAddress = createAsyncThunk('/addresses/fetchAllAddress', async ({ userId }) => {
+export const fetchAllAddress = createAsyncThunk('/addresses/fetchAllAddress', async ( userId ) => {
    const response = await axios.get(`http://localhost:3000/user/address/get/${userId}`)
    return response.data;
 })
@@ -31,7 +32,11 @@ export const deleteAddress = createAsyncThunk('/addresses/deleteAddress', async 
 const addressSlice = createSlice({
    name: 'address',
    initialState,
-   reducers: {},
+   reducers: {
+      setSelectedAddress: (state, action ) => {
+         state.selectedAddress = action.payload
+      }
+   },
    extraReducers: (builder) => {
       builder.addCase(addNewAddress.pending, (state) => {
          state.isLoading = true;
@@ -49,13 +54,26 @@ const addressSlice = createSlice({
          })
          .addCase(fetchAllAddress.fulfilled, (state, action) => {
             state.isLoading = false;
-            state.addressList = action.payload.data;
+            state.addressList = [...action.payload.data];
          })
          .addCase(fetchAllAddress.rejected, (state) => {
             state.isLoading = false;
             state.addressList = [];
-         });
+         })
+         .addCase(editAddress.pending, (state) => {
+            state.isLoading = true;
+         })
+         .addCase(editAddress.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.addressList = state.addressList.map(address => 
+               address._id === action.payload.data._id ? action.payload.data : address
+            );
+         })
+         .addCase(editAddress.rejected, (state) => {
+            state.isLoading = false;
+         });         
    }
 })
 
+export const { setSelectedAddress } = addressSlice.actions;
 export default addressSlice.reducer;
