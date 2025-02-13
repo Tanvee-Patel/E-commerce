@@ -1,6 +1,6 @@
 import { CircleUserRound, House, LogOut, ShoppingCart, SquareMenu } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet'
 import { Button } from '../ui/button'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,27 +14,32 @@ import { Label } from '../ui/label'
 
 function MenuItems() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const [searchParams, setSearchParams] = useSearchParams()
 
-  function handleNavigate(getCurrentMenuItems){
+  function handleNavigate(getCurrentMenuItems) {
     sessionStorage.removeItem('filters')
-    const currentFilter = getCurrentMenuItems.id !== 'home' ?
-    {
-      category: [getCurrentMenuItems.id]
-    } : null
-    sessionStorage.setItem('filters', JSON.stringify(currentFilter))
-    navigate(getCurrentMenuItems.path)
+    const currentFilter = getCurrentMenuItems.id !== 'home' && getCurrentMenuItems.id !== 'products' && getCurrentMenuItems.id !== 'search' ?
+      {
+        category: [getCurrentMenuItems.id]
+      } : null
+    if (currentFilter) {
+      sessionStorage.setItem('filters', JSON.stringify(currentFilter));
+      setSearchParams(new URLSearchParams({ category: getCurrentMenuItems.id }));
+    }
+    navigate(getCurrentMenuItems.path);
   }
 
   return (
     <nav className='flex flex-col mb-3 lg:mb-0 lg:items-center gap-6 lg:flex-row'>
       {
         shoppingViewHeaderMenuItems.map(menuItem =>
-          <Label 
-          onClick={()=>handleNavigate(menuItem)}
-          key={menuItem.id}
-          className='text-sm font-medium cursor-pointer'
-        >
-          {menuItem.label}
+          <Label
+            onClick={() => handleNavigate(menuItem)}
+            key={menuItem.id}
+            className='text-sm font-medium cursor-pointer'
+          >
+            {menuItem.label}
           </Label>
         )
       }
@@ -47,32 +52,32 @@ function HeaderRightContent({ closeMenu }) {
   const [openCartSheet, setOpenCartSheet] = useState(false)
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {cartItems} = useSelector(state=>state.userCart)
+  const { cartItems } = useSelector(state => state.userCart)
 
   function handleLogout() {
     dispatch(logoutUser());
     closeMenu();
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(fetchCartItems(user?.id))
-  },[dispatch])
+  }, [dispatch])
 
   return (
     <div className='flex lg:items-center lg:flex-row flex-col gap-4'>
       <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
         <Button
-          onClick={()=>setOpenCartSheet(true)}
+          onClick={() => setOpenCartSheet(true)}
           variant="outline"
           size="icon"
           className="mb-3">
           <ShoppingCart className='h-6 w-6' />
           <span className='sr-only'>User shopping cart</span>
         </Button>
-        <CartWrapper 
-        setOpenCartSheet={setOpenCartSheet}
-        cartItems={cartItems && cartItems.items && cartItems.items.length > 0 ? 
-        cartItems.items : []}/>
+        <CartWrapper
+          setOpenCartSheet={setOpenCartSheet}
+          cartItems={cartItems && cartItems.items && cartItems.items.length > 0 ?
+            cartItems.items : []} />
       </Sheet>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

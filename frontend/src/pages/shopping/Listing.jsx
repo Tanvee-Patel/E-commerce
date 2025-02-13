@@ -20,6 +20,8 @@ const Listing = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const [openDetailsDialog, setOpenDetailsDialog]=useState(false)
   const {user} = useSelector (state => state.auth)
+  const categorySearchParam = searchParams.get('category')
+  const {cartItems} = useSelector(state => state.userCart)
 
   function createSearchParamsHelper(filterParams){
     const queryParams = [];
@@ -36,23 +38,23 @@ const Listing = () => {
     setSort(value)
   }
 
-  function handleFilter (getSectionId, getCurrentOption){
+  function handleFilter(getSectionId, getCurrentOption){
     let copyFilters = {...filters};
-    const indexOfCurrentSection = Object.keys(copyFilters).indexOf(getSectionId);
-    if(indexOfCurrentSection === -1){
-      copyFilters = {
-        ...copyFilters,
-        [getSectionId] : [getCurrentOption]
+    
+    if (!copyFilters[getSectionId]) {
+      copyFilters[getSectionId] = [getCurrentOption];
+    } else {
+      const indexOfCurrentOption = copyFilters[getSectionId].indexOf(getCurrentOption);
+      if (indexOfCurrentOption === -1) {
+        copyFilters[getSectionId].push(getCurrentOption);
+      } else {
+        copyFilters[getSectionId].splice(indexOfCurrentOption, 1);
       }
     }
-    else{
-      const indexOfCurrentOption = copyFilters[getSectionId].indexOf(getCurrentOption);
-      if(indexOfCurrentOption == -1) copyFilters[getSectionId].push(getCurrentOption)
-        else copyFilters[getSectionId].splice(indexOfCurrentOption, 1)
-    }
-    setFilters(copyFilters)
-    sessionStorage.setItem('filters', JSON.stringify(copyFilters))
-  }
+    
+    setFilters(copyFilters);
+    sessionStorage.setItem('filters', JSON.stringify(copyFilters));
+  }  
 
   function handleGetProductDetails(getCurrentProductId){
     // console.log(getCurrentProductId);
@@ -60,8 +62,22 @@ const Listing = () => {
     setOpenDetailsDialog(true)
   }
 
-  function handleAddToCart(getCurrentProductId){
-    console.log(getCurrentProductId);  
+  function handleAddToCart(getCurrentProductId, getTotalStock){
+    // console.log(getCurrentProductId);
+    console.log(cartItems, "Cart Items");
+
+    let getCartItems = cartItems.items || [];
+    if(getCartItems.length){
+      const indexOfCurrentItem = getCartItems.findIndex(item => item.productId === getCurrentProductId)
+      if(indexOfCurrentItem > -1){
+        const getQuantity = getCartItems[indexOfCurrentItem].quantity
+        if(getQuantity + 1 > getTotalStock){
+          toast(`Only ${getQuantity} quantity can be added for this item`)
+          return;
+        }
+      }  
+    }    
+
     dispatch(addToCart({userId: user?.id, productId: getCurrentProductId, quantity: 1}))
     .then((data)=>{
       if(data?.payload?.success){
@@ -74,7 +90,7 @@ const Listing = () => {
   useEffect(()=>{
     setSort('Price: Low to High')
     setFilters(JSON.parse(sessionStorage.getItem('filters')) || {})
-  },[])
+  },[categorySearchParam])
 
   useEffect(()=>{
     if(filters && Object.keys(filters).length > 0){

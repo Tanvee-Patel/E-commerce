@@ -19,6 +19,7 @@ import Account from './pages/shopping/Account';
 import CheckAuth from './components/common/CheckAuth';
 import { Toaster } from 'react-hot-toast';
 import { Skeleton } from './components/ui/skeleton';
+import Search from './pages/shopping/Search';
 
 function App() {
   const { isAuthenticated, user, isLoading } = useSelector((state) => state.auth);
@@ -54,6 +55,7 @@ function App() {
           <Route path="listing" element={<Listing />} />
           <Route path="checkout" element={<Checkout />} />
           <Route path="account" element={<Account />} />
+          <Route path="search" element={<Search/>} />
         </Route>
       </Routes>
     </div>

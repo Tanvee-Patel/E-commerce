@@ -5,30 +5,38 @@ import { Separator } from '../ui/separator'
 import Form from '../common/Form'
 import { Badge } from '../ui/badge'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateOrderStatus } from '@/store/admin/orderSlice'
+import { getAdminOrderDetails, getAllOrderOfAllUsers, updateOrderStatus } from '@/store/admin/orderSlice'
+import toast from 'react-hot-toast'
 
 const initialFormData = {
    status: ''
 }
- 
-const OrderDetail = ({orderDetail}) => {
-   const {user} = useSelector( state => state.auth)
+
+const OrderDetail = ({ orderDetail }) => {
+   const { user } = useSelector(state => state.auth)
    const [formData, setFormData] = useState(initialFormData)
    const dispatch = useDispatch()
 
    function handleUpdateStatus(e) {
       e.preventDefault()
       // console.log(formData);
-      const {status} = formData
+      const { status } = formData
       dispatch(updateOrderStatus({
-         id: orderDetail?._id, 
+         id: orderDetail?._id,
          orderStatus: status
       }))
-      .then(data=>console.log(data,"34567"))
+         .then(data => {
+            if (data?.payload.success) {
+               dispatch(getAdminOrderDetails(orderDetail?._id))
+               dispatch(getAllOrderOfAllUsers())
+               setFormData(initialFormData)
+               toast.success('Order status updates successfully!')
+            }
+         });
    }
 
    // console.log(orderDetail);
-   
+
 
    return (
 
@@ -40,7 +48,7 @@ const OrderDetail = ({orderDetail}) => {
                </DialogTitle>
             </div>
             <div className='grid gap-6'>
-            <div className='grid gap-2'>
+               <div className='grid gap-2'>
                   <div className='flex items-center justify-between'>
                      <p className='font-medium'>Order Id</p>
                      <Label className="mr-5">{orderDetail?._id}</Label>
@@ -83,7 +91,7 @@ const OrderDetail = ({orderDetail}) => {
                      </ul>
                   </div>
                </div>
-               <Separator/>
+               <Separator />
                <div className='grid gap-4'>
                   <div className='grid gap-2'>
                      <div className='font-medium'>
@@ -92,7 +100,7 @@ const OrderDetail = ({orderDetail}) => {
                      <div className='grid gap-0.5 text-muted-foreground'>
                         <span>Username: {user.username}</span>
                         <span>Address: {orderDetail?.addressInfo?.address}
-                        <span>, {orderDetail?.addressInfo?.city || 'N/A'}</span> </span>
+                           <span>, {orderDetail?.addressInfo?.city || 'N/A'}</span> </span>
                         <span>Pincode: {orderDetail?.addressInfo?.pincode || 'N/A'}</span>
                         <span>Phone: {orderDetail?.addressInfo?.phone || 'N/A'}</span>
                      </div>
@@ -104,7 +112,7 @@ const OrderDetail = ({orderDetail}) => {
                         {
                            label: "Order Status",
                            name: "status",
-                          componentType: "select",
+                           componentType: "select",
                            options: [
                               { id: "pending", label: "Pending" },
                               { id: "confirmed", label: "Confirmed" },

@@ -8,6 +8,8 @@ import toast from 'react-hot-toast'
 const CartItemsContent = ({ cartItem }) => {
   const dispatch = useDispatch()
   const { user } = useSelector(state => state.auth)
+  const { cartItems } = useSelector((state) => state.userCart)
+  const { productList } = useSelector(state => state.userProducts)
 
   const handleCartItemDelete = (item) => {
     dispatch(deleteCartItem({ userId: user.id, productId: item.productId }))
@@ -15,7 +17,33 @@ const CartItemsContent = ({ cartItem }) => {
       .catch(() => toast.error('Failed to delete item'))
   }
 
-  const handleUpdateQuantity = (cartItem, typeOfAction) => {
+  function handleUpdateQuantity(getCartItem, typeOfAction) {
+    if (typeOfAction == "plus") {
+      let getCartItems = cartItems.items || [];
+
+      if (getCartItems.length) {
+        const indexOfCurrentCartItem = getCartItems.findIndex(
+          (item) => item.productId === getCartItem?.productId
+        );
+
+        const getCurrentProductIndex = productList.findIndex((product) => product._id === getCartItem?.productId);
+
+        if (getCurrentProductIndex === -1) {
+          console.error(`Product with ID ${getCartItem?.productId} not found in productList`);
+          toast.error('Product information is missing.');
+          return;
+        }
+
+        const getTotalStock = productList[getCurrentProductIndex].totalStock;
+        if (indexOfCurrentCartItem > -1) {
+          const getQuantity = getCartItems[indexOfCurrentCartItem].quantity;
+          if (getQuantity + 1 > getTotalStock) {
+            toast(`Only ${getQuantity} quantity can be added for this item`);
+            return;
+          }
+        }
+      }
+    }
     const newQuantity = typeOfAction === 'plus'
       ? cartItem.quantity + 1
       : cartItem.quantity > 1
@@ -24,7 +52,7 @@ const CartItemsContent = ({ cartItem }) => {
 
     dispatch(updateCartItemQuantity({
       userId: user.id,
-      items: [{productId: cartItem.productId, quantity: newQuantity}]
+      items: [{ productId: cartItem.productId, quantity: newQuantity }]
     }))
       .then((response) => {
         const { success, data } = response.payload;
@@ -55,7 +83,7 @@ const CartItemsContent = ({ cartItem }) => {
             size="icon"
             className="h-9 w-9 rounded-full border-gray-300 hover:bg-gray-100"
             onClick={() => handleUpdateQuantity(cartItem, 'minus')}
-            disabled = {cartItem?.quantity === 1}
+            disabled={cartItem?.quantity === 1}
           >
             <Minus className="w-4 h-4 text-gray-600" />
           </Button>
