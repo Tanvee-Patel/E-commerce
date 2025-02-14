@@ -70,8 +70,11 @@ function HeaderRightContent({ closeMenu }) {
           onClick={() => setOpenCartSheet(true)}
           variant="outline"
           size="icon"
-          className="mb-3">
+          className="mb-3 relative">
           <ShoppingCart className='h-6 w-6' />
+          <span className='absolute -top-1.5 -right-1.5 backdrop-blur-lg bg-white/40 text-gray-900 font-semibold text-[10px] w-5 h-5 flex items-center justify-center rounded-full border border-indigo-400 shadow-lg transition-all duration-300 hover:scale-110'>
+            {cartItems?.items?.length}
+          </span>
           <span className='sr-only'>User shopping cart</span>
         </Button>
         <CartWrapper

@@ -7,6 +7,7 @@ import addressSlice from './user/addressSlice'
 import orderSlice from './user/orderSlice'
 import AorderSlice from './admin/orderSlice'
 import userSearchSlice from './user/searchSlice'
+import userReviewSlice from './user/reviewSlice'
 
 const store = configureStore({
    reducer:{
@@ -17,7 +18,8 @@ const store = configureStore({
       userAddress: addressSlice,
       orders: orderSlice,
       adminOrders: AorderSlice,
-      userSearch: userSearchSlice
+      userSearch: userSearchSlice,
+      userReview: userReviewSlice
    }
 });
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import image from '../../assets/image.png'
 import Address from '@/components/shopping/Address'
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,7 +15,10 @@ const Checkout = () => {
   const orderStatus = useSelector((state) => state.orders.orderStatus) || 'Pending';
   const { addressList, selectedAddress } = useSelector(state => state.userAddress)
   const { cartItems } = useSelector(state => state.userCart)
+  const [currentSelectedAddress, setCurrentSelectedAddress] = useState(null);
 
+  console.log(currentSelectedAddress);
+  
   useEffect(() => {
     if (user?.id) {
       dispatch(fetchAllAddress(user?.id))
@@ -27,7 +30,7 @@ const Checkout = () => {
     // console.log("Setting selected address:", selectedAddress);
   }
   useEffect(() => {
-    console.log("Updated Selected Address:", selectedAddress);
+    // console.log("Updated Selected Address:", selectedAddress);
   }, [selectedAddress]);
   
 
@@ -43,10 +46,10 @@ const Checkout = () => {
       return;
     }
 
-    if (!selectedAddress) {
-      toast.error('Please select a delivery address!');
-      return;
-    }
+    // if (!selectedAddress) {
+    //   toast.error('Please select a delivery address!');
+    //   return;
+    // }
 
     const orderData = {
       userId: user?.id || '',
@@ -56,8 +59,8 @@ const Checkout = () => {
       totalAmount: totalCartAmount,
       orderStatus: orderStatus,
     };
-    console.log("Order Status", orderStatus);
-    console.log("Order Data", orderData);
+    // console.log("Order Status", orderStatus);
+    // console.log("Order Data", orderData);
 
     try {
       await dispatch(createOrder(orderData)).unwrap();
@@ -92,8 +95,11 @@ const Checkout = () => {
 
               {/* Address Section */}
               <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                <Address key={cartItems} />
-                <div className="border p-4 rounded-md">
+                <Address 
+                selectedId={currentSelectedAddress}
+                setCurrentSelectedAddress={setCurrentSelectedAddress}
+                key={cartItems} />
+                {/* <div className="border p-4 rounded-md">
                   <h2 className="text-xl font-semibold mb-4">Select Address</h2>
                   {addressList && addressList.length > 0 ? (
                     addressList.map((addr) => (
@@ -111,7 +117,7 @@ const Checkout = () => {
                   ) : (
                     <p className="text-gray-600">No addresses found. Add one in your profile.</p>
                   )}
-                </div>
+                </div> */}
               </div>
 
               {/* Cart Items Section */}

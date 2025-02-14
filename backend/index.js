@@ -11,6 +11,7 @@ const userAddressRouter = require ('./routes/user/addressRoutes')
 const userOrderRouter = require ('./routes/user/orderRoutes')
 const adminOrderRouter = require ('./routes/admin/orderRoutes')
 const userSearchRouter = require ('./routes/user/searchRoutes')
+const userReviewRouter = require ('./routes/user/reviewRoutes')
 
 const app = express()
 const PORT = process.env.PORT || 3000;
@@ -36,3 +37,4 @@ app.use('/user/address', userAddressRouter)
 app.use('/user/order', userOrderRouter)  
 app.use('/admin/order', adminOrderRouter)  
 app.use('/user/search',userSearchRouter)
+app.use('/user/review', userReviewRouter)

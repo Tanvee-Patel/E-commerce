@@ -1,9 +1,14 @@
 const mongoose = require('mongoose')
 
 const ProductReviewSchema = new mongoose.Schema({
-   productId: String,
-   userId: String,
-   userName: String,
+   productId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product'
+   },
+   userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+   },
    ReviewMessage: String,
    reviewValue: Number
 }, {

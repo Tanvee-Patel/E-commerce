@@ -1,6 +1,7 @@
 const Order = require("../../models/order")
 const Product = require("../../models/product")
 const ProductReview = require("../../models/review")
+const mongoose = require ("mongoose")
 
 const addProductReview = async (req, res) => {
    try {
@@ -10,7 +11,7 @@ const addProductReview = async (req, res) => {
          "cartItems.productId": productId,
          orderStatus: "confirmed"
       })
-
+      
       if (!order) {
          return res.status(403).json({
             success: false,
@@ -27,16 +28,19 @@ const addProductReview = async (req, res) => {
       }
 
       const newReview = new ProductReview({
-         productId, userId, userName, ReviewMessage, reviewValue
+         productId: new mongoose.Types.ObjectId(productId),
+         userId: new mongoose.Types.ObjectId(userId),
+         ReviewMessage,
+         reviewValue,
       })
       await newReview.save()
 
-      const reviews = await ProductReview.findOne({productId})
+      const reviews = await ProductReview.find({productId})
       const totalReviewsLength = reviews.length;
       const avgReview = reviews.reduce((sum, reviewItem) => sum + reviewItem.reviewValue, 0) / totalReviewsLength;
 
       await Product.findByIdAndUpdate(productId, {avgReview})
-      res.status(500).json({
+      res.status(200).json({
          success: true,
          data: newReview
       })
@@ -52,6 +56,19 @@ const addProductReview = async (req, res) => {
 
 const getProductReviews = async (req, res) => {
    try {
+      const { productId } = req.params;
+      console.log("Product Id: ",productId);
+      
+      const reviews = await ProductReview.find({productId})
+      .populate({
+         path: 'userId',
+         select: 'username'
+       });
+       
+      res.status(200).json({
+         success: true,
+         data: reviews
+      })
 
    } catch (error) {
       console.log(error);

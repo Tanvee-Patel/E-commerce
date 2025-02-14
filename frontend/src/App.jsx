@@ -29,13 +29,22 @@ function App() {
     dispatch(checkAuth());
   }, [dispatch]);
 
-  if(isLoading) return <Skeleton className="w-[800px] bg-black h-[600px] rounded-full" />
-  
+  if (isLoading) return <Skeleton className="w-[800px] bg-black h-[600px] rounded-full" />
+
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       <Toaster position="top-right" reverseOrder={false} />
       <Routes>
         {/* Public Routes */}
+        <Route
+          path='/'
+          element={
+            <CheckAuth
+              isAuthenticated={isAuthenticated}
+              user={user}>
+
+            </CheckAuth>}
+        />
         <Route path="/auth" element={<Layout />}>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
@@ -55,7 +64,7 @@ function App() {
           <Route path="listing" element={<Listing />} />
           <Route path="checkout" element={<Checkout />} />
           <Route path="account" element={<Account />} />
-          <Route path="search" element={<Search/>} />
+          <Route path="search" element={<Search />} />
         </Route>
       </Routes>
     </div>

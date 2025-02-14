@@ -26,7 +26,7 @@ const CartItemsContent = ({ cartItem }) => {
           (item) => item.productId === getCartItem?.productId
         );
 
-        const getCurrentProductIndex = productList.findIndex((product) => product._id === getCartItem?.productId);
+        const getCurrentProductIndex = productList.findIndex((product) => String(product._id) === String(getCartItem?.productId));
 
         if (getCurrentProductIndex === -1) {
           console.error(`Product with ID ${getCartItem?.productId} not found in productList`);
