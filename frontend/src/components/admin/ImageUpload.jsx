@@ -6,7 +6,14 @@ import { Button } from '../ui/button'
 import axios from 'axios'
 import { Skeleton } from '../ui/skeleton'
 
-const ImageUpload = ({ imageFile, setImageFile, imageLoadingState, uploadedImageUrl, setUploadedImageUrl, setImageLoadingState, isEditMode }) => {
+const ImageUpload = ({ imageFile, 
+   setImageFile, 
+   imageLoadingState, 
+   uploadedImageUrl, 
+   setUploadedImageUrl, 
+   setImageLoadingState, 
+   isEditMode, 
+   isCustomStyling= false }) => {
    const inputRef = useRef(null)
 
    function handleImageFileChange(e) {
@@ -37,8 +44,7 @@ const ImageUpload = ({ imageFile, setImageFile, imageLoadingState, uploadedImage
       if (response?.data?.success) {
          setUploadedImageUrl(response.data.result.url)
          setImageLoadingState(false)
-         console.log(response.data.result.url);
-
+         // console.log(response.data.result.url)
       }
    }
 
@@ -47,7 +53,7 @@ const ImageUpload = ({ imageFile, setImageFile, imageLoadingState, uploadedImage
    }, [imageFile])
 
    return (
-      <div className="w-full max-w-md mx-auto mt-4">
+      <div className={`w-full mt-4 ${isCustomStyling ? '' : 'max-w-md mx-auto'}`}>
          {!isEditMode && (
             <div
                onDragOver={handleDragOver}

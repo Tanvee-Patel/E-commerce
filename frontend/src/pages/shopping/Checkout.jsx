@@ -15,9 +15,7 @@ const Checkout = () => {
   const orderStatus = useSelector((state) => state.orders.orderStatus) || 'Pending';
   const { addressList, selectedAddress } = useSelector(state => state.userAddress)
   const { cartItems } = useSelector(state => state.userCart)
-  const [currentSelectedAddress, setCurrentSelectedAddress] = useState(null);
-
-  console.log(currentSelectedAddress);
+  // const [currentSelectedAddress, setCurrentSelectedAddress] = useState(null);
   
   useEffect(() => {
     if (user?.id) {
@@ -29,10 +27,6 @@ const Checkout = () => {
     dispatch(setSelectedAddress(address))
     // console.log("Setting selected address:", selectedAddress);
   }
-  useEffect(() => {
-    // console.log("Updated Selected Address:", selectedAddress);
-  }, [selectedAddress]);
-  
 
   const totalCartAmount = cartItems && cartItems.items && cartItems.items.length > 0 ?
     cartItems.items.reduce((sum, currentItem) => sum + (
@@ -46,10 +40,10 @@ const Checkout = () => {
       return;
     }
 
-    // if (!selectedAddress) {
-    //   toast.error('Please select a delivery address!');
-    //   return;
-    // }
+    if (!selectedAddress) {
+      toast.error('Please select a delivery address!');
+      return;
+    }
 
     const orderData = {
       userId: user?.id || '',
@@ -59,8 +53,6 @@ const Checkout = () => {
       totalAmount: totalCartAmount,
       orderStatus: orderStatus,
     };
-    // console.log("Order Status", orderStatus);
-    // console.log("Order Data", orderData);
 
     try {
       await dispatch(createOrder(orderData)).unwrap();
@@ -96,28 +88,10 @@ const Checkout = () => {
               {/* Address Section */}
               <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                 <Address 
-                selectedId={currentSelectedAddress}
-                setCurrentSelectedAddress={setCurrentSelectedAddress}
+                selectedId={selectedAddress?._id}
+                onAddressSelect={handleAddressSelect}
                 key={cartItems} />
-                {/* <div className="border p-4 rounded-md">
-                  <h2 className="text-xl font-semibold mb-4">Select Address</h2>
-                  {addressList && addressList.length > 0 ? (
-                    addressList.map((addr) => (
-                      <label key={addr._id} className="flex items-center gap-2 mb-2">
-                        <input
-                          type="radio"
-                          name="selectedAddress"
-                          checked={selectedAddress?._id === addr._id}
-                          onChange={() => handleAddressSelect(addr)}
-                          className="form-radio h-4 w-4 text-indigo-600"
-                        />
-                        <span>{addr.address}, {addr.city}, {addr.pincode}</span>
-                      </label>
-                    ))
-                  ) : (
-                    <p className="text-gray-600">No addresses found. Add one in your profile.</p>
-                  )}
-                </div> */}
+  
               </div>
 
               {/* Cart Items Section */}

@@ -19,7 +19,7 @@ const Aproducts = () => {
     price: "",
     salePrice: "",
     totalStock: "",
-    // averageReview: 0,
+    averageReview: 0,
   }
   const [openCreateProductsDialog, setOpenCreateProductsDialog] = useState(false)
   const [formData, setFormData] = useState(initialFormData)
@@ -87,7 +87,7 @@ const Aproducts = () => {
     
   }
 
-  useEffect(() => {
+  useEffect(() => { 
     dispatch(fetchAllProducts());
   }, [dispatch]);  
 

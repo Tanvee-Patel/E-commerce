@@ -12,6 +12,7 @@ const userOrderRouter = require ('./routes/user/orderRoutes')
 const adminOrderRouter = require ('./routes/admin/orderRoutes')
 const userSearchRouter = require ('./routes/user/searchRoutes')
 const userReviewRouter = require ('./routes/user/reviewRoutes')
+const commonFeatureRouter = require ('./routes/common/featureRoutes')
 
 const app = express()
 const PORT = process.env.PORT || 3000;
@@ -38,3 +39,4 @@ app.use('/user/order', userOrderRouter)
 app.use('/admin/order', adminOrderRouter)  
 app.use('/user/search',userSearchRouter)
 app.use('/user/review', userReviewRouter)
+app.use('/common/feature', commonFeatureRouter)
