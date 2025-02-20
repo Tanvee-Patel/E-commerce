@@ -3,9 +3,11 @@ import { Card, CardContent, CardFooter } from '../ui/card';
 import { Label } from '../ui/label';
 import { Button } from '../ui/button';
 
-const AddressCard = ({ addressInfo, handleDeleteAddress, handleEditAddress, setCurrentSelectedAddress, selectedId }) => {
+const AddressCard = ({ addressInfo, handleDeleteAddress, handleEditAddress, setCurrentSelectedAddress, selectedId, currentSelectedAddress }) => {
    const handleClick = () =>{
+      console.log("Clicked Address", addressInfo);
       setCurrentSelectedAddress(addressInfo)
+      
    }
    return (
       <Card

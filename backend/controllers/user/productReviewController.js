@@ -14,18 +14,18 @@ const addProductReview = async (req, res) => {
       
       if (!order) {
          return res.status(403).json({
-            success: false,
-            message: "You must have purchased this product to submit a review."
-         })
-      }
+           success: false,
+           message: "You must have purchased this product to submit a review.",
+         });
+       }   
 
-      const checkExistingReview = await ProductReview.findOne({ productId, userId })
-      if (checkExistingReview) {
+      const existingReview = await ProductReview.findOne({ productId, userId })
+      if (existingReview) {
          return res.status(400).json({
-            success: false,
-            message: "You have already reviewed this product"
-         })
-      }
+           success: false,
+           message: "You have already reviewed this product.",
+         });
+       }
 
       const newReview = new ProductReview({
          productId: new mongoose.Types.ObjectId(productId),
@@ -46,7 +46,6 @@ const addProductReview = async (req, res) => {
       })
 
    } catch (error) {
-      console.log(error);
       res.status(500).json({
          success: false,
          message: "Error"

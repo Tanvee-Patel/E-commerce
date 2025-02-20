@@ -1,15 +1,13 @@
-
-const Order = require ('../../models/order')
-const { sendMail } = require ('../../models/mailer')
+const Order = require('../../models/order')
 
 const createOrder = async (req, res) => {
    try {
       const { userId, cartId, cartItems, addressInfo, totalAmount, orderStatus } = req.body;
-      
+
       if (!userId || !cartId || !cartItems || cartItems.length === 0 || !addressInfo || !totalAmount) {
          return res.status(400).json({ success: false, message: 'Missing required fields' });
       }
-      
+
       const newOrder = new Order({
          userId,
          cartId,
@@ -20,22 +18,15 @@ const createOrder = async (req, res) => {
          orderDate: new Date(),
          orderUpdateDate: new Date()
       });
-      
+
       await newOrder.save();
-      
-      if (newOrder.orderStatus === 'Confirmed') {
-         try {
-            await sendMail(addressInfo.address, 'Order Status Update', `Your order with ID: ${newOrder._id} is now being processed.`);
-         } catch (mailError) {
-            console.error('Failed to send order processing email:', mailError);
-         }
-      }
-      
+
       res.status(201).json({
          success: true,
          message: 'Order created successfully',
          order: newOrder
       });
+
    } catch (error) {
       console.error('Error creating order:', error);
       res.status(500).json({
@@ -45,12 +36,14 @@ const createOrder = async (req, res) => {
    }
 };
 
-const getAllOrderByUser = async (req, res) =>{
+const getAllOrderByUser = async (req, res) => {
    try {
-      const {userId} = req.params;
-      const orders = await Order.find({userId})
+      const { userId } = req.params;
+      const orders = await Order.find({ userId })
+         .populate({ path: "userId", select: "email username" }) // Fetch email & username
+         .lean();
 
-      if(!orders.length){
+      if (!orders.length) {
          return res.status(404).json({
             success: false,
             message: 'No orders found'
@@ -61,7 +54,7 @@ const getAllOrderByUser = async (req, res) =>{
          success: true,
          data: orders
       })
-      
+
    } catch (error) {
       console.error('Error fetching orders:', error);
       res.status(500).json({
@@ -71,12 +64,14 @@ const getAllOrderByUser = async (req, res) =>{
    }
 }
 
-const getOrderDetails = async (req, res) =>{
+const getOrderDetails = async (req, res) => {
    try {
-      const {id} = req.params;
+      const { id } = req.params;
       const order = await Order.findById(id)
+         .populate({ path: "userId", select: "email username" }) // Fetch email & username
+         .lean();
 
-      if(!order){
+      if (!order) {
          return res.status(404).json({
             success: false,
             message: 'Order not found'
@@ -87,7 +82,7 @@ const getOrderDetails = async (req, res) =>{
          success: true,
          data: order
       })
-      
+
    } catch (error) {
       console.error('Error fetching orders:', error);
       res.status(500).json({

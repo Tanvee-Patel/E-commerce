@@ -15,8 +15,8 @@ const Checkout = () => {
   const orderStatus = useSelector((state) => state.orders.orderStatus) || 'Pending';
   const { addressList, selectedAddress } = useSelector(state => state.userAddress)
   const { cartItems } = useSelector(state => state.userCart)
-  // const [currentSelectedAddress, setCurrentSelectedAddress] = useState(null);
-  
+  const [currentSelectedAddress, setCurrentSelectedAddress] = useState(null);
+
   useEffect(() => {
     if (user?.id) {
       dispatch(fetchAllAddress(user?.id))
@@ -24,6 +24,7 @@ const Checkout = () => {
   }, [dispatch, user])
 
   const handleAddressSelect = (address) => {
+    setCurrentSelectedAddress(address)
     dispatch(setSelectedAddress(address))
     // console.log("Setting selected address:", selectedAddress);
   }
@@ -40,7 +41,7 @@ const Checkout = () => {
       return;
     }
 
-    if (!selectedAddress) {
+    if (!setCurrentSelectedAddress) {
       toast.error('Please select a delivery address!');
       return;
     }
@@ -87,11 +88,12 @@ const Checkout = () => {
 
               {/* Address Section */}
               <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                <Address 
-                selectedId={selectedAddress?._id}
-                onAddressSelect={handleAddressSelect}
-                key={cartItems} />
-  
+                <Address
+                  selectedId={selectedAddress?._id}
+                  setCurrentSelectedAddress={setCurrentSelectedAddress}
+                  onAddressSelect={handleAddressSelect}
+                />
+
               </div>
 
               {/* Cart Items Section */}
@@ -104,8 +106,8 @@ const Checkout = () => {
                   </CardTitle>
 
                   {cartItems && cartItems.items && cartItems.items.length > 0 ? (
-                    cartItems.items.map(cartItem => (
-                      <CartItemsContent key={cartItem.id} cartItem={cartItem} />
+                    cartItems.items.map((cartItem, index) => (
+                      <CartItemsContent key={cartItem._id || index} cartItem={cartItem} />
                     ))
                   ) : (
                     <p className="text-gray-600 text-center">Your cart is empty.</p>

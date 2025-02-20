@@ -29,6 +29,10 @@ const ProductDetails = ({ open, setOpen, productDetails }) => {
   }
 
   function handleAddReview() {
+    if (!rating || !reviewMsg.trim()) {
+      return toast.error("Please provide a rating and a review message.");
+    }
+
     dispatch(addProductReview({
       productId: productDetails?._id,
       userId: user?.id,
@@ -36,7 +40,9 @@ const ProductDetails = ({ open, setOpen, productDetails }) => {
       ReviewMessage: reviewMsg,
       reviewValue: rating
     }))
+      .unwrap()
       .then((data) => {
+        console.log(user?.id);
         if (data.payload.success) {
           setRating(0)
           setReviewMsg("")
@@ -44,6 +50,12 @@ const ProductDetails = ({ open, setOpen, productDetails }) => {
           toast.success("Review Added successfully")
         }
       })
+      .catch((error) => {
+        // toast.error("Error submitting review",error)
+        // const errorMessage = error.response?.data?.message;
+        toast.error(error);
+      });
+
   }
 
   function handleAddToCart(productId, getTotalStock) {
@@ -167,7 +179,6 @@ const ProductDetails = ({ open, setOpen, productDetails }) => {
                       <h1>No Reviews</h1>
                     )
                   }
-
                 </div>
 
                 <div className='mt-10 flex-col flex gap-2'>

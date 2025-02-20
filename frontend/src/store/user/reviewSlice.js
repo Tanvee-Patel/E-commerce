@@ -2,12 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const addProductReview = createAsyncThunk('/addProductReview', async (reviewData) => {
-   const response = await axios.post(
-      'http://localhost:3000/user/review/add',
-      reviewData
-   );
-   return response.data;
+export const addProductReview = createAsyncThunk('/addProductReview', 
+   async (reviewData, { rejectWithValue }) => {
+   try {
+      const response = await axios.post(
+         'http://localhost:3000/user/review/add',
+         reviewData
+      );
+      return response.data;
+   } catch (error) {
+      return rejectWithValue(error.response?.data?.message);
+   }
 })
 
 export const getProductReviews = createAsyncThunk('/getProductReviews', async (productId) => {
@@ -26,6 +31,18 @@ const ReviewSlice = createSlice({
    reducers: {},
    extraReducers: (builder) => {
       builder
+         .addCase(addProductReview.pending, (state) => {
+            state.isLoading = true;
+            state.error = null;
+         })
+         .addCase(addProductReview.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.reviews.push(action.payload.data); // Assuming `data` is the new review
+         })
+         .addCase(addProductReview.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+         })
          .addCase(getProductReviews.pending, (state) => {
             state.isLoading = true;
          })

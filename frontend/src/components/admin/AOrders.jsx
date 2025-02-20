@@ -5,7 +5,7 @@ import { Button } from '../ui/button'
 import { Dialog } from '../ui/dialog'
 import OrderDetail from './OrderDetail'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAdminOrderDetails, getAllOrderOfAllUsers, resetOrderDetails } from '@/store/admin/orderSlice'
+import { getAdminOrderDetails, getAllOrderOfAllUsers, resetOrderDetails, updateOrderStatus } from '@/store/admin/orderSlice'
 import { Badge } from '../ui/badge'
 
 const AOrders = () => {

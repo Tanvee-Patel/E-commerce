@@ -62,11 +62,8 @@ export const addProductFormElements = [
       { id: "electronics", label: "Electronics" },
       { id: "appliances", label: "Appliances" },
       { id: "furniture", label: "Furniture" },
-      { id: "groceries", label: "Groceries" },
       { id: "books", label: "Books" },
-      { id: "toys", label: "Toys" },
       { id: "beauty", label: "Beauty & Personal Care" },
-      { id: "sports", label: "Sports & Fitness" },
     ],
   },
   {
@@ -132,16 +129,6 @@ export const shoppingViewHeaderMenuItems = [
     path: '/user/listing',
   },
   {
-    id: 'appliances',
-    label: 'Appliances',
-    path: '/user/listing',
-  },
-  {
-    id: 'furniture',
-    label: 'Furniture',
-    path: '/user/listing',
-  },
-  {
     id: 'books',
     label: 'Books',
     path: '/user/listing',
@@ -161,13 +148,8 @@ export const shoppingViewHeaderMenuItems = [
 export const filterOptions = {
   category: [
     { id: "electronics", label: "Electronics" },
-    { id: "appliances", label: "Appliances" },
-    { id: "furniture", label: "Furniture" },
-    { id: "groceries", label: "Groceries" },
     { id: "books", label: "Books" },
-    { id: "toys", label: "Toys" },
     { id: "beauty", label: "Beauty & Personal Care" },
-    { id: "sports", label: "Sports & Fitness" },
   ],
   brand: [
     // Electronics brands
@@ -175,11 +157,6 @@ export const filterOptions = {
     { id: "samsung", label: "Samsung", category: "electronics" },
     { id: "sony", label: "Sony", category: "electronics" },
     { id: "lg", label: "LG", category: "electronics" },
-    // Appliances brands
-    { id: "philips", label: "Philips", category: "appliances" },
-    { id: "panasonic", label: "Panasonic", category: "appliances" },
-    // Furniture brands
-    { id: "ikea", label: "IKEA", category: "furniture" },
     // Books brands
     { id: "penguin", label: "Penguin", category: "books" },
     { id: "harpercollins", label: "HarperCollins", category: "books" },

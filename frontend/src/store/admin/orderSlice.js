@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 export const getAllOrderOfAllUsers = createAsyncThunk(
    '/order/getAllOrderByUser', async () => {
@@ -16,12 +17,34 @@ export const getAdminOrderDetails = createAsyncThunk(
       return response.data;
    })
 
-   export const updateOrderStatus = createAsyncThunk(
-      '/order/updateOrderStatus', async ({id, orderStatus}) => {
-         const response = await axios.put(
-            `http://localhost:3000/admin/order/update/${id}`,{orderStatus});
-         return response.data;
+export const updateOrderStatus = createAsyncThunk(
+   '/order/updateOrderStatus', async ({ id, orderStatus }) => {
+      const response = await axios.put(
+         `http://localhost:3000/admin/order/update/${id}`, { orderStatus });
+      if (response.data.success) {
+         if (orderStatus.toLowerCase() === "confirmed") {
+            toast.success("Confirmation email sent to the customer!");
+         }
+      }
+      return response.data;
+   })
+
+export const sendOrderEmail = createAsyncThunk(
+   '/order/sendOrderEmail', async ({ email, orderId, status}) => {
+      const response = await axios.post(
+         "http://localhost:3000/admin/order/send-mail", {
+         email,
+         orderId,
+         status
       })
+      if (response.data.success) {
+         toast.success("email sent successfully")
+      }
+      else {
+         toast.error("Failed to send email")
+      }
+      return response.data;
+   })
 
 const AorderSlice = createSlice({
    name: 'adminOrderSlice',
@@ -30,7 +53,7 @@ const AorderSlice = createSlice({
       orderDetails: null
    },
    reducers: {
-      resetOrderDetails: (state) =>{
+      resetOrderDetails: (state) => {
          state.orderDetails = null
       }
    },
@@ -60,6 +83,28 @@ const AorderSlice = createSlice({
          .addCase(getAdminOrderDetails.rejected, (state) => {
             state.isLoading = false;
             state.orderDetails = null;
+         })
+         .addCase(updateOrderStatus.pending, (state) => {
+            state.isLoading = true;
+         })
+         .addCase(updateOrderStatus.fulfilled, (state, action) => {
+            state.isLoading = false;
+            const updatedOrder = action.payload.data;
+            state.orders = state.orders.map(order =>
+               order._id === updatedOrder._id ? updatedOrder : order
+            );
+         })
+         .addCase(updateOrderStatus.rejected, (state) => {
+            state.isLoading = false;
+         })
+         .addCase(sendOrderEmail.pending, (state) => {
+            state.isLoading = true;
+         })
+         .addCase(sendOrderEmail.fulfilled, (state) => {
+            state.isLoading = false;
+         })
+         .addCase(sendOrderEmail.rejected, (state) => {
+            state.isLoading = false;
          });
    },
 });

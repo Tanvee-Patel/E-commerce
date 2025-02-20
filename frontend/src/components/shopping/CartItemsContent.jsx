@@ -10,7 +10,7 @@ const CartItemsContent = ({ cartItem }) => {
   const { user } = useSelector(state => state.auth)
   const { cartItems } = useSelector((state) => state.userCart)
   const { productList } = useSelector(state => state.userProducts)
-
+  
   const handleCartItemDelete = (item) => {
     dispatch(deleteCartItem({ userId: user.id, productId: item.productId }))
       .then(() => toast.success('Item Deleted successfully'))
@@ -29,7 +29,7 @@ const CartItemsContent = ({ cartItem }) => {
         const getCurrentProductIndex = productList.findIndex((product) => String(product._id) === String(getCartItem?.productId));
 
         if (getCurrentProductIndex === -1) {
-          console.error(`Product with ID ${getCartItem?.productId} not found in productList`);
+          // console.error(`Product with ID ${cartItem?.productId} not found in productList`);
           toast.error('Product information is missing.');
           return;
         }
@@ -52,10 +52,10 @@ const CartItemsContent = ({ cartItem }) => {
 
     dispatch(updateCartItemQuantity({
       userId: user.id,
-      items: [{ productId: cartItem.productId, quantity: newQuantity }]
+      items: [{ productId: cartItem?.productId, quantity: newQuantity }]
     }))
       .then((response) => {
-        const { success, data } = response.payload;
+        const { success } = response.payload;
         if (success) {
           toast.success('Cart item updated!')
         } else {

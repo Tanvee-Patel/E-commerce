@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Armchair, Bed, Book, BookOpen, BoomBox, Brush, ChevronLeft, ChevronRight, Droplet, Dumbbell, LibraryBig, Lightbulb, Monitor, Palette, Plug, Puzzle, ShoppingBasket, Smartphone, Tablet, Tv, WandSparkles, WashingMachine } from 'lucide-react'
+import { Book, BookOpen, Brush, ChevronLeft, ChevronRight, Droplet, LibraryBig, Monitor, Palette, Smartphone, Tablet, TabletSmartphone, Tv, WandSparkles } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllFilteredProducts, fetchProductDetails } from '@/store/user/productSlice'
@@ -12,14 +12,9 @@ import ProductDetails from '@/components/shopping/ProductDetails'
 import { getFeatureImages } from '@/store/commonSlice'
 
 const categories = [
-  { id: "electronics", label: "Electronics", icon: BoomBox },
-  { id: "appliances", label: "Appliances", icon: WashingMachine },
-  { id: "furniture", label: "Furniture", icon: Armchair },
-  { id: "groceries", label: "Groceries", icon: ShoppingBasket },
+  { id: "electronics", label: "Electronics", icon: TabletSmartphone },
   { id: "books", label: "Books", icon: LibraryBig },
-  { id: "toys", label: "Toys", icon: Puzzle },
-  { id: "beauty", label: "Beauty & Personal Care", icon: WandSparkles },
-  { id: "sports", label: "Sports & Fitness", icon: Dumbbell },
+  { id: "beauty", label: "Beauty & Personal Care", icon: WandSparkles }
 ]
 
 const brand = [
@@ -28,11 +23,6 @@ const brand = [
   { id: "samsung", label: "Samsung", icon: Tablet },
   { id: "sony", label: "Sony", icon: Tv },
   { id: "lg", label: "LG", icon: Monitor },
-  // Appliances brands
-  { id: "philips", label: "Philips", icon: Lightbulb },
-  { id: "panasonic", label: "Panasonic", icon: Plug },
-  // Furniture brands
-  { id: "ikea", label: "IKEA", icon: Bed },
   // Books brands
   { id: "penguin", label: "Penguin", icon: BookOpen },
   { id: "harpercollins", label: "HarperCollins", icon: Book },
@@ -157,7 +147,7 @@ return (
     <section className="py-16 bg-white shadow-lg rounded-lg mx-4 my-8 ring-2 ring-primary-300">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-extrabold text-center text-gray-900 mb-8">Shop by Category</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((categoryItem, index) => (
             <Card
               key={index}
@@ -178,7 +168,7 @@ return (
     <section className="py-16 mx-4 my-8 bg-white shadow-lg rounded-lg ring-2 ring-primary-300">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-extrabold text-center text-gray-900 mb-8">Shop by Brand</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {brand.map((brandItem, index) => (
             <Card
               key={index}

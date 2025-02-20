@@ -15,13 +15,13 @@ const initialAddressFormData = {
    notes: '',
 }
 
-const Address = ({ setCurrentSelectedAddress, selectedId }) => {
+const Address = ({ currentSelectedAddress, setCurrentSelectedAddress, selectedId }) => {
    const [formData, setFormData] = useState(initialAddressFormData)
    const [currentEditedId, setCurrentEditedId] = useState(null)
    const dispatch = useDispatch()
    const { user } = useSelector(state => state.auth)
    const { addressList } = useSelector(state => state.userAddress)
-
+   
    function handleManageAddress(e) {
       e.preventDefault()
       if (addressList.length >= 3 && currentEditedId === null) {
@@ -90,6 +90,10 @@ const Address = ({ setCurrentSelectedAddress, selectedId }) => {
          notes: getCurrentAddress?.notes
       })
    }
+
+   useEffect(()=>{
+      // console.log(currentSelectedAddress);
+   },[currentSelectedAddress])
 
    useEffect(() => {
       if (user?.id) {

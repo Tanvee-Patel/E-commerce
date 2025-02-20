@@ -1,6 +1,7 @@
 import ImageUpload from '@/components/admin/ImageUpload'
 import { Button } from '@/components/ui/button'
-import { addFeatureImage, getFeatureImages } from '@/store/commonSlice'
+import { addFeatureImage, deleteFeatureImage, getFeatureImages } from '@/store/commonSlice'
+import { X } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -32,7 +33,13 @@ const Adashboard = () => {
       .catch((err) => console.error('Upload error:', err));
   }
 
-
+  function handleDeleteFeatureImage(imageId){
+    dispatch(deleteFeatureImage(imageId))
+    .then(()=>{
+      dispatch(getFeatureImages())
+    })
+    .catch((e) => console.error('Error',e))
+  }
   useEffect(() => {
     dispatch(getFeatureImages())
   }, [dispatch])
@@ -61,11 +68,16 @@ const Adashboard = () => {
         {
           featureImageList?.length > 0 ? (
             featureImageList.map((featureImageItem) => (
-              <div className='relative' key={featureImageItem?._id}>
+              <div className='relative group' key={featureImageItem?._id}>
                 <img
                   src={featureImageItem?.image}
                   className='w-full h-[300px] object-cover rounded-t-lg'
                 />
+                <Button
+                onClick={()=>handleDeleteFeatureImage(featureImageItem?._id)}
+                className='absolute top-2 right-2 bg-white p-1 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200'>
+                  <X className='text-red-500 w-6 h-6'/>
+                </Button>
               </div>
             ))
           ) : (

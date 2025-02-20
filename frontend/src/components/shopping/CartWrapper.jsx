@@ -1,17 +1,17 @@
 import React from 'react'
-import { SheetContent, SheetHeader, SheetTitle } from '../ui/sheet'
+import { SheetContent, SheetDescription, SheetHeader, SheetTitle } from '../ui/sheet'
 import { Button } from '../ui/button'
 import CartItemsContent from './CartItemsContent'
 import { useNavigate } from 'react-router-dom'
 
-const CartWrapper = ({cartItems, setOpenCartSheet}) => {
-   
-const navigate = useNavigate()
+const CartWrapper = ({ cartItems, setOpenCartSheet }) => {
+
+   const navigate = useNavigate()
    const totalCartAmount = cartItems && cartItems.length > 0 ?
-   cartItems.reduce((sum,currentItem) => sum + (
-      currentItem?.salePrice > 0 ?
-      currentItem?.salePrice : currentItem?.price
-   ) * currentItem?.quantity, 0) : 0
+      cartItems.reduce((sum, currentItem) => sum + (
+         currentItem?.salePrice > 0 ?
+            currentItem?.salePrice : currentItem?.price
+      ) * currentItem?.quantity, 0) : 0
 
    return (
       <SheetContent className="sm:max-w-md">
@@ -19,11 +19,14 @@ const navigate = useNavigate()
             <SheetTitle>
                Your Cart
             </SheetTitle>
+            <SheetDescription>
+               Review your cart items before proceeding to checkout.
+            </SheetDescription>
          </SheetHeader>
          <div className='mt-8 space-y-4' key={cartItems}>
             {
                cartItems && cartItems.length > 0 ?
-               cartItems.map(item => <CartItemsContent key={item.productId} cartItem = {item}/>) : null
+                  cartItems.map(item => <CartItemsContent key={item.productId} cartItem={item} />) : null
             }
          </div>
          <div className='mt-8 space-y-4'>
@@ -32,12 +35,12 @@ const navigate = useNavigate()
                <span className='font-bold'>${totalCartAmount}</span>
             </div>
          </div>
-         <Button 
-         onClick={()=>{
-            navigate('/user/checkout')
-            setOpenCartSheet(false)
-         }}
-         className="w-full mt-6">
+         <Button
+            onClick={() => {
+               navigate('/user/checkout')
+               setOpenCartSheet(false)
+            }}
+            className="w-full mt-6">
             Checkout
          </Button>
       </SheetContent>

@@ -1,9 +1,9 @@
-const feature = require("../../models/features")
+const Feature = require("../../models/features")
 
 const addFeatureImage = async(req,res)=>{
    try {
       const { image } = req.body;
-      const featureImages = new feature({
+      const featureImages = new Feature({
          image
       })
 
@@ -26,10 +26,10 @@ const addFeatureImage = async(req,res)=>{
 
 const getFeatureImages = async(req,res)=>{
    try {
-      const images = await feature.find({})
+      const images = await Feature.find({})
 
       res.status(200).json({
-         success: false,
+         success: true,
          data: images
       });
       
@@ -41,5 +41,26 @@ const getFeatureImages = async(req,res)=>{
    }
 }
 
+const deleteFeatureImage = async(req,res)=>{
+   try {
+      const { id } = req.params;
+      const deletedImage = await Feature.findByIdAndDelete(id)
 
-module.exports = { addFeatureImage, getFeatureImages };
+      if (!deletedImage) {
+         return res.status(404).json({ success: false, message: "Image not found." });
+       }
+
+      res.status(200).json({
+         success: true,
+         message: "Image deleted successfully."
+      });
+      
+   } catch (error) {
+      res.status(500).json({
+         success: false,
+         message: 'An error occurred while Fetching orders'
+      });
+   }
+}
+
+module.exports = { addFeatureImage, getFeatureImages, deleteFeatureImage };
