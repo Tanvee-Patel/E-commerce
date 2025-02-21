@@ -31,19 +31,26 @@ export const updateOrderStatus = createAsyncThunk(
 
 export const sendOrderEmail = createAsyncThunk(
    '/order/sendOrderEmail', async ({ email, orderId, status}) => {
-      const response = await axios.post(
-         "http://localhost:3000/admin/order/send-mail", {
-         email,
-         orderId,
-         status
-      })
-      if (response.data.success) {
-         toast.success("email sent successfully")
+      console.log("Sending mail req", {email, orderId,status});
+      try {
+         const response = await axios.post(
+            "http://localhost:3000/admin/order/send-mail", {
+            email,
+            orderId,
+            status
+         })
+         return response.data;
+      } catch (error) {
+         console.error("error sending mail",error);
+         
       }
-      else {
-         toast.error("Failed to send email")
-      }
-      return response.data;
+      
+      // if (response.data.success) {
+      //    toast.success("email sent successfully")
+      // }
+      // else {
+      //    toast.error("Failed to send email")
+      // }
    })
 
 const AorderSlice = createSlice({

@@ -91,8 +91,6 @@ const Aproducts = () => {
     dispatch(fetchAllProducts());
   }, [dispatch]);  
 
-  // console.log("Product List:",productList,uploadedImageUrl);
-
   return (
     <Fragment>
       <div className='mb-5 w-full flex justify-end'>

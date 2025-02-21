@@ -65,7 +65,6 @@ const Home = () => {
       sortParams: 'price-lowtohigh'
     }))
   }, [dispatch])
-  // console.log(productList);
 
   function handlePrevSlide() {
     setCurrentSlide((prevSlide) => (prevSlide - 1 + featureImageList.length) % featureImageList.length)

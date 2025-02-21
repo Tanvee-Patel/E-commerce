@@ -63,6 +63,13 @@ const Login = () => {
               Register
             </Link>
           </p>
+
+          <p className="text-sm text-gray-700 mt-6">
+            <Link to="/auth/forgot-password" className="text-primary-500 hover:outline-dashed font-semibold">
+              Forgot Password?
+            </Link>
+          </p>
+
         </div>
         <div className="bg-white rounded-lg shadow-xl p-8 space-y-6 ring-2 ring-primary-300">
           <Form

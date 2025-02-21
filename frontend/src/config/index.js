@@ -60,8 +60,6 @@ export const addProductFormElements = [
     componentType: "select",
     options: [
       { id: "electronics", label: "Electronics" },
-      { id: "appliances", label: "Appliances" },
-      { id: "furniture", label: "Furniture" },
       { id: "books", label: "Books" },
       { id: "beauty", label: "Beauty & Personal Care" },
     ],
@@ -76,11 +74,6 @@ export const addProductFormElements = [
       { id: "samsung", label: "Samsung", category: "electronics" },
       { id: "sony", label: "Sony", category: "electronics" },
       { id: "lg", label: "LG", category: "electronics" },
-      // Appliances brands
-      { id: "philips", label: "Philips", category: "appliances" },
-      { id: "panasonic", label: "Panasonic", category: "appliances" },
-      // Furniture brands
-      { id: "ikea", label: "IKEA", category: "furniture" },
       // Books brands
       { id: "penguin", label: "Penguin", category: "books" },
       { id: "harpercollins", label: "HarperCollins", category: "books" },

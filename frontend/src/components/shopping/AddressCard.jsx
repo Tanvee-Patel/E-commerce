@@ -7,8 +7,7 @@ const AddressCard = ({ addressInfo, handleDeleteAddress, handleEditAddress, setC
    const handleClick = () =>{
       console.log("Clicked Address", addressInfo);
       setCurrentSelectedAddress(addressInfo)
-      
-   }
+   } 
    return (
       <Card
          onClick={handleClick}

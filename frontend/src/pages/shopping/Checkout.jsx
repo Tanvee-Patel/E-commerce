@@ -23,10 +23,11 @@ const Checkout = () => {
     }
   }, [dispatch, user])
 
-  const handleAddressSelect = (address) => {
-    setCurrentSelectedAddress(address)
-    dispatch(setSelectedAddress(address))
-    // console.log("Setting selected address:", selectedAddress);
+  const handleAddressSelect = (addressId) => {
+    const address = addressList.find(addr => addr._id === addressId)
+    setCurrentSelectedAddress(address);
+    const action = setSelectedAddress(address);
+    dispatch(action);
   }
 
   const totalCartAmount = cartItems && cartItems.items && cartItems.items.length > 0 ?
@@ -41,7 +42,7 @@ const Checkout = () => {
       return;
     }
 
-    if (!setCurrentSelectedAddress) {
+    if (!currentSelectedAddress) {
       toast.error('Please select a delivery address!');
       return;
     }
@@ -50,7 +51,7 @@ const Checkout = () => {
       userId: user?.id || '',
       cartId: cartItems?._id,
       cartItems: cartItems.items,
-      addressInfo: selectedAddress || {},
+      addressInfo: currentSelectedAddress || {},
       totalAmount: totalCartAmount,
       orderStatus: orderStatus,
     };
@@ -93,13 +94,11 @@ const Checkout = () => {
                   setCurrentSelectedAddress={setCurrentSelectedAddress}
                   onAddressSelect={handleAddressSelect}
                 />
-
               </div>
 
               {/* Cart Items Section */}
               <div className="bg-white p-5 rounded-lg shadow-md border border-gray-200">
                 <div className="flex flex-col gap-4 bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 p-6 shadow-lg">
-
                   {/* Title */}
                   <CardTitle className="text-2xl font-semibold text-gray-900 text-center">
                     <h1 className="text-3xl font-bold text-gray-900 tracking-tight mb-4">Cart Items</h1>

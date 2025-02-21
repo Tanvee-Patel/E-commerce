@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react'
 import { DialogContent, DialogTitle } from '../ui/dialog'
 import { Label } from '../ui/label'
@@ -22,10 +23,7 @@ const OrderDetail = ({ orderDetail }) => {
       e.preventDefault()
       setUpdating(true)
       const { status } = formData;
-      const email = orderDetail?.addressInfo?.email;
-      console.log("Email",email);
-      console.log("OrdeerDetail", orderDetail);
-      
+      const email = orderDetail?.userId?.email;
 
       dispatch(updateOrderStatus({
          id: orderDetail?._id,
@@ -98,7 +96,7 @@ const OrderDetail = ({ orderDetail }) => {
                         {
                            orderDetail?.cartItems && orderDetail.cartItems.length > 0 ?
                               orderDetail?.cartItems.map(item =>
-                                 <li className='flex items-center justify-between'>
+                                 <li key={item?._id} className='flex items-center justify-between'>
                                     <span className='w-1/2'>{item.title}</span>
                                     <span className='w-1/4 text-center'>{item.quantity}</span>
                                     <span className='w-1/4 text-right'>${item.price}</span>

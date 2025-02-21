@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import { Button } from '../ui/button'
-import { Dialog } from '../ui/dialog'
+import { Dialog, DialogContent, DialogTitle } from '../ui/dialog'
 import OrderDetail from './OrderDetail'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAdminOrderDetails, getAllOrderOfAllUsers, resetOrderDetails, updateOrderStatus } from '@/store/admin/orderSlice'
@@ -22,8 +22,8 @@ const AOrders = () => {
       dispatch(getAllOrderOfAllUsers())
    }, [dispatch])
 
-   useEffect(()=>{
-      if(orderDetails !== null) {
+   useEffect(() => {
+      if (orderDetails !== null) {
          setOpenDetailsDialog(true)
       }
    }, [orderDetails])
@@ -81,7 +81,11 @@ const AOrders = () => {
                      setOpenDetailsDialog(false)
                      dispatch(resetOrderDetails())
                   }}>
-                  <OrderDetail orderDetail={orderDetails} />
+                  <DialogContent aria-describedby="order-description">
+                  <DialogTitle>Order Details</DialogTitle>
+                     <p id="order-description">Order details and relevant information.</p>
+                     <OrderDetail orderDetail={orderDetails} />
+                  </DialogContent>
                </Dialog>
             </Card>
          </div>

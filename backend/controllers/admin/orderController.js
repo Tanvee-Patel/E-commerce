@@ -1,14 +1,14 @@
-const Order = require ('../../models/order')
+const Order = require('../../models/order')
 
-const getAllOrderOfAllUsers = async (req, res) =>{
+const getAllOrderOfAllUsers = async (req, res) => {
    try {
       const orders = await Order.find()
-      .populate({
-         path: "userId",
-         select: "email username"
-      })
+         .populate({
+            path: "userId",
+            select: "email username"
+         })
 
-      if(!orders.length){
+      if (!orders.length) {
          return res.status(404).json({
             success: false,
             message: 'No orders found'
@@ -19,7 +19,7 @@ const getAllOrderOfAllUsers = async (req, res) =>{
          success: true,
          data: orders
       })
-      
+
    } catch (error) {
       console.error('Error fetching orders:', error);
       res.status(500).json({
@@ -27,18 +27,18 @@ const getAllOrderOfAllUsers = async (req, res) =>{
          message: 'An error occurred while Fetching orders'
       });
    }
-} 
+}
 
-const getAdminOrderDetails = async (req, res) =>{
+const getAdminOrderDetails = async (req, res) => {
    try {
-      const {id} = req.params;
+      const { id } = req.params;
       const order = await Order.findById(id)
-      .populate({
-         path: "userId",
-         select: "email username"
-      })
+         .populate({
+            path: "userId",
+            select: "email username"
+         })
 
-      if(!order){
+      if (!order) {
          return res.status(404).json({
             success: false,
             message: 'Order not found'
@@ -49,7 +49,7 @@ const getAdminOrderDetails = async (req, res) =>{
          success: true,
          data: order
       })
-      
+
    } catch (error) {
       console.error('Error fetching orders:', error);
       res.status(500).json({
@@ -59,13 +59,13 @@ const getAdminOrderDetails = async (req, res) =>{
    }
 }
 
-const updateOrderStatus = async (req,res)=>{
+const updateOrderStatus = async (req, res) => {
    try {
-      const {id} = req.params;
-      const {orderStatus} = req.body;
+      const { id } = req.params;
+      const { orderStatus } = req.body;
       const order = await Order.findById(id).populate('userId')
 
-      if(!order){
+      if (!order) {
          return res.status(404).json({
             success: false,
             message: 'Order not found'

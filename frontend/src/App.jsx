@@ -20,6 +20,8 @@ import CheckAuth from './components/common/CheckAuth';
 import { Toaster } from 'react-hot-toast';
 import { Skeleton } from './components/ui/skeleton';
 import Search from './pages/shopping/Search';
+import ForgotPassword from './pages/Forgot-pwd';
+import VerifyOtp from './pages/VerifyOtp';
 
 function App() {
   const { isAuthenticated, user, isLoading } = useSelector((state) => state.auth);
@@ -47,6 +49,8 @@ function App() {
         />
         <Route path="/auth" element={<Layout />}>
           <Route path="login" element={<Login />} />
+          <Route path="forgot-password" element={<ForgotPassword/>}/>
+          <Route path="verify-otp" element={<VerifyOtp/>}/>
           <Route path="register" element={<Register />} />
         </Route>
 

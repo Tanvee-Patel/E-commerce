@@ -34,7 +34,7 @@ const Address = ({ currentSelectedAddress, setCurrentSelectedAddress, selectedId
             userId: user?.id,
             addressId: currentEditedId,
             formData
-         }))
+         })) 
             .then((data) => {
                if (data?.payload?.success) {
                   dispatch(fetchAllAddress(user?.id))

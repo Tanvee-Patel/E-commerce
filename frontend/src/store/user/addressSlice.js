@@ -5,14 +5,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 const initialState = {
    isLoading: false,
    addressList: [],
-   selectedAddress: null
 }
 
 export const addNewAddress = createAsyncThunk('/addresses/addNewAddress', async (FormData) => {
    const response = await axios.post('http://localhost:3000/user/address/add', FormData)
    return response.data;
 })
-
+ 
 export const editAddress = createAsyncThunk('/addresses/editAddress', async ({ userId, addressId, formData }) => {
    const response = await axios.put(`http://localhost:3000/user/address/update/${userId}/${addressId}`, formData)
    return response.data;
@@ -28,15 +27,10 @@ export const deleteAddress = createAsyncThunk('/addresses/deleteAddress', async 
    return response.data;
 })
 
-
 const addressSlice = createSlice({
    name: 'userAddress',
    initialState,
-   reducers: {
-      setSelectedAddress: (state, action ) => {
-         state.selectedAddress = action.payload
-      }
-   },
+   reducers: {},
    extraReducers: (builder) => {
       builder.addCase(addNewAddress.pending, (state) => {
          state.isLoading = true;
