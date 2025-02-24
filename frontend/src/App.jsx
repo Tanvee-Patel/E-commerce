@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkAuth } from './store/authSlice';
@@ -22,6 +21,7 @@ import { Skeleton } from './components/ui/skeleton';
 import Search from './pages/shopping/Search';
 import ForgotPassword from './pages/Forgot-pwd';
 import VerifyOtp from './pages/VerifyOtp';
+import ResetPassword from './pages/ResetPwd';
 
 function App() {
   const { isAuthenticated, user, isLoading } = useSelector((state) => state.auth);
@@ -31,7 +31,7 @@ function App() {
     dispatch(checkAuth());
   }, [dispatch]);
 
-  if (isLoading) return <Skeleton className="w-[800px] bg-black h-[600px] rounded-full" />
+  if (isLoading) return <Skeleton className="w-full bg-black rounded-full" />
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
@@ -44,14 +44,14 @@ function App() {
             <CheckAuth
               isAuthenticated={isAuthenticated}
               user={user}>
-
             </CheckAuth>}
         />
         <Route path="/auth" element={<Layout />}>
-          <Route path="login" element={<Login />} />
-          <Route path="forgot-password" element={<ForgotPassword/>}/>
-          <Route path="verify-otp" element={<VerifyOtp/>}/>
           <Route path="register" element={<Register />} />
+          <Route path="login" element={<Login />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="reset-password/:resetToken" element={<ResetPassword/>} />
+          <Route path="verify-otp/:email" element={<VerifyOtp/>}/>
         </Route>
 
         {/* Protected Routes - Admin */}

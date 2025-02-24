@@ -9,6 +9,8 @@ import AorderSlice from './admin/orderSlice'
 import userSearchSlice from './user/searchSlice'
 import userReviewSlice from './user/reviewSlice'
 import commonFeatureSlice from "./commonSlice"
+import forgotPasswordSlice from "./forgotPasswordSlice"
+import resetPasswordSlice from "./resetPasswordSlice"
 
 const store = configureStore({
    reducer:{
@@ -21,7 +23,9 @@ const store = configureStore({
       adminOrders: AorderSlice,
       userSearch: userSearchSlice,
       userReview: userReviewSlice,
-      commonFeature: commonFeatureSlice
+      commonFeature: commonFeatureSlice,
+      forgotPassword : forgotPasswordSlice,
+      resetPassword : resetPasswordSlice,      
    }
 });
 

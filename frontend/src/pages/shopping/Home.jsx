@@ -121,7 +121,7 @@ return (
               src={slide?.image}
               key={index}
               className={`${index === currentSlide ? "opacity-100" : "opacity-0"
-                } absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000`}
+                } absolute top-0 left-0 w-full h-full object-cover px-4 py-7 transition-opacity duration-1000`}
             />
           ))
           : null
@@ -143,7 +143,7 @@ return (
       </Button>
     </div>
 
-    <section className="py-16 bg-white shadow-lg rounded-lg mx-4 my-8 ring-2 ring-primary-300">
+    <section className="py-10 bg-white shadow-lg rounded-lg mx-4 my-8 ring-2 ring-primary-300">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-extrabold text-center text-gray-900 mb-8">Shop by Category</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

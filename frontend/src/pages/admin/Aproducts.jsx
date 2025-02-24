@@ -94,7 +94,9 @@ const Aproducts = () => {
   return (
     <Fragment>
       <div className='mb-5 w-full flex justify-end'>
-        <Button onClick={() => setOpenCreateProductsDialog(true)}>Add New Product</Button>
+        <Button 
+        className='bg-gray-500 text-white hover:bg-black'
+        onClick={() => setOpenCreateProductsDialog(true)}>Add New Product</Button>
       </div>
       <div className='grid gap-4 md:grid-cols-3 lg:grid-cols-4'>
       </div>
@@ -123,7 +125,7 @@ const Aproducts = () => {
         }}>
         <SheetContent
           side="right"
-          className="overflow-auto"
+          className="overflow-auto bg-white"
           aria-describedby="add-product-description">
           <SheetHeader>
             <SheetTitle>
@@ -133,7 +135,7 @@ const Aproducts = () => {
 
               }
             </SheetTitle>
-            <div id="add-product-description">
+            <div id="add-product-description" >
               {currentEditedId !== null ? "Fill out the form below to Edit product." : "Fill out the form below to add a new product."}
 
             </div>

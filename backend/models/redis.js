@@ -13,7 +13,7 @@ const connectRedis = async () => {
    } catch (err) {
       console.log('Redis connection failed',err);
       process.exit(1)
-   }
+   } 
 };
 
 const disconnectRedis=async()=>{

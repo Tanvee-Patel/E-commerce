@@ -11,6 +11,7 @@ import { logoutUser } from '@/store/authSlice'
 import CartWrapper from './CartWrapper'
 import { fetchCartItems } from '@/store/user/cartSlice'
 import { Label } from '../ui/label'
+import { DialogTitle } from '../ui/dialog'
 
 function MenuItems() {
   const navigate = useNavigate()
@@ -31,7 +32,7 @@ function MenuItems() {
   }
 
   return (
-    <nav className='flex flex-col mb-3 lg:mb-0 lg:items-center gap-6 lg:flex-row'>
+    <nav className='flex flex-col mb-3 lg:mb-0 lg:items-center gap-6 lg:flex-row mt-3'>
       {
         shoppingViewHeaderMenuItems.map(menuItem =>
           <Label
@@ -72,7 +73,7 @@ function HeaderRightContent({ closeMenu }) {
           size="icon"
           className="mb-3 relative">
           <ShoppingCart className='h-6 w-6' />
-          <span className='absolute -top-1.5 -right-1.5 backdrop-blur-lg bg-white/40 text-gray-900 font-semibold text-[10px] w-5 h-5 flex items-center justify-center rounded-full border border-indigo-400 shadow-lg transition-all duration-300 hover:scale-110'>
+          <span className='absolute -top-1.5 -right-1.5 backdrop-b bg-white/40 text-gray-900 font-semibold text-[10px] w-5 h-5 flex items-center justify-center rounded-full border border-indigo-400 shadow-lg transition-all duration-300 hover:scale-110'>
             {cartItems?.items?.length}
           </span>
           <span className='sr-only'>User shopping cart</span>
@@ -83,6 +84,7 @@ function HeaderRightContent({ closeMenu }) {
             cartItems.items : []} />
       </Sheet>
       <DropdownMenu>
+        <div className='relative'>
         <DropdownMenuTrigger asChild>
           <Avatar className="bg-black lg:mb-3">
             <AvatarFallback className="bg-black text-white font-extrabold">
@@ -90,7 +92,8 @@ function HeaderRightContent({ closeMenu }) {
             </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
-        <DropdownMenuContent side="right" className="w-56">
+        </div>
+        <DropdownMenuContent side="right" className="w-56 bg-white">
           <DropdownMenuLabel>
             Logged in as {user?.username}
           </DropdownMenuLabel>
@@ -132,7 +135,8 @@ const SHeader = () => {
               <span className='sr-only'>Toggle header menu</span>
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-full max-w-xs bg-white p-4">
+          <SheetContent side="left" className="w-full max-w-xs bg-white p-4" aria-describedby={undefined}>
+            <DialogTitle className="sr-only">Header Menu</DialogTitle>
             <HeaderRightContent closeMenu={handleClose} />
             <MenuItems closeMenu={handleClose} />
           </SheetContent>

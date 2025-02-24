@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, CardContent, CardFooter } from '../ui/card'
 import { Button } from '../ui/button'
 
-const AProductTile = ({product, setFormData, setOpenCreateProductsDialog,currentEditedId, setCurrentEditedId, handleDelete}) => {
+const AProductTile = ({ product, setFormData, setOpenCreateProductsDialog, currentEditedId, setCurrentEditedId, handleDelete }) => {
    return (
       <Card className='w-full max-w-sm mx-auto'>
          <div>
@@ -10,7 +10,7 @@ const AProductTile = ({product, setFormData, setOpenCreateProductsDialog,current
                <img
                   src={product?.image}
                   alt={product?.title}
-                  className='w-full h-[300px] object-cover rounded-t-lg'
+                  className='w-full h-full object-cover rounded-t-lg'
                />
             </div>
             <CardContent>
@@ -30,13 +30,19 @@ const AProductTile = ({product, setFormData, setOpenCreateProductsDialog,current
                </div>
             </CardContent>
             <CardFooter className='flex justify-between items-center'>
-               <Button onClick={()=>{
-                  setOpenCreateProductsDialog(true)
-                  setCurrentEditedId(product?._id)
-                  setFormData(product)
-                  currentEditedId={currentEditedId}
-               }}>Edit</Button>
-               <Button onClick={()=> handleDelete(product?._id)}>Delete</Button>
+               <Button
+                  className='bg-cyan-500 text-white rounded-xl hover:bg-cyan-600'
+                  onClick={() => {
+                     setOpenCreateProductsDialog(true)
+                     setCurrentEditedId(product?._id)
+                     setFormData(product)
+                     currentEditedId = { currentEditedId }
+                  }}>Edit</Button>
+               <Button
+               className='bg-red-500 text-white rounded-xl hover:bg-red-600'
+                  onClick={() => handleDelete(product?._id)}>
+                  Delete
+               </Button>
             </CardFooter>
          </div>
       </Card>

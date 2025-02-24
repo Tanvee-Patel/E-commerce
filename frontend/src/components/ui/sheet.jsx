@@ -58,7 +58,7 @@ const SheetContent = React.forwardRef(
           {/* Render default description if using fallback id */}
           {descriptionId === "sheet-content-description" && (
             <SheetDescription id="sheet-content-description">
-              Additional information about the content.
+              {/* Additional information about the content. */}
             </SheetDescription>
           )}
           {children}

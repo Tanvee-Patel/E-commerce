@@ -28,9 +28,9 @@ function VerifyOtp() {
     setIsLoading(true);
     try {
       const baseURL = 'http://localhost:3000';
-      const { data } = await axios.post(`${baseURL}/auth/forgot-password/verify-otp`, { email: decodedEmail, otp });
+      const { data } = await axios.post(`${baseURL}/auth/verify-otp`, { email: decodedEmail, otp });
       toast.success(data?.message || 'OTP verified successfully.');
-      navigate(`/auth/reset-password/${encodeURIComponent(decodedEmail)}`);
+      navigate(`/auth/reset-password/${encodeURIComponent(data.resetToken)}?email=${encodeURIComponent(email)}`);
     } catch (error) {
       console.error('Error during OTP verification:', error.response?.data || error.message);
       toast.error(error.response?.data?.message || 'Invalid OTP. Please try again.');
@@ -71,7 +71,7 @@ function VerifyOtp() {
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">
             Didn’t receive an OTP?{' '}
-            <a href="/forgot-password" className="text-blue-500 hover:underline font-medium">
+            <a href="/auth/forgot-password" className="text-blue-500 hover:underline font-medium">
               Resend OTP
             </a>
           </p>

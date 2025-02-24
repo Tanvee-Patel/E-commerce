@@ -61,7 +61,7 @@ const Adashboard = () => {
       />
       <Button
         onClick={handleUploadFeatureImage}
-        className="mt-5 w-full">
+        className="mt-5 w-full bg-blue-500 text-white">
         Upload
       </Button>
       <div className='mt-5'>

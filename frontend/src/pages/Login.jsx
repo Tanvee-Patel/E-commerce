@@ -16,7 +16,7 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();  // Get previous location
+  const location = useLocation();  
   const user = useSelector((state) => state.auth.user);
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
@@ -52,7 +52,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center px-4">
-      <div className="w-full max-w-lg space-y-8">
+      <div className="w-full ">
         <div className="text-center">
           <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight mb-4">
           Sign In to Explore More!

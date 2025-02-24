@@ -42,13 +42,13 @@ const AOrders = () => {
                <CardContent>
                   <Table className="w-full border-collapse border border-gray-200">
                      <TableHeader>
-                        <TableRow className="bg-gray-100">
-                           <TableHead className="px-6 py-3 text-left text-sm font-medium text-gray-700">Order Id</TableHead>
-                           <TableHead className="px-6 py-3 text-left text-sm font-medium text-gray-700">Order Date</TableHead>
-                           <TableHead className="px-6 py-3 text-left text-sm font-medium text-gray-700">Order Status</TableHead>
-                           <TableHead className="px-6 py-3 text-left text-sm font-medium text-gray-700">Order Price</TableHead>
-                           <TableHead className="px-6 py-3 text-left text-sm font-medium text-gray-700">
-                              <span className="sr-only">Details</span>
+                        <TableRow className="bg-gray-100 border-b border-gray-400">
+                           <TableHead className="px-6 py-3 text-left text-base font-medium text-gray-700">Order Id</TableHead>
+                           <TableHead className="px-6 py-3 text-left text-base font-medium text-gray-700">Order Date</TableHead>
+                           <TableHead className="px-6 py-3 text-left text-base font-medium text-gray-700">Order Status</TableHead>
+                           <TableHead className="px-6 py-3 text-left text-base font-medium text-gray-700">Order Price</TableHead>
+                           <TableHead className="px-6 py-3 text-left text-base font-medium text-gray-700"> Details
+                              {/* <span className="sr-only">Details</span> */}
                            </TableHead>
                         </TableRow>
                      </TableHeader>
@@ -65,6 +65,7 @@ const AOrders = () => {
                                     <TableCell>${orderItem?.totalAmount}</TableCell>
                                     <TableCell>
                                        <Button
+                                       className='border border-sky-400'
                                           onClick={() => handleFetchOrderDetails(orderItem?._id)}>
                                           View Details
                                        </Button>

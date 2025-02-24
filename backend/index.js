@@ -12,7 +12,8 @@ const userOrderRouter = require ('./routes/user/orderRoutes')
 const adminOrderRouter = require ('./routes/admin/orderRoutes')
 const userSearchRouter = require ('./routes/user/searchRoutes')
 const userReviewRouter = require ('./routes/user/reviewRoutes')
-const commonFeatureRouter = require ('./routes/common/featureRoutes')
+const commonFeatureRouter = require ('./routes/common/featureRoutes');
+const { connectRedis } = require('./models/redis');
 
 const app = express()
 const PORT = process.env.PORT || 3000;
@@ -27,6 +28,8 @@ app.use(cors({
    methods: ['GET', 'POST', 'DELETE', 'PUT'],
    credentials: true
 }));
+
+connectRedis()
 
 app.use(cookieParser())
 app.use(express.json())

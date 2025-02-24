@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { toast } from 'react-hot-toast';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { resetPassword, resetPasswordRequest } from '@/store/resetPasswordSlice';
 
 function ResetPassword() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const { resetToken } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+  
+  const location = useLocation()
+  const queryParams = new URLSearchParams(location.search);
+  const email = queryParams.get('email')
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!newPassword || newPassword.length < 8) {
-      toast.error('Password must be at least 8 characters long.');
+    if (!newPassword || newPassword.length < 6) {
+      toast.error('Password must be at least 6 characters long.');
       return;
     }
 
@@ -23,14 +29,8 @@ function ResetPassword() {
     }
 
     try {
-      const baseURL = 'http://localhost:3000';
-      const response = await axios.post(`${baseURL}/auth/forgot-password/reset-password`, {
-        resetToken,
-        newPassword,
-        confirmPassword
-      });
-
-      toast.success(response.data.message);
+      const response = dispatch(resetPassword({ newPassword, confirmPassword, resetToken, email })).unwrap()
+      toast.success(response.data || "Redirecting to Login page");
       console.log('Redirecting to Login Page ');
 
       navigate('/auth/login');
@@ -39,7 +39,7 @@ function ResetPassword() {
       toast.error('Something went wrong. Please try again.');
     }
   };
-
+  
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-800 to-blue-500 flex items-center justify-center px-6">
       <div className="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md">

@@ -15,7 +15,7 @@ const Account = () => {
           </h1>
         </div>
         <div className="bg-white rounded-lg shadow-xl p-8 space-y-6 ring-2 ring-primary-300">
-          <div className='relative h-[250px] max-w-full rounded-lg overflow-hidden shadow-lg mb-6'>
+          <div className='relative h-[250px] max-w-full rounded-lg shadow-lg mb-6'>
             <img
               src={accountImage}
               className='h-full w-full object-cover object-center transition-transform transform hover:scale-105 rounded-lg'

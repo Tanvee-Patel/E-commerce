@@ -25,7 +25,7 @@ const ProductTile = ({ product, handleGetProductDetails, handleAddToCart }) => {
                <img
                   src={product.image}
                   alt={product.title}
-                  className='w-full h-[280px] object-cover rounded-t-lg'
+                  className='w-full h-full object-cover rounded-t-lg'
                />
                {
                   product?.totalStock === 0 ? (

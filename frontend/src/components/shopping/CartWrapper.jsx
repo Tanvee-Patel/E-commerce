@@ -14,7 +14,7 @@ const CartWrapper = ({ cartItems, setOpenCartSheet }) => {
       ) * currentItem?.quantity, 0) : 0
 
    return (
-      <SheetContent className="sm:max-w-md">
+      <SheetContent className="sm:max-w-md bg-white">
          <SheetHeader>
             <SheetTitle>
                Your Cart
@@ -40,7 +40,7 @@ const CartWrapper = ({ cartItems, setOpenCartSheet }) => {
                navigate('/user/checkout')
                setOpenCartSheet(false)
             }}
-            className="w-full mt-6">
+            className="w-full mt-6 bg-emerald-300">
             Checkout
          </Button>
       </SheetContent>

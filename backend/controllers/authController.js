@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
+const {sendOtp, verifyOtp, resetPassword}=require('../controllers/passwordController');
 
 //register
 const register = async (req, res) => {
@@ -111,4 +112,33 @@ const authMiddleware = async (req, res, next) => {
    }
 }
 
-module.exports = { register, login, logout, authMiddleware }
+const forgotPassword = async (req, res) => {
+   const { email, action } = req.body;
+ 
+   try {
+    console.log('Received forgot password request',{email,action});
+    
+     if (action === 'sendOtp') {
+       console.log('Action: sendOtp');
+       return sendOtp(req, res);
+     }
+ 
+     if (action === 'resetPassword') {
+       const otpVerification = await verifyOtp(req, res);
+       if (!otpVerification) {
+         return res.status(400).json({ error: 'OTP verification failed' });
+       }
+ 
+       req.body.email = email;
+       req.body.newPassword = newPassword;
+       return resetPassword(req, res);
+     }
+ 
+     return res.status(400).json({ error: 'Invalid action specified' });
+   } catch (error) {
+     console.error(error);
+     res.status(500).json({ error: 'An error occurred during the password reset process.' });
+   }
+ };
+
+module.exports = { register, login, logout, authMiddleware, forgotPassword }
