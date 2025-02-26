@@ -1,4 +1,4 @@
-import { LayoutDashboard, Package, ShoppingCart } from "lucide-react";
+import { LayoutDashboard, MessageSquareText, Package, ShoppingCart } from "lucide-react";
 
 import { SquareUserRound } from 'lucide-react'
 import React, { Fragment } from 'react'
@@ -61,6 +61,12 @@ export const adminSidebarMenuItems = [
     path: '/admin/orders',
     icon: <ShoppingCart />
   },
+  {
+    id: 'messages',
+    label: 'Messages',
+    path: '/admin/messages',
+    icon: <MessageSquareText />
+  }
 ]
 
 const MenuItems = ({ setOpen }) => {

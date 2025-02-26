@@ -48,7 +48,7 @@ const Adashboard = () => {
 
   return (
     <div>
-      <h1>Upload Feature Images</h1>
+      {/* <h1>Upload Feature Images</h1> */}
       <ImageUpload
         imageFile={imageFile}
         setImageFile={setImageFile}

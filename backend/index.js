@@ -14,6 +14,7 @@ const userSearchRouter = require ('./routes/user/searchRoutes')
 const userReviewRouter = require ('./routes/user/reviewRoutes')
 const commonFeatureRouter = require ('./routes/common/featureRoutes');
 const { connectRedis } = require('./models/redis');
+const contactRouter = require('./routes/common/contactRoutes')
 
 const app = express()
 const PORT = process.env.PORT || 3000;
@@ -43,3 +44,4 @@ app.use('/admin/order', adminOrderRouter)
 app.use('/user/search',userSearchRouter)
 app.use('/user/review', userReviewRouter)
 app.use('/common/feature', commonFeatureRouter)
+app.use('/contact', contactRouter)

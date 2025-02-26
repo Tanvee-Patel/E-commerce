@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllFilteredProducts, fetchProductDetails } from '@/store/user/productSlice'
 import ProductTile from '@/components/shopping/ProductTile'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { addToCart, fetchCartItems } from '@/store/user/cartSlice'
 import toast from 'react-hot-toast'
 import ProductDetails from '@/components/shopping/ProductDetails'
@@ -21,13 +21,13 @@ const brand = [
   // Electronics brands
   { id: "apple", label: "Apple", icon: Smartphone },
   { id: "samsung", label: "Samsung", icon: Tablet },
-  { id: "sony", label: "Sony", icon: Tv },
-  { id: "lg", label: "LG", icon: Monitor },
+  // { id: "sony", label: "Sony", icon: Tv },
+  // { id: "lg", label: "LG", icon: Monitor },
   // Books brands
   { id: "penguin", label: "Penguin", icon: BookOpen },
   { id: "harpercollins", label: "HarperCollins", icon: Book },
   // Beauty brands
-  { id: "loreal", label: "L'Oreal", icon: Droplet },
+  // { id: "loreal", label: "L'Oreal", icon: Droplet },
   { id: "maybelline", label: "Maybelline", icon: Brush },
   { id: "mac", label: "MAC", icon: Palette },
 ]
@@ -145,7 +145,7 @@ return (
 
     <section className="py-10 bg-white shadow-lg rounded-lg mx-4 my-8 ring-2 ring-primary-300">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-extrabold text-center text-gray-900 mb-8">Shop by Category</h2>
+        <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-8">Shop by Category</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {categories.map((categoryItem, index) => (
             <Card
@@ -166,7 +166,7 @@ return (
 
     <section className="py-16 mx-4 my-8 bg-white shadow-lg rounded-lg ring-2 ring-primary-300">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-extrabold text-center text-gray-900 mb-8">Shop by Brand</h2>
+        <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-8">Shop by Brand</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {brand.map((brandItem, index) => (
             <Card
@@ -182,6 +182,9 @@ return (
             </Card>
           ))}
         </div>
+        {/* <p className="text-center mt-6 text-primary-500 font-medium hover:underline cursor-pointer text-blue-600">
+          <Link to="/user/listing">View More Brands</Link>
+        </p> */}
       </div>
     </section>
 

@@ -96,11 +96,9 @@ const ProductDetails = ({ open, setOpen, productDetails }) => {
   return (
     <Dialog open={open} onOpenChange={handleCloseDialog}>
       <DialogContent className="sm:p-8 p-6 max-w-[90vw] sm:max-w-[80vw] lg:max-w-[70vw] rounded-lg shadow-xl bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 overflow-y-auto max-h-[80vh]">
-        <DialogTitle className="text-4xl font-extrabold text-gray-900 mb-6 text-center">{productDetails?.title || "Loading..."}</DialogTitle>
-
+        <DialogTitle className="text-3xl font-extrabold text-gray-900 mb-6 text-center">{productDetails?.title || "Loading..."}</DialogTitle>
         {productDetails ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-12">
-
             <img
               src={productDetails.image}
               alt={productDetails.title}
@@ -109,14 +107,13 @@ const ProductDetails = ({ open, setOpen, productDetails }) => {
               className="aspect-square w-full object-cover rounded-xl"
             />
             <div className="space-y-6">
-              <h1 className="text-4xl font-extrabold text-gray-900">{productDetails.title}</h1>
+              {/* <h1 className="text-3xl font-bold text-gray-900">{productDetails.title}</h1> */}
               <p className="text-lg text-gray-600 leading-relaxed">{productDetails.description}</p>
 
               <div className="flex items-center justify-between">
-                <p
-                  className={`text-3xl font-bold text-primary ${productDetails?.salePrice > 0 ? "line-through" : ""
-                    }`}
-                >
+                <p 
+                className={`text-3xl font-bold text-primary ${productDetails?.salePrice > 0 ? 
+                  "line-through" : "" }`} >
                   ${productDetails?.price}
                 </p>
                 {productDetails?.salePrice > 0 ? (
@@ -132,7 +129,7 @@ const ProductDetails = ({ open, setOpen, productDetails }) => {
                     rating={avgReview}
                   />
                 </div>
-                <span className='text-muted-foreground'>({avgReview.toFixed(1)})</span>
+                <span className='text-muted-foreground font-medium'>({avgReview.toFixed(1)})</span>
               </div>
 
               {
@@ -142,7 +139,7 @@ const ProductDetails = ({ open, setOpen, productDetails }) => {
                   </Button>
                   : <Button
                     onClick={() => handleAddToCart(productDetails?._id, productDetails?.totalStock)}
-                    className="w-full bg-primary-500 text-cyan-700 hover:bg-primary-600 transition-all mt-4">
+                    className="w-full bg-primary-500 text-cyan-700 hover:bg-primary-600 hover:bg-slate-200 transition-all mt-4">
                     Add to Cart
                   </Button>
               }
@@ -160,7 +157,6 @@ const ProductDetails = ({ open, setOpen, productDetails }) => {
                             <AvatarFallback>
                               {reviewItem?.userId?.username?.[0]?.toUpperCase() || "U"}
                             </AvatarFallback>
-
                           </Avatar>
                           <div className="grid gap-1">
                             <div className="flex items-center gap-2">
@@ -198,7 +194,7 @@ const ProductDetails = ({ open, setOpen, productDetails }) => {
                   <Button
                     onClick={handleAddReview}
                     disabled={reviewMsg.trim() === ""}
-                    className="p-4">
+                    className="p-4 hover:bg-slate-200">
                     Submit
                   </Button>
                 </div>

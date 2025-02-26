@@ -41,9 +41,10 @@ function ResetPassword() {
   };
   
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-800 to-blue-500 flex items-center justify-center px-6">
-      <div className="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md">
-        <h1 className="text-3xl font-extrabold text-center text-blue-700 mb-6">Reset Password</h1>
+    <div className="flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-7 overflow-hidden">
+      <div className="w-full h-full max-w-lg backdrop-blur-md p-6">
+        <div className='text-center'>
+        <h1 className="text-3xl font-bold text-gray-900 tracking-tight mb-4 underline decoration-primary-300 decoration-3 underline-offset-3">Reset Password</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-gray-700 font-semibold mb-2">New Password</label>
@@ -52,7 +53,7 @@ function ResetPassword() {
               placeholder="Enter New Password..."
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
+              className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:outline-none shadow-sm"
             />
           </div>
           <div>
@@ -62,16 +63,17 @@ function ResetPassword() {
               placeholder="Confirm New Password..."
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
+              className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:outline-none shadow-sm"
             />
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-800 transition duration-300"
+            className="w-full bg-primary-500 text-white bg-blue-400 hover:text-gray-600 hover:bg-white py-3 rounded-lg font-medium hover:bg-primary-600 transition duration-300"
           >
             Reset Password
           </button>
         </form>
+        </div>
       </div>
     </div>
   );

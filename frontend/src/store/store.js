@@ -11,6 +11,7 @@ import userReviewSlice from './user/reviewSlice'
 import commonFeatureSlice from "./commonSlice"
 import forgotPasswordSlice from "./forgotPasswordSlice"
 import resetPasswordSlice from "./resetPasswordSlice"
+import contactSlice from "./contactSlice"
 
 const store = configureStore({
    reducer:{
@@ -25,7 +26,8 @@ const store = configureStore({
       userReview: userReviewSlice,
       commonFeature: commonFeatureSlice,
       forgotPassword : forgotPasswordSlice,
-      resetPassword : resetPasswordSlice,      
+      resetPassword : resetPasswordSlice, 
+      contact: contactSlice     
    }
 });
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import SHeader from './SHeader'
+import SFooter from './SFooter'
 
 const Slayout = () => {
   return (
@@ -9,6 +10,7 @@ const Slayout = () => {
        <main className='flex flex-col w-full'>
          <Outlet/>
       </main>
+      <SFooter/>
     </div>
   )
 }

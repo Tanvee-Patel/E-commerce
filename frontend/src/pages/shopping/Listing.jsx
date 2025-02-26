@@ -122,7 +122,7 @@ const Listing = () => {
 
         <div className='w-full md:w-3/4 space-y-8'>
           <div className='bg-white p-6 rounded-lg shadow-xl'>
-            <h2 className='text-4xl font-extrabold text-gray-900 tracking-tight mb-6 text-center'>
+            <h2 className='text-3xl font-extrabold text-gray-900 tracking-tight mb-6 text-center'>
               All Products
             </h2>
             <div className='flex justify-between items-center mb-6'>

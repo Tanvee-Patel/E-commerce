@@ -42,10 +42,10 @@ const Register = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center px-4">
-      <div className="w-full max-w-lg space-y-8">
+    <div className="bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-7 rounded-xl">
+      <div className="w-full h-full max-w-lg space-y-8">
         <div className="text-center">
-          <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight mb-4">
+          <h1 className="text-3xl font-bold text-gray-900 tracking-tight mb-4 underline decoration-primary-300 decoration-3 underline-offset-4">
             Create Your Account
           </h1>
           <p className="text-xl text-gray-700 mb-6">

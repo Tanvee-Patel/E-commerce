@@ -73,7 +73,7 @@ function HeaderRightContent({ closeMenu }) {
           size="icon"
           className="mb-3 relative">
           <ShoppingCart className='h-6 w-6' />
-          <span className='absolute -top-1.5 -right-1.5 backdrop-b bg-white/40 text-gray-900 font-semibold text-[10px] w-5 h-5 flex items-center justify-center rounded-full border border-indigo-400 shadow-lg transition-all duration-300 hover:scale-110'>
+          <span className='absolute -top-1.5 -right-1.5 backdrop-b bg-white/40 text-gray-600 font-bold text-[10px] w-5 h-5 flex items-center justify-center rounded-full border bg-sky-400 border-sky-700 shadow-lg transition-all duration-300 hover:scale-110'>
             {cartItems?.items?.length}
           </span>
           <span className='sr-only'>User shopping cart</span>
@@ -125,7 +125,7 @@ const SHeader = () => {
         <Link to="/user/home" className='flex items-center gap-2 text-gray-900'>
           <House className='h-6 w-6 text-primary-600' />
           <span className='font-bold text-primary-600'>
-            E-commerce
+          Shine, Spark & Scroll
           </span>
         </Link>
         <Sheet open={isOpen} onOpenChange={setIsOpen}>

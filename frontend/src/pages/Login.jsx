@@ -51,22 +51,16 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center px-4">
-      <div className="w-full ">
+    <div className="bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-7 rounded-xl">
+      <div className="w-full h-full max-w-lg space-y-8">
         <div className="text-center">
-          <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight mb-4">
+          <h1 className="text-3xl font-bold text-gray-900 tracking-tight mb-4 underline decoration-primary-300 decoration-3 underline-offset-4">
           Sign In to Explore More!
           </h1>
           <p className="text-xl text-gray-700 mb-6">
             Don't have an account?{' '}
             <Link className="text-primary-500 hover:outline-dashed font-semibold" to="/auth/register">
               Register
-            </Link>
-          </p>
-
-          <p className="text-sm text-gray-700 mt-6">
-            <Link to="/auth/forgot-password" className="text-primary-500 hover:outline-dashed font-semibold">
-              Forgot Password?
             </Link>
           </p>
 
@@ -80,6 +74,11 @@ const Login = () => {
             onSubmit={onSubmit}
           />
         </div>
+        <p className="text-sm text-gray-700 mt-6">
+            <Link to="/auth/forgot-password" className="text-primary-500 hover:outline-dashed font-semibold">
+              Forgot Password?
+            </Link>
+          </p>
       </div>
     </div>
   );

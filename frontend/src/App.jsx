@@ -22,6 +22,9 @@ import Search from './pages/shopping/Search';
 import ForgotPassword from './pages/Forgot-pwd';
 import VerifyOtp from './pages/VerifyOtp';
 import ResetPassword from './pages/ResetPwd';
+import AboutUs from './pages/shopping/About';
+import Contact from './pages/shopping/Contact';
+import Messages from './pages/admin/Messages';
 
 function App() {
   const { isAuthenticated, user, isLoading } = useSelector((state) => state.auth);
@@ -50,8 +53,8 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
-          <Route path="reset-password/:resetToken" element={<ResetPassword/>} />
-          <Route path="verify-otp/:email" element={<VerifyOtp/>}/>
+          <Route path="reset-password/:resetToken" element={<ResetPassword />} />
+          <Route path="verify-otp/:email" element={<VerifyOtp />} />
         </Route>
 
         {/* Protected Routes - Admin */}
@@ -60,6 +63,7 @@ function App() {
           <Route path="features" element={<Afeatures />} />
           <Route path="orders" element={<Aorders />} />
           <Route path="products" element={<Aproducts />} />
+          <Route path='messages' element={<Messages />} />
         </Route>
 
         {/* Protected Routes - User */}
@@ -69,6 +73,8 @@ function App() {
           <Route path="checkout" element={<Checkout />} />
           <Route path="account" element={<Account />} />
           <Route path="search" element={<Search />} />
+          <Route path="about" element={<AboutUs />} />
+          <Route path="contact" element={<Contact />} />
         </Route>
       </Routes>
     </div>
