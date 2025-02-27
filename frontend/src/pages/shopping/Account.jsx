@@ -1,5 +1,5 @@
 import React from 'react'
-import accountImage from '../../assets/image.png'
+import accountImage from '../../assets/e-comm.jpg'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Separator } from '@/components/ui/separator'
 import Orders from '@/components/shopping/Orders'
@@ -8,25 +8,25 @@ import Address from '@/components/shopping/Address'
 const Account = () => {
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-100 via-indigo-100 to-purple-100 flex items-center justify-center px-4">
-      <div className="w-full max-w-3xl space-y-8">
+      <div className="w-full space-y-8 mb-7">
         <div className="text-center">
           <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight mb-4">
             Your Account
           </h1>
         </div>
-        <div className="bg-white rounded-lg shadow-xl p-8 space-y-6 ring-2 ring-primary-300">
-          <div className='relative h-[250px] max-w-full rounded-lg shadow-lg mb-6'>
+        <div className="bg-white rounded-xl shadow-xl p-8 space-y-6 ring-2 ring-primary-300 ">
+          <div className='relative h-[250px] max-w-full rounded-xl shadow-lg mb-6 p-4 bg-white'>
             <img
               src={accountImage}
-              className='h-full w-full object-cover object-center transition-transform transform hover:scale-105 rounded-lg'
+              className='h-full w-full object-cover object-center transition-transform transform hover:scale-105 rounded-xl  '
               alt='Account'
             />
           </div>
           <Tabs defaultValue='orders'>
             <TabsList className="flex justify-center space-x-1">
-              <TabsTrigger value="orders" className="px-6 py-2 text-lg font-semibold text-gray-300 rounded-lg hover:bg-gray-700">Orders</TabsTrigger>
+              <TabsTrigger value="orders" className="px-6 py-2 text-lg font-semibold text-gray-300 rounded-xl hover:bg-gray-700">Orders</TabsTrigger>
               <Separator className="h-6 w-10 sm:w-16 md:w-20 lg:w-24" />
-              <TabsTrigger value="address" className="px-6 py-2 text-lg font-semibold text-gray-300 rounded-lg hover:bg-gray-700">Address</TabsTrigger>
+              <TabsTrigger value="address" className="px-6 py-2 text-lg font-semibold text-gray-300 rounded-xl hover:bg-gray-700">Address</TabsTrigger>
             </TabsList>
             <TabsContent value="orders">
               <div className="text-gray-600 text-lg">

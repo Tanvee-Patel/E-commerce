@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+// import socket from '../socket';
 
 export const getAllOrderOfAllUsers = createAsyncThunk(
    '/order/getAllOrderByUser', async () => {
@@ -30,8 +31,8 @@ export const updateOrderStatus = createAsyncThunk(
    })
 
 export const sendOrderEmail = createAsyncThunk(
-   '/order/sendOrderEmail', async ({ email, orderId, status}) => {
-      console.log("Sending mail req", {email, orderId,status});
+   '/order/sendOrderEmail', async ({ email, orderId, status }) => {
+      console.log("Sending mail req", { email, orderId, status });
       try {
          const response = await axios.post(
             "http://localhost:3000/admin/order/send-mail", {
@@ -41,16 +42,9 @@ export const sendOrderEmail = createAsyncThunk(
          })
          return response.data;
       } catch (error) {
-         console.error("error sending mail",error);
-         
+         console.error("error sending mail", error);
+
       }
-      
-      // if (response.data.success) {
-      //    toast.success("email sent successfully")
-      // }
-      // else {
-      //    toast.error("Failed to send email")
-      // }
    })
 
 const AorderSlice = createSlice({
@@ -62,7 +56,15 @@ const AorderSlice = createSlice({
    reducers: {
       resetOrderDetails: (state) => {
          state.orderDetails = null
-      }
+      },
+      // updateOrderStatusLive: (state, action) => {
+      //    const updatedOrder = action.payload;
+      //    state.orders = state.orders.map(order =>
+      //       order._id === updatedOrder.orderId ?
+      //          { ...order, orderStatus: updatedOrder.status } :
+      //          order)
+      //          toast.success(updatedOrder.message)
+      // }
    },
    extraReducers: (builder) => {
       builder
@@ -119,3 +121,10 @@ const AorderSlice = createSlice({
 export const { resetOrderDetails } = AorderSlice.actions;
 
 export default AorderSlice.reducer
+
+// socket.on("connect", () => {
+//    console.log("Connected to WebSocket server");
+//    socket.on(`orderStatusUpdated_${localStorage.getItem("userId")}`, (data) => {
+//       store.dispatch(updateOrderStatusLive(data));
+//    });
+// });

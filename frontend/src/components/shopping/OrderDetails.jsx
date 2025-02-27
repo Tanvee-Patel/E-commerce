@@ -11,7 +11,7 @@ const OrderDetails = ({ orderDetails }) => {
 
    return (
       <DialogContent className="bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center ring-4">
-         <div className="w-full max-w-lg rounded-lg p-8 space-y-6 ">
+         <div className="w-full max-w-lg rounded-xl p-8 space-y-6 ">
             <div className="text-center">
                <DialogTitle className="text-3xl font-extrabold text-gray-900 tracking-tight mb-4">
                   Order Details

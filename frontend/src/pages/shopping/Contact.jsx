@@ -36,7 +36,9 @@ const Contact = () => {
                   </div>
                   <div className="flex items-center space-x-4">
                      <FaEnvelope className="text-red-500 text-2xl" />
-                     <p className="text-gray-700">vedanship517@gmail.com</p>
+                     <p className="text-blue-600 text-sm pb-2">
+                        <a href="mailto:vedanship517@email.com" className="hover:underline">E-mail</a>
+                     </p>
                   </div>
                   <div className="flex items-center space-x-4">
                      <FaPhone className="text-green-500 text-2xl" />
@@ -53,35 +55,34 @@ const Contact = () => {
                </div>
 
                {/* Contact Form */}
-               <div className="bg-gray-100 p-6 rounded-lg shadow-md">
+               <div className="bg-gray-100 p-6 rounded-xl shadow-md">
                   <form onSubmit={handleSubmit} className="space-y-4">
                      <div>
                         <label className="block text-gray-700 font-medium">Name</label>
                         <input type="text" name="name" value={formData.name} onChange={handleChange}
-                           className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500" required />
+                           className="w-full border rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-500" required />
                      </div>
                      <div>
                         <label className="block text-gray-700 font-medium">Email</label>
                         <input type="email" name="email" value={formData.email} onChange={handleChange}
-                           className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500" required />
+                           className="w-full border rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-500" required />
                      </div>
                      <div>
                         <label className="block text-gray-700 font-medium">Message</label>
                         <textarea name="message" rows="4" value={formData.message} onChange={handleChange}
-                           className="w-full border rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500" required></textarea>
+                           className="w-full border rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-500" required></textarea>
                      </div>
-                     <button type="submit" disabled={loading} className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
+                     <button type="submit" disabled={loading} className="w-full bg-blue-600 text-white py-2 rounded-xl font-semibold hover:bg-blue-700 transition">
                         {loading ? "Sending..." : "Send Message"}
                      </button>
                   </form>
                </div>
             </div>
 
-            {/* Optional: Google Maps Embed */}
             {/* <div className="w-full h-64">
           <iframe
             title="Google Map"
-            className="w-full h-full rounded-lg"
+            className="w-full h-full rounded-xl  "
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509056!2d144.9537363155041!3d-37.81627974202192!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65d43e7b19f2d%3A0x56c73b5d46c021bf!2sYour+E-Commerce+Store!5e0!3m2!1sen!2sus!4v1617760632948!5m2!1sen!2sus"
             allowFullScreen=""
             loading="lazy"

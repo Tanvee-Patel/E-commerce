@@ -55,7 +55,7 @@ const Register = () => {
             </Link>
           </p>
         </div>
-        <div className="bg-white rounded-lg shadow-xl p-8 space-y-6 ring-2 ring-primary-300">
+        <div className="bg-white rounded-xl shadow-lg p-8 space-y-6 ring-2">
           <Form
             formControlls={registerFormControlls}
             buttonText={'Sign Up'}

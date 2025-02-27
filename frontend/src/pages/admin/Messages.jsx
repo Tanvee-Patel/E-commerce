@@ -14,7 +14,7 @@ const Messages = () => {
    if (error) return <p>Error: {error}</p>;
 
    return (
-      <div className="max-w-2xl mx-auto p-6 bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 shadow-md rounded-lg">
+      <div className="max-w-2xl mx-auto p-6 bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 shadow-md rounded-xl  ">
          <h2 className="text-2xl font-bold text-gray-800 mb-4">Messages</h2>
          {messages.length === 0 ? (
             <p className="text-gray-600 text-center">No messages found.</p>

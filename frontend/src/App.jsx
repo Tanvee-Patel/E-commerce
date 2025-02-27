@@ -25,6 +25,7 @@ import ResetPassword from './pages/ResetPwd';
 import AboutUs from './pages/shopping/About';
 import Contact from './pages/shopping/Contact';
 import Messages from './pages/admin/Messages';
+import Notifications from './pages/shopping/Notifications';
 
 function App() {
   const { isAuthenticated, user, isLoading } = useSelector((state) => state.auth);
@@ -34,10 +35,10 @@ function App() {
     dispatch(checkAuth());
   }, [dispatch]);
 
-  if (isLoading) return <Skeleton className="w-full bg-black rounded-full" />
+  if (isLoading) return <Skeleton className="max-w-full bg-black rounded-full" />
 
   return (
-    <div className="flex flex-col overflow-hidden bg-white">
+    <div className="flex flex-col bg-white">
       <Toaster position="top-right" reverseOrder={false} />
       <Routes>
         {/* Public Routes */}
@@ -75,6 +76,7 @@ function App() {
           <Route path="search" element={<Search />} />
           <Route path="about" element={<AboutUs />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="notifications" element={<Notifications/>}/>
         </Route>
       </Routes>
     </div>

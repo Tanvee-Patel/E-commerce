@@ -75,24 +75,27 @@ const updateOrderStatus = async (req, res) => {
       order.orderStatus = orderStatus;
       await order.save()
 
+      const { io, onlineUsers } = require("../../index")
+      const userId = order.userId._id.toString()
+      const message = `Your order #${id} status changed to ${orderStatus}`
+      console.log("📢 Emitting order update notification...");
+      console.log("🗂 Current Online Users:", onlineUsers);
+      console.log(`🔍 Searching for user ${userId}...`);
+      
+      const userSocketId = onlineUsers.get(userId);
+      
+      if (userSocketId) {
+         console.log(`📤 Sending notification to ${userSocketId}`);
+         io.to(userSocketId).emit("notification", message);
+      } else {
+         console.log(`⚠️ User ${userId} is offline, cannot send notification.`);
+      }
+
       res.status(200).json({
          success: true,
          message: "Order status is updated",
          data: orderStatus
       })
-
-      // if (orderStatus.toLowerCase() === 'confirmed' && order.userId?.email) {
-      //    try {
-      //       console.log(`Attempting to send email to: ${order.userId.email}`);
-      //       const subject = 'Order Confirmed successfully!';
-      //       const text = `Dear ${order.userId.username},\n\nYour order with ID ${order._id} has been confirmed!\n\nThank you for shopping with us.`;
-      //       await sendMail(order.userId.email, subject, text);
-      //       console.log(`Email sent to ${order.userId.email}`);
-      //    } catch (emailError) {
-      //       console.error("Error sending confirmation email:", emailError);
-      //       res.status(500).json({ success: false, message: "Email sending failed" });        
-      //    }
-      //  }
 
    } catch (error) {
       console.error('Error fetching orders:', error);

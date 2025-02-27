@@ -95,7 +95,7 @@ const ProductDetails = ({ open, setOpen, productDetails }) => {
 
   return (
     <Dialog open={open} onOpenChange={handleCloseDialog}>
-      <DialogContent className="sm:p-8 p-6 max-w-[90vw] sm:max-w-[80vw] lg:max-w-[70vw] rounded-lg shadow-xl bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 overflow-y-auto max-h-[80vh]">
+      <DialogContent className="sm:p-8 p-6 max-w-[90vw] sm:max-w-[80vw] lg:max-w-[70vw] rounded-xl shadow-xl bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 overflow-y-auto max-h-[80vh]">
         <DialogTitle className="text-3xl font-extrabold text-gray-900 mb-6 text-center">{productDetails?.title || "Loading..."}</DialogTitle>
         {productDetails ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-12">
@@ -190,7 +190,7 @@ const ProductDetails = ({ open, setOpen, productDetails }) => {
                     value={reviewMsg}
                     onChange={(e) => setReviewMsg(e.target.value)}
                     placeholder="Write a Review"
-                    className="w-full p-4 border rounded-lg" />
+                    className="w-full p-4 border rounded-xl  " />
                   <Button
                     onClick={handleAddReview}
                     disabled={reviewMsg.trim() === ""}

@@ -65,7 +65,7 @@ const Login = () => {
           </p>
 
         </div>
-        <div className="bg-white rounded-lg shadow-xl p-8 space-y-6 ring-2 ring-primary-300">
+        <div className="bg-white rounded-xl shadow-xl p-8 space-y-6 ring-2 ring-primary-300">
           <Form
             formControlls={loginFormControlls}
             buttonText={isLoading ? 'Logging in...' : 'Login'}

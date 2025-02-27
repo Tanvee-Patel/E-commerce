@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DialogContent, DialogTitle } from '../ui/dialog'
 import { Label } from '../ui/label'
 import { Separator } from '../ui/separator'
@@ -8,6 +8,7 @@ import { Badge } from '../ui/badge'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAdminOrderDetails, getAllOrderOfAllUsers, sendOrderEmail, updateOrderStatus } from '@/store/admin/orderSlice'
 import toast from 'react-hot-toast'
+// import socket from '@/store/socket'
 
 const initialFormData = {
    status: ''
@@ -18,6 +19,16 @@ const OrderDetail = ({ orderDetail }) => {
    const [formData, setFormData] = useState(initialFormData)
    const [updating, setUpdating] = useState(false);
    const dispatch = useDispatch()
+
+   // useEffect(() => {
+   //    socket.on(`orderStatusUpdated_${user._id}`,(data)=>{
+   //       toast.success(data.message);
+   //       dispatch(getAdminOrderDetails(orderDetail?._id))
+   //    })
+   //    return () =>{
+   //       socket.off(`orderStatusUpdated_${user._id}`)
+   //    }
+   // }, [dispatch, orderDetail, user])
 
    function handleUpdateStatus(e) {
       e.preventDefault()
@@ -56,7 +67,7 @@ const OrderDetail = ({ orderDetail }) => {
    
    return (
       <DialogContent className="bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center ring-4">
-         <div className="w-full max-w-lg rounded-lg p-8 space-y-6 ">
+         <div className="w-full max-w-lg rounded-xl p-8 space-y-6 ">
             <div className="text-center">
                <DialogTitle className="text-3xl font-extrabold text-gray-900 tracking-tight mb-4">
                   Order Details

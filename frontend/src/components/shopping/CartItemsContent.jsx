@@ -69,11 +69,11 @@ const CartItemsContent = ({ cartItem }) => {
   }
 
   return (
-    <div className="flex items-center space-x-4 bg-white p-4 rounded-lg shadow-md ring-2 ring-primary-300 w-full overflow-hidden">
+    <div className="flex items-center space-x-4 bg-white p-4 rounded-xl shadow-md ring-2 ring-primary-300 w-full overflow-hidden">
       <img
         src={cartItem?.image}
         alt={cartItem?.title}
-        className="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover shadow-sm max-w-full"
+        className="w-16 h-16 md:w-20 md:h-20 rounded-xl object-cover shadow-sm max-w-full"
       />
       <div className="flex-1 min-w-0">
         <h3 className="text-lg font-extrabold text-gray-900 truncate">{cartItem?.title}</h3>

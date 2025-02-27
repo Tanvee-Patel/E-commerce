@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import image from '../../assets/image.png'
+import image from '../../assets/e-comm.jpg'
 import Address from '@/components/shopping/Address'
 import { useDispatch, useSelector } from 'react-redux'
 import CartItemsContent from '@/components/shopping/CartItemsContent'
@@ -68,27 +68,27 @@ const Checkout = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center px-6">
-      <div className="w-full max-w-4xl space-y-8">
+      <div className="w-full space-y-8 mb-7">
 
         {/* Title */}
         <div className="text-center">
-          <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight mb-4">
+          <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight mt-4 mb-4">
             Checkout
           </h1>
         </div>
 
         {/* Image */}
-        <div className="relative h-[250px] w-full overflow-hidden rounded-lg shadow-md">
+        <div className="relative h-[250px] w-full overflow-hidden rounded-xl shadow-md p-4 bg-white ring-2">
           <img src={image} className="h-full w-full object-cover object-center" alt="Checkout Banner" />
         </div>
 
         {/* Checkout Card */}
-        <Card className="bg-white rounded-lg shadow-2xl p-8 space-y-6 ring-2 ring-primary-300">
+        <Card className="bg-white rounded-xl shadow-2xl p-7 space-y-6 ring-2 ring-primary-300">
           <CardContent className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
               {/* Address Section */}
-              <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+              <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
                 <Address
                   selectedId={selectedAddress?._id}
                   setCurrentSelectedAddress={setCurrentSelectedAddress}
@@ -97,8 +97,8 @@ const Checkout = () => {
               </div>
 
               {/* Cart Items Section */}
-              <div className="bg-white p-5 rounded-lg shadow-md border border-gray-200">
-                <div className="flex flex-col gap-4 bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 p-6 shadow-lg">
+              <div className="bg-white p-5 shadow-md border border-gray-200 rounded-xl">
+                <div className="flex flex-col gap-4 bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 p-6 shadow-lg rounded-xl">
                   {/* Title */}
                   <CardTitle className="text-2xl font-semibold text-gray-900 text-center">
                     <h1 className="text-3xl font-bold text-gray-900 tracking-tight mb-4">Cart Items</h1>

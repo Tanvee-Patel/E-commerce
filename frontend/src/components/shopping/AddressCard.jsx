@@ -11,7 +11,7 @@ const AddressCard = ({ addressInfo, handleDeleteAddress, handleEditAddress, setC
    return (
       <Card
          onClick={handleClick}
-         className={`cursor-pointer border rounded-lg shadow-md bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 ${selectedId?._id === addressInfo?._id
+         className={`cursor-pointer border rounded-xl shadow-md bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 ${selectedId?._id === addressInfo?._id
                ? "border-red-900 border-[4px]"
                : "border-black"
             }`}>

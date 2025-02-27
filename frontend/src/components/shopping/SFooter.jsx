@@ -4,7 +4,7 @@ import { FaFacebookF, FaTwitter, FaWhatsapp, FaPinterest, FaInstagram, FaFaceboo
 
 const SFooter = () => {
    return (
-      <footer className="text-black bg-white py-3">
+      <footer className="text-black bg-white py-3 w-full mt-auto">
          <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-10">
 
             {/* Brand Info */}
@@ -19,7 +19,9 @@ const SFooter = () => {
             <div>
                <h3 className="text-xl font-semibold mb-2">Office</h3>
                <p className="text-gray-500 text-sm pb-2">Surat, Gujarat, India</p>
-               <p className="text-gray-500 text-sm pb-2">Email: vedanship517@gmail.com</p>
+               <p className="text-blue-600 text-sm pb-2">
+                  <a href="mailto:vedanship517@email.com" className="hover:underline">E-mail</a>
+               </p>
                <p className="text-gray-500 text-sm">Phone: +91 77788 57425</p>
             </div>
 

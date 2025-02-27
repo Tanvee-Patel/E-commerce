@@ -116,12 +116,12 @@ const Listing = () => {
     <div className='min-h-screen bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-100 flex items-center justify-center p-6'>
       <div className='w-full max-w-7xl flex flex-col md:flex-row gap-8'>
       
-        <div className='bg-white p-6 rounded-lg shadow-xl w-full md:w-1/4'>
+        <div className='bg-white p-6 rounded-xl shadow-xl w-full md:w-1/4'>
           <Filter filters={filters} handleFilter={handleFilter} />
         </div>
 
         <div className='w-full md:w-3/4 space-y-8'>
-          <div className='bg-white p-6 rounded-lg shadow-xl'>
+          <div className='bg-white p-6 rounded-xl shadow-xl'>
             <h2 className='text-3xl font-extrabold text-gray-900 tracking-tight mb-6 text-center'>
               All Products
             </h2>

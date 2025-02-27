@@ -6,7 +6,7 @@ import { Separator } from '../ui/separator'
 
 const Filter = ({ filters, handleFilter }) => {
   return (
-    <div className='bg-white rounded-lg shadow-xl overflow-hidden'>
+    <div className='bg-white rounded-xl shadow-xl overflow-hidden'>
       <div className='p-6 border-b'>
         <h2 className='text-2xl font-semibold text-gray-900 tracking-tight'>Filters</h2>
       </div>

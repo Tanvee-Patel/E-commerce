@@ -39,8 +39,8 @@ function ForgotPassword() {
    }
 
    return (
-      <div className="flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-7 overflow-hidden">
-      <div className="w-full h-full max-w-lg backdrop-blur-md p-6">
+      <div className="flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-7">
+      <div className="w-full h-full max-w-lg p-6">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-gray-900 tracking-tight mb-4 underline decoration-primary-300 decoration-3 underline-offset-3">
             Forgot Password?
@@ -50,8 +50,8 @@ function ForgotPassword() {
           </p>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6 space-y-6 ring-2 ring-primary-300">
-          <form onSubmit={handleForgotPassword} className="space-y-6">
+        <div className="bg-white rounded-xl shadow-md p-6 space-y-6 ring-2 ring-primary-300">
+          <form onSubmit={handleForgotPassword} className="space-y-6 p-5">
             <div>
               <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">
                 Email Address
@@ -62,12 +62,12 @@ function ForgotPassword() {
                 placeholder="Enter your email..."
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:outline-none shadow-sm"
+                className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 focus:outline-none shadow-sm"
               />
             </div>
             <button
               type="submit"
-              className={`w-full bg-primary-500 text-white bg-blue-400 hover:text-gray-600 hover:bg-white py-3 rounded-lg font-medium hover:bg-primary-600 transition duration-300 ${
+              className={`max-w-full p-8 bg-blue-400 hover:text-gray-600 hover:bg-white py-3 rounded-xl font-semibold ${
                 isLoading ? 'opacity-50 cursor-not-allowed' : ''
               }`}
               disabled={isLoading}

@@ -1,4 +1,4 @@
-import { CircleUserRound, House, LogOut, ShoppingCart, SquareMenu } from 'lucide-react'
+import { Bell, CircleUserRound, House, InboxIcon, LogOut, ShoppingCart, SquareMenu } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet'
@@ -55,6 +55,8 @@ function HeaderRightContent({ closeMenu }) {
   const dispatch = useDispatch();
   const { cartItems } = useSelector(state => state.userCart)
 
+  const unreadNotifications = 0;
+
   function handleLogout() {
     dispatch(logoutUser());
     closeMenu();
@@ -65,15 +67,29 @@ function HeaderRightContent({ closeMenu }) {
   }, [dispatch])
 
   return (
-    <div className='flex lg:items-center lg:flex-row flex-col gap-4'>
+    <div className='flex lg:flex-row flex-col gap-4 w-full sm:text-left text-center'>
+      <Button
+      onClick={ () => navigate('/user/notifications')}
+      variant="outline"
+      size="icon"
+      className="relative"
+      >
+        <Bell className='h-6 w-6'/>
+        {unreadNotifications > 0 && (
+          <span className='absolute -top-1.5 -right-1.5 backdrop-b text-gray-600 bg-white/40 text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full border bg-sky-400 border-sky-700 shadow-lg transition-all duration-300 hover:scale-110'>
+            {unreadNotifications}
+          </span>
+        )}
+        <span className='sr-only'>Notifications</span>
+      </Button>
       <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
         <Button
           onClick={() => setOpenCartSheet(true)}
           variant="outline"
           size="icon"
-          className="mb-3 relative">
+          className="relative">
           <ShoppingCart className='h-6 w-6' />
-          <span className='absolute -top-1.5 -right-1.5 backdrop-b bg-white/40 text-gray-600 font-bold text-[10px] w-5 h-5 flex items-center justify-center rounded-full border bg-sky-400 border-sky-700 shadow-lg transition-all duration-300 hover:scale-110'>
+          <span className='absolute -top-1.5 -right-1.5 backdrop-b bg-white/40 text-gray-600 font-bold text-xs w-5 h-5 flex items-center justify-center rounded-full border bg-sky-400 border-sky-700 shadow-lg transition-all duration-300 hover:scale-110'>
             {cartItems?.items?.length}
           </span>
           <span className='sr-only'>User shopping cart</span>
@@ -86,7 +102,7 @@ function HeaderRightContent({ closeMenu }) {
       <DropdownMenu>
         <div className='relative'>
         <DropdownMenuTrigger asChild>
-          <Avatar className="bg-black lg:mb-3">
+          <Avatar className="bg-black">
             <AvatarFallback className="bg-black text-white font-extrabold">
               {user?.username[0].toUpperCase()}
             </AvatarFallback>

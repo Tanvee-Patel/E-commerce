@@ -33,7 +33,7 @@ const AOrders = () => {
    return (
       <div className="bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center px-4">
          <div className="w-full max-w-4xl space-y-8">
-            <Card className="bg-white rounded-lg shadow-xl p-8 ring-2 ring-primary-300">
+            <Card className="bg-white rounded-xl shadow-xl p-8 ring-2 ring-primary-300">
                <CardHeader>
                   <CardTitle className="text-3xl font-extrabold text-gray-900 tracking-tight mb-4 text-center">
                      All Orders

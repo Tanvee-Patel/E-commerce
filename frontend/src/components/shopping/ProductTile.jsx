@@ -19,7 +19,7 @@ const ProductTile = ({ product, handleGetProductDetails, handleAddToCart }) => {
    const brandLabel = getBrandLabel(product.brand)
 
    return (
-      <Card className="w-full max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
+      <Card className="w-full max-w-sm mx-auto bg-white shadow-lg rounded-xl overflow-hidden transform hover:scale-105 transition-all duration-300">
          <div onClick={() => handleGetProductDetails(product?._id)}>
             <div className='relative'>
                <img

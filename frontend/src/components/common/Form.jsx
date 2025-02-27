@@ -9,11 +9,7 @@ const Form = ({ formControlls, formData, setFormData, onSubmit, buttonText, isBt
 
   function renderInputsByComponentType(controlItem) {
     const { name, componentType, placeholder, type, options, label } = controlItem;
-    const value = formData[name] || ''; // Safeguard against undefined value
-
-    // console.log(formData);
-    // console.log(formControlls);
-
+    const value = formData[name] || '';
 
     switch (componentType) {
       case 'input':
@@ -42,7 +38,7 @@ const Form = ({ formControlls, formData, setFormData, onSubmit, buttonText, isBt
             }
             value={formData[name] || ''}
           >
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="max-w-full">
               <SelectValue placeholder={label} />
             </SelectTrigger>
             <SelectContent>
@@ -53,10 +49,6 @@ const Form = ({ formControlls, formData, setFormData, onSubmit, buttonText, isBt
               ))}
             </SelectContent>
           </Select>
-
-
-
-
         );
 
       case 'textarea':
@@ -95,7 +87,7 @@ const Form = ({ formControlls, formData, setFormData, onSubmit, buttonText, isBt
     <form onSubmit={onSubmit}>
       <div className="flex flex-col gap-3">
         {formControlls.map(controlItem => (
-          <div key={controlItem.name} className="grid w-full gap-1.5">
+          <div key={controlItem.name} className="grid max-w-full gap-1.5">
             <Label className="mb-1">
               {controlItem.label}
             </Label>
@@ -106,7 +98,7 @@ const Form = ({ formControlls, formData, setFormData, onSubmit, buttonText, isBt
       <Button 
       disabled={isBtnDisabled} 
       type="submit" 
-      className={`mt-2 w-full ${buttonText === 'Edit' ? 'bg-green-400' : 'bg-blue-400'} hover:bg-opacity-80`}>
+      className={`rounded-xl mt-8 max-w-full ${buttonText === 'Edit' ? 'bg-green-400' : 'bg-blue-400'} font-semibold`} >
         {buttonText || 'Submit'}
       </Button>
     </form>

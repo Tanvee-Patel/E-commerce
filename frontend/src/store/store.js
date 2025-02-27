@@ -12,7 +12,7 @@ import commonFeatureSlice from "./commonSlice"
 import forgotPasswordSlice from "./forgotPasswordSlice"
 import resetPasswordSlice from "./resetPasswordSlice"
 import contactSlice from "./contactSlice"
-
+import notificationReducer from "./user/notificationSlice"
 const store = configureStore({
    reducer:{
       auth: authReducer,
@@ -27,7 +27,8 @@ const store = configureStore({
       commonFeature: commonFeatureSlice,
       forgotPassword : forgotPasswordSlice,
       resetPassword : resetPasswordSlice, 
-      contact: contactSlice     
+      contact: contactSlice,
+      notifications: notificationReducer    
    }
 });
 

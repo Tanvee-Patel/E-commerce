@@ -113,7 +113,7 @@ const Home = () => {
 
 return (
   <div className="min-h-screen bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 flex flex-col">
-    <div className="relative w-full h-[600px] overflow-hidden">
+    <div className="relative w-full h-[600px]">
       {
         featureImageList && featureImageList.length > 0 
           ? featureImageList.map((slide, index) => (
@@ -143,7 +143,7 @@ return (
       </Button>
     </div>
 
-    <section className="py-10 bg-white shadow-lg rounded-lg mx-4 my-8 ring-2 ring-primary-300">
+    <section className="py-10 bg-white shadow-lg rounded-xl mx-4 my-8 ring-2 ring-primary-300">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-8">Shop by Category</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -153,7 +153,7 @@ return (
               onClick={() => {
                 handleNavigateToListingPage('category', categoryItem,);
               }}
-              className="cursor-pointer hover:shadow-2xl transition-all bg-gray-50 rounded-lg">
+              className="cursor-pointer hover:shadow-2xl transition-all bg-gray-50 rounded-xl">
               <CardContent className="flex flex-col items-center justify-center p-8">
                 {React.createElement(categoryItem.icon, { className: "w-14 h-14 mb-4 text-primary" })}
                 <span className="text-lg font-semibold text-gray-900">{categoryItem.label}</span>
@@ -164,7 +164,7 @@ return (
       </div>
     </section>
 
-    <section className="py-16 mx-4 my-8 bg-white shadow-lg rounded-lg ring-2 ring-primary-300">
+    <section className="py-10 mx-4 my-8 bg-white shadow-lg rounded-xl ring-2 ring-primary-300">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-8">Shop by Brand</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -174,7 +174,7 @@ return (
               onClick={() => {
                 handleNavigateToListingPage('brand', brandItem,);
               }}
-              className="cursor-pointer hover:shadow-2xl transition-all bg-gray-50 rounded-lg">
+              className="cursor-pointer hover:shadow-2xl transition-all bg-gray-50 rounded-xl">
               <CardContent className="flex flex-col items-center justify-center p-8">
                 <brandItem.icon className="w-14 h-14 mb-4 text-primary" />
                 <span className="text-lg font-semibold text-gray-900">{brandItem.label}</span>
@@ -188,7 +188,7 @@ return (
       </div>
     </section>
 
-    <section className="py-16 mx-4 my-8 bg-white shadow-lg rounded-lg ring-2 ring-primary-300">
+    <section className="py-16 mx-4 my-8 bg-white shadow-lg rounded-xl ring-2 ring-primary-300">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-extrabold text-center text-gray-900 mb-8">Featured Products</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
