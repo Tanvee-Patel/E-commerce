@@ -1,42 +1,36 @@
-
 export const registerFormControlls = [
   {
     name: 'username',
-    label: 'Username',
-    placeholder: 'Enter your username',
+    placeholder: 'Username',
     commonType: 'input',
-    type: 'text'
+    type: 'text',
   },
   {
     name: 'email',
-    label: 'Email',
-    placeholder: 'Enter your email',
+    placeholder: 'Email',
     commonType: 'input',
-    type: 'email'
+    type: 'email',
   },
   {
     name: 'password',
-    label: 'Password',
-    placeholder: 'Enter your password',
+    placeholder: 'Password',
     commonType: 'input',
-    type: 'password'
+    type: 'password',
   },
 ]
 
 export const loginFormControlls = [
   {
     name: 'email',
-    label: 'Email',
-    placeholder: 'Enter your email',
+    placeholder: 'Email',
     commonType: 'input',
-    type: 'email'
+    type: 'email',
   },
   {
     name: 'password',
-    label: 'Password',
-    placeholder: 'Enter your password',
+    placeholder: 'Password',
     commonType: 'input',
-    type: 'password'
+    type: 'password',
   },
 ];
 
@@ -133,7 +127,7 @@ export const shoppingViewHeaderMenuItems = [
   },
   {
     id: 'search',
-    label: 'Search',
+    label: 'Explore',
     path: '/user/search',
   },
 ];
@@ -168,37 +162,37 @@ export const sortOptions = [
 
 export const addressFormControls = [
   {
-    label: "Address",
+    // label: "Address",
     name: "address",
     componentType: "input",
     type: "text",
-    placeholder: "Enter your address",
+    placeholder: "Address",
   },
   {
-    label: "City",
+    // label: "City",
     name: "city",
     componentType: "input",
     type: "text",
-    placeholder: "Enter your city",
+    placeholder: "City",
   },
   {
-    label: "Pincode",
+    // label: "Pincode",
     name: "pincode",
     componentType: "input",
     type: "text",
-    placeholder: "Enter your pincode",
+    placeholder: "Pincode",
   },
   {
-    label: "Phone",
+    // label: "Phone",
     name: "phone",
     componentType: "input",
     type: "text",
-    placeholder: "Enter your phone number",
+    placeholder: "Phone Number",
   },
   {
-    label: "Notes",
+    // label: "Notes",
     name: "notes",
     componentType: "textarea",
-    placeholder: "Enter any additional notes",
+    placeholder: "Additional Notes",
   },
 ];

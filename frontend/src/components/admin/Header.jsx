@@ -24,7 +24,7 @@ const Header = ({setOpen}) => {
       <div className='flex flex-1 justify-end'>
         <Button
         onClick = {handleLogout}
-        className="inline-flex gap-2 shadow-md items-center rounden-md px-4 py-2 text-sm font-medium hover:bg-red-600 transition duration-300">
+        className="inline-flex gap-2 shadow-md items-center rounden-md px-4 py-2 text-sm font-medium hover:bg-red-700 rounded-xl bg-red-500 text-white transition duration-300">
           <LogOut /> Logout
         </Button>
       </div>

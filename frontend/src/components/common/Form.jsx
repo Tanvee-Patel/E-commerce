@@ -14,17 +14,22 @@ const Form = ({ formControlls, formData, setFormData, onSubmit, buttonText, isBt
     switch (componentType) {
       case 'input':
         return (
-          <Input
-            name={name}
-            placeholder={placeholder}
-            id={name}
-            type={type}
-            value={value}
-            onChange={(e) => setFormData({
-              ...formData,
-              [name]: e.target.value,
-            })}
-          />
+          <div className="relative w-full">
+           
+            <Input
+              name={name}
+              placeholder={placeholder}
+              id={name}
+              type={type}
+              value={value}
+              className={`pl-10 w-full border rounded-xl p-2 bg-gray-100 focus:outline-none`}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  [name]: e.target.value,
+                }) }
+            />
+          </div>
         );
 
       case 'select':
@@ -68,6 +73,7 @@ const Form = ({ formControlls, formData, setFormData, onSubmit, buttonText, isBt
       default:
         return (
           <Input
+            className='border rounded-xl mb-2'
             name={name}
             placeholder={placeholder}
             id={name}
@@ -95,10 +101,10 @@ const Form = ({ formControlls, formData, setFormData, onSubmit, buttonText, isBt
           </div>
         ))}
       </div>
-      <Button 
-      disabled={isBtnDisabled} 
-      type="submit" 
-      className={`rounded-xl mt-8 max-w-full ${buttonText === 'Edit' ? 'bg-green-400' : 'bg-blue-400'} font-semibold`} >
+      <Button
+        disabled={isBtnDisabled}
+        type="submit"
+        className={`rounded-xl mt-8 max-w-full ${buttonText === 'Edit' ? 'bg-green-400 hover:bg-green-500' : 'bg-blue-400 hover:bg-blue-500'} font-semibold`} >
         {buttonText || 'Submit'}
       </Button>
     </form>

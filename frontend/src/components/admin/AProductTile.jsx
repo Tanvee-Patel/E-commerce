@@ -10,7 +10,7 @@ const AProductTile = ({ product, setFormData, setOpenCreateProductsDialog, curre
                <img
                   src={product?.image}
                   alt={product?.title}
-                  className='w-full h-full object-cover rounded-t-lg'
+                  className='h-80 w-auto object-fill rounded-xl'
                />
             </div>
             <CardContent>

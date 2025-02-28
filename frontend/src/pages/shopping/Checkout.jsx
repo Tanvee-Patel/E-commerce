@@ -16,6 +16,9 @@ const Checkout = () => {
   const { addressList, selectedAddress } = useSelector(state => state.userAddress)
   const { cartItems } = useSelector(state => state.userCart)
   const [currentSelectedAddress, setCurrentSelectedAddress] = useState(null);
+  const [isPaymentStart, setIsPaymentStart] = useState(false)
+  const { approvalURL } = useSelector((state) => state.orders)
+  const [paymentMethod, setPaymentMethod] = useState('cod')
 
   useEffect(() => {
     if (user?.id) {
@@ -50,21 +53,57 @@ const Checkout = () => {
     const orderData = {
       userId: user?.id || '',
       cartId: cartItems?._id,
-      cartItems: cartItems.items,
+      cartItems: cartItems.items.map(singleCartItem => ({
+        productId: singleCartItem?.productId,
+        title: singleCartItem?.title,
+        image: singleCartItem?.image,
+        price: singleCartItem?.price,
+        quantity: singleCartItem?.quantity
+      })),
       addressInfo: currentSelectedAddress || {},
       totalAmount: totalCartAmount,
       orderStatus: orderStatus,
+      paymentId: '',
+      paymentMethod,
+      paymentStatus: paymentMethod === 'cod' ? 'pending' : 'processing',
+      payerId: '',
+      orderDate: new Date(),
+      orderUpdateDate: new Date(),
+      approvalURL: approvalURL
     };
+    console.log(orderData);
 
     try {
-      await dispatch(createOrder(orderData)).unwrap();
-      toast.success('Woohoo! 🎉 Your order is confirmed. We’ll update you soon!', {
-        duration: 5000,
-      });
+      const response = await dispatch(createOrder(orderData)).unwrap();
+      if (response?.success) {
+        setIsPaymentStart(true)
+        if (paymentMethod === 'paypal' && approvalURL) {
+          window.location.href = approvalURL;
+        } else {
+          toast.success('Order placed successfully with Cash on Delivery! 🎉', {
+            duration: 5000,
+          });
+        }
+      }
+      else {
+        setIsPaymentStart(false)
+        toast.error('Failed to place order. Please try again.');
+      }
+      // toast.success('Woohoo! 🎉 Your order is confirmed. We’ll update you soon!', {
+      //   duration: 5000,
+      // });
     } catch (err) {
       toast.error('Failed to place order. Please try again.');
     }
   }
+
+  useEffect(() => {
+    // console.log("Approval URL", approvalURL);
+    if ( isPaymentStart && paymentMethod === 'paypal' && approvalURL) {
+      window.location.href = approvalURL;
+    }
+  }, [approvalURL, paymentMethod, isPaymentStart]);
+  // console.log(approvalURL);
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center px-6">
@@ -78,17 +117,17 @@ const Checkout = () => {
         </div>
 
         {/* Image */}
-        <div className="relative h-[250px] w-full overflow-hidden rounded-xl shadow-md p-4 bg-white ring-2">
+        <div className="relative h-[250px] w-full overflow-hidden rounded-xl shadow-md p-4 bg-white">
           <img src={image} className="h-full w-full object-cover object-center" alt="Checkout Banner" />
         </div>
 
         {/* Checkout Card */}
-        <Card className="bg-white rounded-xl shadow-2xl p-7 space-y-6 ring-2 ring-primary-300">
+        <Card className="bg-white rounded-xl shadow-2xl p-7 space-y-6 ">
           <CardContent className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
               {/* Address Section */}
-              <div className="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+              <div className="bg-white p-6 rounded-xl">
                 <Address
                   selectedId={selectedAddress?._id}
                   setCurrentSelectedAddress={setCurrentSelectedAddress}
@@ -97,8 +136,8 @@ const Checkout = () => {
               </div>
 
               {/* Cart Items Section */}
-              <div className="bg-white p-5 shadow-md border border-gray-200 rounded-xl">
-                <div className="flex flex-col gap-4 bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 p-6 shadow-lg rounded-xl">
+              <div className="bg-white p-5 rounded-xl">
+                <div className="flex flex-col gap-4 bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 p-6 rounded-xl mt-10">
                   {/* Title */}
                   <CardTitle className="text-2xl font-semibold text-gray-900 text-center">
                     <h1 className="text-3xl font-bold text-gray-900 tracking-tight mb-4">Cart Items</h1>
@@ -120,8 +159,27 @@ const Checkout = () => {
                     </div>
                   </div>
 
+                  {/* Payment Method Selection */}
+                  <div className="mt-4 flex flex-col gap-2">
+                    <h2 className="text-lg font-semibold">Select Payment Method</h2>
+                    <div className="flex items-center gap-4">
+                      <div className="mt-4 w-[30%] bg-green-500 text-white rounded-xl text-center hover:bg-green-600">
+                        <Button
+                          onClick={ () => setPaymentMethod('paypal')}>
+                          With Paypal
+                        </Button>
+                      </div>
+                      <div className="mt-4 w-[30%] bg-blue-500 text-white rounded-xl text-center hover:bg-blue-600">
+                        <Button
+                          onClick={() => setPaymentMethod('cod')}>
+                          Cash on Delivery
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+
                   {/* Place Order Button */}
-                  <div className="mt-4 w-full">
+                  <div className="mt-4 w-[30%] bg-gray-500 text-white rounded-xl text-center hover:bg-gray-600">
                     <Button
                       onClick={handleCheckout}>
                       Place Order

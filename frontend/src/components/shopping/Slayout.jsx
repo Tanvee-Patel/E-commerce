@@ -5,7 +5,7 @@ import SFooter from './SFooter'
 
 const Slayout = () => {
   return (
-    <div className='flex flex-col min-h-screen bg-white text-gray-800'>
+    <div className='flex flex-col text-gray-800'>
       <SHeader/>
        <main className='flex-grow w-full'>
          <Outlet/>

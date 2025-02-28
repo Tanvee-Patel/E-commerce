@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Book, BookOpen, Brush, ChevronLeft, ChevronRight, Droplet, LibraryBig, Monitor, Palette, Smartphone, Tablet, TabletSmartphone, Tv, WandSparkles } from 'lucide-react'
+import { Book, BookOpen, Brush, ChevronLeft, ChevronRight, LibraryBig, Palette, Smartphone, Tablet, TabletSmartphone, WandSparkles } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllFilteredProducts, fetchProductDetails } from '@/store/user/productSlice'
@@ -121,7 +121,7 @@ return (
               src={slide?.image}
               key={index}
               className={`${index === currentSlide ? "opacity-100" : "opacity-0"
-                } absolute top-0 left-0 w-full h-full object-cover px-4 py-7 transition-opacity duration-1000`}
+                } absolute top-0 left-0 w-full h-full object-cover py-7 transition-opacity duration-1000`}
             />
           ))
           : null
@@ -143,7 +143,7 @@ return (
       </Button>
     </div>
 
-    <section className="py-10 bg-white shadow-lg rounded-xl mx-4 my-8 ring-2 ring-primary-300">
+    <section className="py-10 bg-white rounded-xl mx-4 my-8 ">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-8">Shop by Category</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -153,7 +153,7 @@ return (
               onClick={() => {
                 handleNavigateToListingPage('category', categoryItem,);
               }}
-              className="cursor-pointer hover:shadow-2xl transition-all bg-gray-50 rounded-xl">
+              className="cursor-pointer hover:shadow-2xl transition-all bg-gray-100 rounded-xl">
               <CardContent className="flex flex-col items-center justify-center p-8">
                 {React.createElement(categoryItem.icon, { className: "w-14 h-14 mb-4 text-primary" })}
                 <span className="text-lg font-semibold text-gray-900">{categoryItem.label}</span>
@@ -164,7 +164,7 @@ return (
       </div>
     </section>
 
-    <section className="py-10 mx-4 my-8 bg-white shadow-lg rounded-xl ring-2 ring-primary-300">
+    <section className="py-10 mx-4 my-8 bg-white rounded-xl">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-8">Shop by Brand</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -174,7 +174,7 @@ return (
               onClick={() => {
                 handleNavigateToListingPage('brand', brandItem,);
               }}
-              className="cursor-pointer hover:shadow-2xl transition-all bg-gray-50 rounded-xl">
+              className="cursor-pointer hover:shadow-2xl transition-all bg-gray-100 rounded-xl">
               <CardContent className="flex flex-col items-center justify-center p-8">
                 <brandItem.icon className="w-14 h-14 mb-4 text-primary" />
                 <span className="text-lg font-semibold text-gray-900">{brandItem.label}</span>
@@ -188,7 +188,7 @@ return (
       </div>
     </section>
 
-    <section className="py-16 mx-4 my-8 bg-white shadow-lg rounded-xl ring-2 ring-primary-300">
+    <section className="py-16 mx-4 my-8 bg-white rounded-xl">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-extrabold text-center text-gray-900 mb-8">Featured Products</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

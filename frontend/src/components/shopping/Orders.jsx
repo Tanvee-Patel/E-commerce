@@ -80,7 +80,7 @@ const Orders = () => {
                     <TableCell className="py-3 px-4 text-center">
                       <Button
                         onClick={() => handleFetchOrderDetails(orderItem?._id)}
-                        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg transition">
+                        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-xl transition">
                         View Details
                       </Button>
                     </TableCell>

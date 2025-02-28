@@ -22,7 +22,7 @@ export const updateOrderStatus = createAsyncThunk(
    '/order/updateOrderStatus', async ({ id, orderStatus }) => {
       const response = await axios.put(
          `http://localhost:3000/admin/order/update/${id}`, { orderStatus });
-      if (response.data.success) {
+      if (response.data.payload.success) {
          if (orderStatus.toLowerCase() === "confirmed") {
             toast.success("Confirmation email sent to the customer!");
          }
@@ -102,6 +102,9 @@ const AorderSlice = createSlice({
             state.orders = state.orders.map(order =>
                order._id === updatedOrder._id ? updatedOrder : order
             );
+            if (state.orderDetails && state.orderDetails._id === updatedOrder._id) {
+               state.orderDetails = updatedOrder;
+            }
          })
          .addCase(updateOrderStatus.rejected, (state) => {
             state.isLoading = false;

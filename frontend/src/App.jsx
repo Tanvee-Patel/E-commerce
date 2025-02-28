@@ -26,6 +26,8 @@ import AboutUs from './pages/shopping/About';
 import Contact from './pages/shopping/Contact';
 import Messages from './pages/admin/Messages';
 import Notifications from './pages/shopping/Notifications';
+import PaypalReturn from './pages/shopping/PaypalReturn';
+import PaymentSuccess from './pages/shopping/PaymentSuccess';
 
 function App() {
   const { isAuthenticated, user, isLoading } = useSelector((state) => state.auth);
@@ -77,6 +79,8 @@ function App() {
           <Route path="about" element={<AboutUs />} />
           <Route path="contact" element={<Contact />} />
           <Route path="notifications" element={<Notifications/>}/>
+          <Route path='paypal-return' element={<PaypalReturn/>}/>
+          <Route path='paypal-success' element={<PaymentSuccess/>}/>
         </Route>
       </Routes>
     </div>

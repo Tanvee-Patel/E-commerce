@@ -104,16 +104,16 @@ const Address = ({ currentSelectedAddress, setCurrentSelectedAddress, selectedId
    // console.log("Address List:", addressList);
 
    return (
-      <div className="min-h-screen flex items-center justify-center p-6 rounded-xl">
-         <div className="w-full space-y-8">
+      <div className="min-h-screen flex items-center justify-center rounded-xl">
+         <div className="w-full">
             <div className="text-center">
-               <h1 className="text-5xl font-extrabold text-gray-900 tracking-tight mb-4">Manage Your Addresses</h1>
-               <p className="text-xl text-gray-700 mb-6">Add, update, or remove your addresses with ease.</p>
+               <h1 className="text-3xl font-bold text-gray-900 tracking-tight mb-4">Manage Your Addresses</h1>
+               <p className="text-xl text-gray-700">Add, update, or remove your addresses with ease.</p>
             </div>
 
-            <Card className="bg-white rounded-xl shadow-xl p-8 space-y-6 ">
+            <Card className="bg-white rounded-xl p-8 space-y-6 ">
                <CardContent>
-                  <div className="p-4 rounded-xl shadow-md">
+                  <div className="p-4 rounded-xl">
                      {addressList && addressList.length > 0 ? (
                         <div className="grid grid-cols-1 gap-4">
                            {addressList.map((singleAddressItem) => (
@@ -124,7 +124,7 @@ const Address = ({ currentSelectedAddress, setCurrentSelectedAddress, selectedId
                                  handleEditAddress={handleEditAddress}
                                  selectedId={selectedId}
                                  setCurrentSelectedAddress={setCurrentSelectedAddress}
-                                 className="border rounded-xl p-4 bg-white shadow" />
+                                 className="rounded-xl p-4 border-0" />
                            ))}
                         </div>
                      ) : (<p> No addresses found. </p>

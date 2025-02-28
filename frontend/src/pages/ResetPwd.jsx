@@ -41,13 +41,15 @@ function ResetPassword() {
   };
   
   return (
-    <div className="flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-7">
-      <div className="w-full h-full max-w-lg p-6">
+    <div className="flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-7 rounded-xl">
+      <div className="w-full h-full max-w-lg space-y-12">
         <div className='text-center'>
-        <h1 className="text-3xl font-bold text-gray-900 tracking-tight mb-7 underline decoration-primary-300 decoration-3 underline-offset-3">Reset Password</h1>
-        <form onSubmit={handleSubmit} className="space-y-6 ring-2 rounded-xl p-8 bg-white">
+        <h1 className="text-3xl font-bold text-gray-900 tracking-tight mb-4 decoration-primary-300 decoration-3 underline-offset-4">Reset Password</h1>
+        </div>
+        <div className='rounded-xl shadow-sm space-y-6'>
+        <form onSubmit={handleSubmit} className="space-y-7 rounded-xl shadow-sm p-9">
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">New Password</label>
+            {/* <label className="block text-gray-700 font-semibold mb-2">New Password</label> */}
             <input
               type="password"
               placeholder="Enter New Password..."
@@ -57,7 +59,7 @@ function ResetPassword() {
             />
           </div>
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">Confirm Password</label>
+            {/* <label className="block text-gray-700 font-semibold mb-2">Confirm Password</label> */}
             <input
               type="password"
               placeholder="Confirm New Password..."
@@ -68,8 +70,7 @@ function ResetPassword() {
           </div>
           <button
             type="submit"
-            className="w-full bg-primary-500 text-white bg-blue-400 hover:text-gray-600 hover:bg-white py-3 rounded-xl font-medium hover:bg-primary-600 transition duration-300"
-          >
+            className="max-w-full p-8 bg-primary-50 bg-blue-400 hover:bg-blue-500 py-3 rounded-xl font-medium hover:bg-primary-600 transition duration-300">
             Reset Password
           </button>
         </form>

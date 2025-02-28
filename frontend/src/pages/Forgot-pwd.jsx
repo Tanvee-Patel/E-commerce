@@ -39,27 +39,27 @@ function ForgotPassword() {
    }
 
    return (
-      <div className="flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-7">
-      <div className="w-full h-full max-w-lg p-6">
+      <div className=" bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-7 rounded-xl">
+      <div className="w-full h-full max-w-lg">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-900 tracking-tight mb-4 underline decoration-primary-300 decoration-3 underline-offset-3">
+          <h1 className="text-3xl font-bold text-gray-900 tracking-tight mb-4 decoration-primary-300 decoration-3 underline-offset-4">
             Forgot Password?
           </h1>
-          <p className="text-lg sm:text-xl text-gray-700 mb-6">
+          <p className="text-xl text-gray-700 mb-2 mt-7">
             Enter your email to receive a One-Time Password (OTP) to reset your password.
           </p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-md p-6 space-y-6 ring-2 ring-primary-300">
-          <form onSubmit={handleForgotPassword} className="space-y-6 p-5">
+        <div className="rounded-xl shadow-sm p-10 space-y-2">
+          <form onSubmit={handleForgotPassword} className="space-y-6 p-6">
             <div>
-              <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">
+              {/* <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">
                 Email Address
-              </label>
+              </label> */}
               <input
                 type="email"
                 id="email"
-                placeholder="Enter your email..."
+                placeholder="Email..."
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 focus:outline-none shadow-sm"
@@ -67,7 +67,7 @@ function ForgotPassword() {
             </div>
             <button
               type="submit"
-              className={`max-w-full p-8 bg-blue-400 hover:text-gray-600 hover:bg-white py-3 rounded-xl font-semibold ${
+              className={`max-w-full p-8 bg-blue-400 hover:bg-blue-500 py-3 rounded-xl font-semibold ${
                 isLoading ? 'opacity-50 cursor-not-allowed' : ''
               }`}
               disabled={isLoading}

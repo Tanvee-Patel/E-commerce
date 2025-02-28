@@ -71,6 +71,21 @@ const updateOrderStatus = async (req, res) => {
             message: 'Order not found'
          })
       }
+      
+      if (order.orderStatus === "delivered" || order.orderStatus === "canceled") {
+         return res.status(400).json({
+            success: false,
+            message: "Cannot update a delivered or canceled order"
+         });
+      }
+
+      if (orderStatus === "cancelled" || orderStatus === "returned") {
+         for (let item of order.cartItems) {
+            await Product.findByIdAndUpdate(item.productId, {
+               $inc: { stock: item.quantity }
+            });
+         }
+      }     
 
       order.orderStatus = orderStatus;
       await order.save()
@@ -81,12 +96,16 @@ const updateOrderStatus = async (req, res) => {
       console.log("📢 Emitting order update notification...");
       console.log("🗂 Current Online Users:", onlineUsers);
       console.log(`🔍 Searching for user ${userId}...`);
-      
+
       const userSocketId = onlineUsers.get(userId);
-      
+
       if (userSocketId) {
          console.log(`📤 Sending notification to ${userSocketId}`);
          io.to(userSocketId).emit("notification", message);
+         io.emit("adminOrderUpdated", {
+            orderId: id,
+            status: orderStatus
+         })
       } else {
          console.log(`⚠️ User ${userId} is offline, cannot send notification.`);
       }

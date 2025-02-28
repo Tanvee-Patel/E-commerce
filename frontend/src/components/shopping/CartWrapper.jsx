@@ -40,7 +40,7 @@ const CartWrapper = ({ cartItems, setOpenCartSheet }) => {
                navigate('/user/checkout')
                setOpenCartSheet(false)
             }}
-            className="w-full justify-center py-3 mt-6 bg-blue-400 font-semibold rounded-xl">
+            className="w-full justify-center py-3 mt-6 bg-blue-400 hover:bg-blue-500 font-semibold rounded-xl">
             Checkout
          </Button>
       </SheetContent>

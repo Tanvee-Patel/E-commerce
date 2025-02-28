@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const AboutUs = () => {
    return (
       <div className="min-h-screen bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-6">
-         <div className="max-w-5xl w-full bg-white shadow-lg rounded-xl p-8 space-y-8 ring-2 ring-primary-300">
+         <div className="max-w-5xl w-full bg-white shadow-lg rounded-xl p-8 space-y-8 ">
             {/* Heading */}
             <h1 className="text-4xl font-extrabold text-gray-900 text-center">
                About <span className="text-primary-500">Our Store</span>
@@ -51,7 +51,7 @@ const AboutUs = () => {
             <div className="text-center">
                <Link
                   to="/user/listing"
-                  className="bg-primary-500 text-black px-6 py-3 rounded-xl font-medium text-lg hover:bg-primary-600 transition duration-300"
+                  className="bg-primary-500 px-6 py-3 bg-green-200 hover:bg-green-300 rounded-xl font-medium text-lg hover:bg-primary-600 transition duration-300"
                >
                   Start Shopping
                </Link>

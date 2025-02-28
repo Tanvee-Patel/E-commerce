@@ -14,7 +14,7 @@ const Account = () => {
             Your Account
           </h1>
         </div>
-        <div className="bg-white rounded-xl shadow-xl p-8 space-y-6 ring-2 ring-primary-300 ">
+        <div className="bg-white rounded-xl shadow-xl p-8 space-y-6">
           <div className='relative h-[250px] max-w-full rounded-xl shadow-lg mb-6 p-4 bg-white'>
             <img
               src={accountImage}
@@ -24,9 +24,9 @@ const Account = () => {
           </div>
           <Tabs defaultValue='orders'>
             <TabsList className="flex justify-center space-x-1">
-              <TabsTrigger value="orders" className="px-6 py-2 text-lg font-semibold text-gray-300 rounded-xl hover:bg-gray-700">Orders</TabsTrigger>
+              <TabsTrigger value="orders" className="px-6 py-2 text-lg font-semibold text-gray-300 rounded-xl hover:text-gray-700">Orders</TabsTrigger>
               <Separator className="h-6 w-10 sm:w-16 md:w-20 lg:w-24" />
-              <TabsTrigger value="address" className="px-6 py-2 text-lg font-semibold text-gray-300 rounded-xl hover:bg-gray-700">Address</TabsTrigger>
+              <TabsTrigger value="address" className="px-6 py-2 text-lg font-semibold text-gray-300 rounded-xl hover:text-gray-700">Address</TabsTrigger>
             </TabsList>
             <TabsContent value="orders">
               <div className="text-gray-600 text-lg">

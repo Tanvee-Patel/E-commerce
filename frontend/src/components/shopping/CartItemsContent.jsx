@@ -73,7 +73,7 @@ const CartItemsContent = ({ cartItem }) => {
       <img
         src={cartItem?.image}
         alt={cartItem?.title}
-        className="w-16 h-16 md:w-20 md:h-20 rounded-xl object-cover shadow-sm max-w-full"
+        className="w-16 h-16 md:w-20 md:h-20 rounded-xl object-contain shadow-sm max-w-full"
       />
       <div className="flex-1 min-w-0">
         <h3 className="text-lg font-extrabold text-gray-900 truncate">{cartItem?.title}</h3>

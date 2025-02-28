@@ -22,7 +22,7 @@ const Contact = () => {
 
    return (
       <div className="min-h-screen bg-gradient-to-r from-blue-100 via-indigo-100 to-purple-100 flex items-center justify-center p-6">
-         <div className="max-w-5xl w-full bg-white shadow-lg rounded-xl p-8 space-y-8 ring-2 ring-primary-300">
+         <div className="max-w-5xl w-full bg-white shadow-lg rounded-xl p-8 space-y-8">
             {/* Heading */}
             <h2 className="text-4xl font-bold text-gray-900 text-center">Contact Us</h2>
             <p className="text-center text-gray-600">We'd love to hear from you! Reach out to us with any questions.</p>
@@ -55,7 +55,7 @@ const Contact = () => {
                </div>
 
                {/* Contact Form */}
-               <div className="bg-gray-100 p-6 rounded-xl shadow-md">
+               <div className="bg-gray-100 p-6 rounded-xl">
                   <form onSubmit={handleSubmit} className="space-y-4">
                      <div>
                         <label className="block text-gray-700 font-medium">Name</label>
@@ -72,7 +72,7 @@ const Contact = () => {
                         <textarea name="message" rows="4" value={formData.message} onChange={handleChange}
                            className="w-full border rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-500" required></textarea>
                      </div>
-                     <button type="submit" disabled={loading} className="w-full bg-blue-600 text-white py-2 rounded-xl font-semibold hover:bg-blue-700 transition">
+                     <button type="submit" disabled={loading} className="max-w-full p-4 bg-blue-500 text-white py-2 rounded-xl font-semibold hover:bg-blue-700 transition">
                         {loading ? "Sending..." : "Send Message"}
                      </button>
                   </form>

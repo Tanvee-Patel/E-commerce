@@ -61,7 +61,7 @@ const Adashboard = () => {
       />
       <Button
         onClick={handleUploadFeatureImage}
-        className="mt-5 w-full bg-blue-500 text-white">
+        className="mt-5 w-full bg-blue-500 text-white hover:bg-blue-600 rounded-xl">
         Upload
       </Button>
       <div className='mt-5'>
@@ -71,7 +71,7 @@ const Adashboard = () => {
               <div className='relative group' key={featureImageItem?._id}>
                 <img
                   src={featureImageItem?.image}
-                  className='w-full h-[300px] object-cover rounded-t-lg'
+                  className='w-full h-[300px] object-cover rounded-xl'
                 />
                 <Button
                 onClick={()=>handleDeleteFeatureImage(featureImageItem?._id)}

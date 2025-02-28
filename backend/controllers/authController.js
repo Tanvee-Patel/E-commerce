@@ -34,7 +34,7 @@ const register = async (req, res) => {
 //login
 const login = async (req, res) => {
    const { email, password } = req.body;
-   console.log('Email:', email, 'Password:', password);
+   // console.log('Email:', email, 'Password:', password);
 
    try {
       const checkUser = await User.findOne({ email })
@@ -116,10 +116,10 @@ const forgotPassword = async (req, res) => {
    const { email, action } = req.body;
  
    try {
-    console.log('Received forgot password request',{email,action});
+   //  console.log('Received forgot password request',{email,action});
     
      if (action === 'sendOtp') {
-       console.log('Action: sendOtp');
+      //  console.log('Action: sendOtp');
        return sendOtp(req, res);
      }
  

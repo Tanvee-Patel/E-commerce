@@ -11,9 +11,9 @@ const AddressCard = ({ addressInfo, handleDeleteAddress, handleEditAddress, setC
    return (
       <Card
          onClick={handleClick}
-         className={`cursor-pointer border rounded-xl shadow-md bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 ${selectedId?._id === addressInfo?._id
+         className={`cursor-pointer border rounded-xl shadow-md bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50   ${selectedId?._id === addressInfo?._id
                ? "border-red-900 border-[4px]"
-               : "border-black"
+               : ""
             }`}>
          <CardContent className="p-4 space-y-2">
             <div className="flex flex-col">
@@ -38,8 +38,8 @@ const AddressCard = ({ addressInfo, handleDeleteAddress, handleEditAddress, setC
             </div>
          </CardContent>
          <CardFooter className='flex justify-between'>
-            <Button onClick={() => handleEditAddress(addressInfo)}>Edit</Button>
-            <Button onClick={() => handleDeleteAddress(addressInfo)}>Delete</Button>
+            <Button onClick={() => handleEditAddress(addressInfo)} className='bg-gray-400 rounded-xl hover:bg-gray-500'>Edit</Button>
+            <Button onClick={() => handleDeleteAddress(addressInfo)} className='bg-red-500 rounded-xl text-white hover:bg-red-600'>Delete</Button>
          </CardFooter>
       </Card>
    );
