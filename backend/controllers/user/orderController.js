@@ -13,9 +13,15 @@ const createOrder = async (req, res) => {
          return res.status(400).json({ success: false, message: 'Missing required fields' });
       }
 
-      const cart = await Cart.findById(cartId)
-         .populate("items.productId")
-      console.log("Cart:", cart);
+      const cart = await Cart.findById(cartId).populate("items.productId"); // Populate product details
+      if (!cart) {
+         return res.status(404).json({ success: false, message: "Cart not found" });
+      }
+      // const cart = await Cart.findById(cartId)
+      // console.log("Cart",cart);
+
+      //    .populate("items.productId")
+      // console.log("Cart:", cart); 
 
       const computedTotal = cart.items.reduce((sum, item) => {
          const product = item.productId;
@@ -37,16 +43,17 @@ const createOrder = async (req, res) => {
       const newOrder = new Order({
          userId,
          cartId,
-         cartItems: cart.items.map(item => ({
-            productId: item.productId._id, 
-            title: item.productId.title,
-            image: item.productId.image,
-            price: item.productId.price,
-            salePrice: item.productId.salePrice,
-            quantity: item.quantity
-         })),
+         cartItems,
+         // cartItems: cart.items.map(item => ({
+         //    productId: item.productId._id, 
+         //    title: item.productId.title,
+         //    image: item.productId.image,
+         //    price: item.productId.price,
+         //    salePrice: item.productId.salePrice,
+         //    quantity: item.quantity
+         // })),
          addressInfo,
-         orderStatus: orderStatus || 'Pending',
+         orderStatus: orderStatus?.toLowerCase() || "pending",
          totalAmount: computedTotal,
          orderDate: new Date(),
          orderUpdateDate: new Date(),
